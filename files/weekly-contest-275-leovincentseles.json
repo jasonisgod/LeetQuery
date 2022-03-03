@@ -1,0 +1,22 @@
+{
+    "rank": 1781,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:44:14",
+    "Q1": {
+        "solve_time": "00:04:22",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    bool checkValid(vector<vector<int>>& matrix) {\n        int N = matrix.size();\n        \n        for (int row=0; row<N; ++row) {\n            unordered_set<int> numSet;\n            for (int col=0; col<N; ++col)\n                numSet.insert(matrix[row][col]);\n            \n            if (numSet.size() < N)\n                return false;            \n        }\n        \n        for (int col=0; col<N; ++col) {\n            unordered_set<int> numSet;\n            for (int row=0; row<N; ++row)\n                numSet.insert(matrix[row][col]);\n            \n            if (numSet.size() < N)\n                return false;            \n        }\n        \n        return true;        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:39:14",
+        "fail_count": 0,
+        "code": "/*\nClarification:\n    Given:\n        vector<int> nums\n            binary circular array\n    Return: \n        The minimum number of swap operation\n        \nExample:    \n    nums = [0, 1, 1, 1, 0, 0, 1, 1, 0]\n    \nSolution: Sliding Window\n    count the number of one\n    count the number of zero that is the required move\n*/\n\nclass Solution {\npublic:\n    int minSwaps(vector<int>& nums) {\n        int N = nums.size(), totalOne = 0, windowZero = 0, minSteps = N;\n        \n        for (int num: nums)\n            totalOne += ((num == 1)? 1: 0);\n        \n        if (totalOne == 0)\n            return 0;\n                        \n        for (int i=0; i<totalOne; ++i)\n            windowZero += ((nums[i] == 0)? 1: 0);                                  \n        \n        minSteps = min(minSteps, windowZero);  \n        // printf(\"%d\\n\", windowZero);\n        \n        for (int i=totalOne; i<2*nums.size()-1; ++i) {                \n            int prevNum = nums[(i - totalOne) % N], currNum = nums[i % N];\n            windowZero -= ((prevNum == 0)? 1: 0);\n            windowZero += ((currNum == 0)? 1: 0);\n            \n            minSteps = min(minSteps, windowZero);\n            \n            // printf(\"i: %d, %d\\n\", i, windowZero);\n        }\n                                            \n        return minSteps;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:22:37",
+        "fail_count": 1,
+        "code": "/*\nClarification:\n    Given:\n        vector<string> startWords\n        vector<string> targetWords\n    Return:\n        int result\n            The number of strings in targetWords can be obtained            \n*/\n\nclass Solution {\nprivate:\n    int stringToNum(string &word) {\n        int num = 0;\n            \n        for (char ch: word) {\n            int bit = ch - 'a';\n            num |= (1 << bit);\n        }\n        \n        return num;\n    }\n    \npublic:\n    int wordCount(vector<string>& startWords, vector<string>& targetWords) {\n        unordered_set<int> startMap;                \n        \n        for (string &word: startWords)                        \n            startMap.insert(stringToNum(word));        \n        \n        int result = 0;\n        \n        for (string &word: targetWords) {\n            int num = stringToNum(word);\n            \n            for (int i=0; i<32; ++i) {\n                if (num & (1 << i)) {\n                    int key = num ^ (1 << i);\n                    if (startMap.count(key) != 0) {\n                        ++result;                  \n                        break;\n                    }\n                }\n            }                 \n        }\n                    \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}

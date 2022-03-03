@@ -1,0 +1,22 @@
+{
+    "rank": 2172,
+    "username": "yoyo6245a",
+    "score": 12,
+    "finish_time": "00:37:47",
+    "Q1": {
+        "solve_time": "00:03:12",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int countEven(int num) {\n        int res = 0;\n        for(int i=1; i<=num; i++){\n            if(check(i))\n                res++;\n        }\n        return res;\n    }\n    bool check(int num){\n        int sum = 0;\n        while(num > 0){\n            sum += num % 10;\n            num /= 10;\n        }\n        return sum % 2 == 0;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:15:11",
+        "fail_count": 0,
+        "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        ListNode* res, *cur;\n        res = new ListNode(0);\n        cur = res;\n        int sum = 0;\n        while(head != nullptr){\n            if(head->val != 0){\n                sum += head->val;\n            }else if(sum != 0){\n                cur->next = new ListNode(sum);\n                cur = cur->next;\n                cur->next = nullptr;\n                sum = 0;\n            }\n            head = head->next;\n        }\n        return res->next;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:37:47",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    string repeatLimitedString(string s, int repeatLimit) {\n        int word[26] = {0};\n        string res = \"\";\n        for(char c: s){\n            word[c - 'a']++;\n        }\n        for(int i=25; i>=0; i--){\n            int cnt = 0;\n            while(cnt < repeatLimit && word[i] > 0){\n                cnt++;\n                res += 'a' + i;\n                word[i]--;\n            }\n            if(cnt == repeatLimit && word[i] > 0){\n                int j=i-1;\n                for(; j>=0; j--){\n                    if(word[j] > 0){\n                        res += 'a' + j;\n                        word[j]--;\n                        break;\n                    }\n                }\n                if(j == -1) break;\n                i++;\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q4": {}
+}

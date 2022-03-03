@@ -1,0 +1,22 @@
+{
+    "rank": 1148,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:29:52",
+    "Q1": {
+        "solve_time": "00:03:36",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    bool isSameAfterReversals(int num) {\n        if (num == 0)\n            return true;\n        \n        if (num % 10 == 0)\n            return false;\n        \n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:10:54",
+        "fail_count": 0,
+        "code": "/*\nClarification:\n    Given:\n        int n\n        vector<int> startPos;\n            startPos = [row, col]\n        string s\n            length m\n    Return:\n*/\n\nclass Solution {\npublic:\n    vector<int> executeInstructions(int n, vector<int>& startPos, string s) {\n        vector<int> result(s.size(), 0);\n        \n        for (int start=0; start<s.size(); ++start) {\n            int row = startPos[0], col = startPos[1];\n            \n            int end;\n            for (end=start; end<s.size(); ++end) {\n                switch(s[end]) {\n                    case 'R':\n                        ++col;\n                        break;\n                    case 'D':\n                        ++row;\n                        break;\n                    case 'L':\n                        --col;\n                        break;\n                    case 'U':\n                        --row;\n                        break;\n                    default:\n                        break;\n                }\n                \n                if (row<0 || row>=n || col<0 || col>=n)\n                    break;\n            }\n            \n            result[start] = end - start;\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:29:52",
+        "fail_count": 0,
+        "code": "/*\nClarification:\n    Given:\n        vector<int> arr\n    Return:\n        vector<long long> intervals\n        \nSolution: Brute Force\n    1. traverse each element\n            traverse each element\n    Time Complexity: O(N^2)\n    Space Complexity: O(N)\n    \nSolution: \n    1. scan the array\n        unordered_map<int, vector<int>>;\n        \n        1 + 3 + 7 + 8\n        1 + 3 + 7 + 8 + (2-1)(-1)(3)\n        2 + 3 + 2 + 5\n        [1, 2, 4, 8, 9]\n        \n    2. leftSum, rightSum\n    \n    Time Complexity: O(N)\n    Space Complexity: O(N)\n*/\n\ntypedef long long int LLI;\n\nclass Solution {\npublic:\n    vector<long long> getDistances(vector<int>& arr) {\n        unordered_map<int, vector<int>> posMap;\n        for (int i=0; i<arr.size(); ++i) {\n            int num = arr[i];\n            posMap[num].push_back(i);\n        }\n        \n        vector<LLI> result(arr.size());\n        \n        for (auto &mapPair: posMap) {\n            int val = mapPair.first;\n            vector<int> &pos = mapPair.second;\n            \n            LLI leftSum = 0, rightSum = 0;\n            \n            for (int i=pos.size()-1; i>0; --i)\n                rightSum += pos[i];\n        \n            result[pos[0]] = rightSum - (pos.size() - 1) * pos[0];\n            \n            for (int i=1; i<pos.size(); ++i) {\n                leftSum += pos[i-1];\n                rightSum -= pos[i];\n                \n                result[pos[i]] = (i * (LLI)pos[i]) - leftSum + rightSum - (pos.size() - i - 1) * (LLI)pos[i];\n            }            \n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}

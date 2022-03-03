@@ -1,0 +1,18 @@
+{
+    "rank": 5472,
+    "username": "jackycaelum",
+    "score": 8,
+    "finish_time": "01:13:38",
+    "Q1": {
+        "solve_time": "00:23:14",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    int countPoints(string rings) {\n        int index = 0;\n        int ans = 0;\n        int ans2[10] = {0};\n        int a[10][3] = {0};\n        \n        while(1)\n        {\n            int rod = rings[index+1] - '0'; \n            \n            if(ans2[rod] != 1)\n            {\n                if(rings[index] == 'R')\n                    a[rod][0] = 1;\n                else if(rings[index] == 'G')\n                    a[rod][1] = 1;\n                else if(rings[index] == 'B')\n                    a[rod][2] = 1;\n\n                if(a[rod][0] == 1 && a[rod][1] == 1 && a[rod][2] == 1)\n                {\n                    ans++;\n                    ans2[rod] = 1;\n                }\n            }\n            \n            if(rings[index+2] == '\\0')\n                break;\n            else\n                index += 2; \n        }\n        \n        return ans;  \n    }\n};"
+    },
+    "Q2": {},
+    "Q3": {
+        "solve_time": "00:53:38",
+        "fail_count": 3,
+        "code": "class Solution {\npublic:\n    int minimumRefill(vector<int>& plants, int capacityA, int capacityB) {\n        int ans = 0;\n        int length = plants.size();\n        int oA = capacityA;\n        int oB = capacityB;\n        \n        int j = length - 1;\n        for(int i = 0; i < floor(length/2); i++)\n        {\n            if(capacityA < plants[i])\n            {\n                ans++;\n                capacityA = oA;\n            }         \n            capacityA -= plants[i];\n                     \n            if(capacityB < plants[j])\n            {\n                ans++;\n                capacityB = oB;\n            }   \n            capacityB -= plants[j];\n            \n            j--;\n        }\n        \n        if (length%2 == 1)\n        {\n            int c;\n            if(capacityA>=capacityB)\n                c = capacityA;\n            else\n                c = capacityB;\n            \n            if(c < plants[floor(length/2)])\n            {\n                ans++;\n            }\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

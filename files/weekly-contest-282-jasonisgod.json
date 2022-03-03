@@ -1,0 +1,22 @@
+{
+    "rank": 5425,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "01:20:11",
+    "Q1": {
+        "solve_time": "00:05:23",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int count = 0;\n        for (string word: words) {\n            if (word.find(pref) == 0)\n                count ++;\n        }\n        return count;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:08:42",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        int ss[256] = {0};\n        int tt[256] = {0};\n        for (char c: s) {\n            ss[c]++;\n        }\n        for (char c: t) {\n            tt[c]++;\n        }\n        int count = 0;\n        for (int c = 'a'; c <= 'z'; c++) {\n            count += abs(ss[c] - tt[c]);\n        }\n        return count;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:05:11",
+        "fail_count": 3,
+        "code": "class Solution {\npublic:\n    long long getSum(vector<int>& time, int total) {\n        long long sum = 0;\n        for (int t: time) {\n            sum += (total / t);\n        }\n        return sum;\n    }\n    long long minimumTime(vector<int>& time, int totalTrips) {\n        long long lb = 1, ub = 1e14;\n        long long mid = 1;\n        long long sum = 0;\n        long long minSum = 1e14;\n        long long ans = 1e14;\n        while (lb <= ub) {\n            mid = (lb + ub) / 2;\n            sum = 0;\n            for (int t: time) {\n                sum += (mid / t);\n            }\n            cout << \"lb \" << lb << \" ub \" << ub << \" mid:\" << mid << \" sum \" << sum << endl;\n            if (sum >= totalTrips && sum <= minSum && mid < ans) {\n                minSum = sum;\n                ans = mid;\n            }\n            if (sum < totalTrips) {\n                lb = mid+1;\n            } else {\n                ub = mid-1;\n            }\n        }\n        cout << \"ans \" << ans << endl;\n        return ans;\n    }\n};\n/*\n\nbinary serach time form 0 to 1e7 {\n    sum = 0\n    for bus in bus_list {\n        sum += (number of trips of this bus)\n    }\n    if sum enough {\n        return\n    }\n}\n        \n        \n*/"
+    },
+    "Q4": {}
+}

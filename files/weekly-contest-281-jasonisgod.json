@@ -1,0 +1,22 @@
+{
+    "rank": 4629,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "01:09:56",
+    "Q1": {
+        "solve_time": "00:25:20",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    int countEven(int num) {\n        int count = 0;\n        for (int i = 1; i <= num; i++) {\n            int tmp = i, sum = 0;\n            while (tmp > 0) {\n                sum += tmp % 10;\n                tmp /= 10;\n            }\n            if (sum % 2 == 0) {\n                count++;\n            }\n        }\n        return count;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:32:50",
+        "fail_count": 0,
+        "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        ListNode* node = head->next;\n        if (node == NULL) {\n            return NULL;\n        }\n        int sum = 0;\n        while (node->val != 0) {\n            sum += node->val;\n            node = node->next;\n        }\n        return new ListNode(sum, mergeNodes(node));\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:59:56",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    string repeatLimitedString(string s, int r) {\n        int t[256] = {0};\n        for (auto ch: s) {\n            t[ch]++;\n        }\n        string ans = \"\";\n        char prev = ' ';\n        bool full = false;\n        while (true) {\n            bool found = false;\n            for (int ch = 'z'; ch >= 'a'; ch--) {\n                if (t[ch] > 0 && ch != prev) {\n                    if (full) {\n                        ans += string(1, ch);\n                        full = false;\n                        t[ch] -= 1;\n                        prev = ch;\n                    } else {\n                        int num = min(t[ch], r);\n                        ans += string(num, ch);\n                        full = (t[ch] > r);\n                        t[ch] -= num;\n                        prev = ch;\n                    }\n                    found = true;\n                    break;\n                }\n            }\n            // cout << ans << endl << full << endl;\n            if (!found) {\n                break;\n            }\n        }\n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,14 @@
+{
+    "rank": 5688,
+    "username": "qm4zirQ15o",
+    "score": 3,
+    "finish_time": "00:08:45",
+    "Q1": {
+        "solve_time": "00:08:45",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    bool checkValid(vector<vector<int>>& matrix) {\n        int m = matrix.size(), n = matrix[0].size();\n        \n        for(int i=0; i<m; i++){\n            unordered_set<int> hash;\n            for(int j=0; j<n; j++){\n                if(matrix[i][j] < 1 || matrix[i][j] > m)\n                    return false;\n                \n                if(hash.find(matrix[i][j]) == hash.end())\n                    hash.insert(matrix[i][j]);\n                else\n                    return false;\n            }\n        }\n        \n        for(int j=0; j<n; j++){\n            unordered_set<int> hash;\n            for(int i=0; i<m; i++){\n                if(matrix[i][j] < 1 || matrix[i][j] > m)\n                    return false;\n                \n                if(hash.find(matrix[i][j]) == hash.end()){\n                    hash.insert(matrix[i][j]);\n                }\n                else{\n                    return false;\n                }\n            }\n        }\n        \n        return true;\n    }\n};"
+    },
+    "Q2": {},
+    "Q3": {},
+    "Q4": {}
+}

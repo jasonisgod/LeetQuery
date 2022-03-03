@@ -1,0 +1,18 @@
+{
+    "rank": 8139,
+    "username": "qm4zirQ15o",
+    "score": 7,
+    "finish_time": "00:11:43",
+    "Q1": {
+        "solve_time": "00:06:19",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int slen = pref.size();\n        int sum = 0;\n        for(auto w: words){\n            int sslen = w.length()>slen?slen:w.length();\n            string sub = w.substr(0, sslen);\n            if(strcmp(sub.c_str(), pref.c_str()) == 0)\n                sum++;\n        }\n        return sum;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:11:43",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        int s_arr[26] = {0};\n        int t_arr[26] = {0};\n        \n        for(auto c: s){\n            s_arr[c-'a']++;\n        }\n        for(auto c: t){\n            t_arr[c-'a']++;\n        }\n        \n        int sn=0, tn=0;\n        for(int i=0; i<26; i++){\n            sn += (t_arr[i] - s_arr[i]) > 0 ? t_arr[i] - s_arr[i] : 0;\n            tn += (s_arr[i] - t_arr[i]) > 0 ? s_arr[i] - t_arr[i] : 0;\n        }\n        return sn+tn;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

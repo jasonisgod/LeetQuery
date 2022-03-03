@@ -1,0 +1,22 @@
+{
+    "rank": 1125,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:22:45",
+    "Q1": {
+        "solve_time": "00:04:55",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<int> sortEvenOdd(vector<int>& nums) {\n        vector<int> odd, even, result(nums.size());\n        \n        for (int i=0; i<nums.size(); ++i) {\n            if (i % 2 == 0)\n                even.push_back(nums[i]);\n            else\n                odd.push_back(nums[i]);\n        }\n        \n        sort(even.begin(), even.end());\n        sort(odd.begin(), odd.end());\n        reverse(odd.begin(), odd.end());\n        \n        for (int i=0; i<nums.size(); ++i)\n            result[i] = (i % 2 == 0)? even[i / 2]: odd[i / 2];\n        \n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:12:19",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    long long smallestNumber(long long num) {\n        if (num == 0)\n            return 0;\n        \n        int sign = (num < 0)? -1: 1;\n        num = abs(num);\n        string numStr = to_string(num);\n        \n        if (sign < 0) {\n            auto it = max_element(numStr.begin(), numStr.end());\n            swap(numStr[0], *it);\n            sort(numStr.begin()+1, numStr.end());\n            reverse(numStr.begin()+1, numStr.end());\n        } else {\n            int minVal = 10, minIdx;\n            for (int i=0; i<numStr.size(); ++i) {\n                if (numStr[i] - '0' < minVal && numStr[i] != '0') {\n                    minVal = numStr[i] - '0';\n                    minIdx = i;\n                }                    \n            }\n            \n            swap(numStr[0], numStr[minIdx]);\n            sort(numStr.begin()+1, numStr.end());             \n        }\n            \n        return stoll(numStr) * sign;        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:22:45",
+        "fail_count": 0,
+        "code": "class Bitset {\nprivate:\n    string data;\n    bool flipTimes;\n    int countOne;\npublic:\n    Bitset(int size) {\n        data.resize(size, '0');\n        flipTimes = false;\n        countOne = 0;\n    }\n    \n    void fix(int idx) {\n        if (flipTimes == false) {\n            if (data[idx] == '0')\n                ++countOne;    \n            data[idx] = '1';\n        } else {\n            if (data[idx] == '1')\n                ++countOne;\n            data[idx] = '0';\n        }        \n    }\n    \n    void unfix(int idx) {\n        if (flipTimes == false) {\n            if (data[idx] == '1')\n                --countOne;    \n            data[idx] = '0';\n        } else {\n            if (data[idx] == '0')\n                --countOne;\n            data[idx] = '1';\n        }\n    }\n    \n    void flip() {\n        flipTimes = !flipTimes;\n        countOne = data.size() - countOne;\n    }\n    \n    bool all() {\n        return countOne == data.size();\n    }\n    \n    bool one() {\n        return countOne >= 1;        \n    }\n    \n    int count() {\n        return countOne;        \n    }\n    \n    string toString() {\n        if (flipTimes == false)\n            return data;\n        \n        string result;\n        result.resize(data.size(), '0');\n        \n        for (int i=0; i<data.size(); ++i)\n            result[i] = (data[i] == '1')? '0': '1';\n        \n        return result;\n    }\n};\n\n/**\n * Your Bitset object will be instantiated and called as such:\n * Bitset* obj = new Bitset(size);\n * obj->fix(idx);\n * obj->unfix(idx);\n * obj->flip();\n * bool param_4 = obj->all();\n * bool param_5 = obj->one();\n * int param_6 = obj->count();\n * string param_7 = obj->toString();\n */"
+    },
+    "Q4": {}
+}

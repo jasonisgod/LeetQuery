@@ -1,0 +1,26 @@
+{
+    "rank": 1171,
+    "username": "jasonisgod",
+    "score": 18,
+    "finish_time": "01:39:28",
+    "Q1": {
+        "solve_time": "00:03:42",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int minimumCost(vector<int>& cost) {\n        sort(cost.begin(), cost.end(), greater<int>());\n        int ans = 0;\n        for (int i = 0; i < cost.size(); i++) {\n            if (i % 3 != 2) {\n                ans += cost[i];\n            }\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:19:52",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    int numberOfArrays(vector<int>& differences, int lower, int upper) {\n        auto d = differences;\n        int n = d.size();\n        long long mn = 0, mx = 0, tmp = 0;\n        for (int i = 0; i < n; i++) {\n            tmp += d[i];\n            mn = min(mn, tmp);\n            mx = max(mx, tmp);\n        }\n        // printf(\"%d %d\\n\", mn, mx);\n        long long l = lower, u = upper;\n        return max(0, (int)(upper - (mx + (lower - mn)) + 1));\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:18:04",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    struct Data {\n        int i, j;\n        int path;\n        int price;\n    };\n    static bool cmp(Data a, Data b) {\n        if (a.path != b.path) {\n            return a.path < b.path;\n        }\n        if (a.price != b.price) {\n            return a.price < b.price;\n        }\n        if (a.i != b.i) {\n            return a.i < b.i;\n        }\n        if (a.j != b.j) {\n            return a.j < b.j;\n        }\n        return true;\n    }\n    vector<vector<int>> highestRankedKItems(vector<vector<int>>& grid, vector<int>& pricing, vector<int>& start, int k) {\n        \n        vector<vector<int>> ans;\n        int m = grid.size();\n        int n = grid[0].size();\n        int di[4] = {1, -1, 0, 0};\n        int dj[4] = {0, 0, 1, -1};\n        \n        int bfs[m][n];\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                bfs[i][j] = 0;\n            }\n        }\n        \n        queue<vector<int>> q;\n        q.push(start);\n        bfs[start[0]][start[1]] = 1;\n        while (!q.empty()) {\n            vector<int> tmp = q.front();\n            int ii = tmp[0], jj = tmp[1];\n            q.pop();\n            for (int s = 0; s < 4; s++) {\n                int i = ii + di[s];\n                int j = jj + dj[s];\n                if (i >= 0 && i < m && j >= 0 && j < n) {\n                    if (bfs[i][j] == 0 && grid[i][j] != 0) {\n                        bfs[i][j] = bfs[ii][jj] + 1;\n                        q.push(vector<int>{i, j});\n                    }\n                }\n            }\n        }\n        // for (int i = 0; i < m; i++) {\n        //     for (int j = 0; j < n; j++) {\n        //         printf(\"%d\", bfs[i][j]);\n        //     }\n        //     printf(\"\\n\");\n        // }\n        \n        vector<Data> d;\n        for (int i = 0; i < m; i++) {\n            for (int j = 0; j < n; j++) {\n                int path = bfs[i][j];\n                int price = grid[i][j];\n                if (path != 0 && pricing[0] <= price && price <= pricing[1]) {\n                    d.push_back({i, j, path, price});\n                }\n            }\n        }\n        sort(d.begin(), d.end(), cmp);\n        \n        int size = min(k, (int)d.size());\n        for (int s = 0; s < size; s++) {\n            ans.push_back(vector<int>{d[s].i, d[s].j});\n        }\n        return ans;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:24:28",
+        "fail_count": 1,
+        "code": "class Solution {\npublic:\n    int numberOfWays(string corridor) {\n        int n = corridor.length();\n        int count = 0;\n        int last = 0;\n        long long ans = 1;\n        for (int i = 0; i < n; i++) {\n            if (corridor[i] == 'S') {\n                if (count % 2 == 0 && count > 0) {\n                    int diff = i - last;\n                    ans = (ans * diff) % (1000000000 + 7);\n                }\n                count++;\n                last = i;\n            }\n        }\n        if (count == 0 || count % 2 == 1) {\n            return 0;\n        }\n        return ans;\n    }\n};"
+    }
+}

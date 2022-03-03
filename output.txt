@@ -1,0 +1,98 @@
+{
+    "weekly-contest-272": [
+        {
+            "rank": 2043,
+            "username": "jasonisgod",
+            "score": 18,
+            "finish_time": "01:45:22",
+            "Q1": {
+                "solve_time": "00:05:42",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    string firstPalindrome(vector<string>& words) {\n        for (string s: words) {\n            string ss = s;\n            reverse(ss.begin(), ss.end());\n            if (s == ss) {\n                return s;\n            }\n        }\n        return \"\";\n    }\n};"
+            },
+            "Q2": {
+                "solve_time": "00:08:52",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    string addSpaces(string s, vector<int>& spaces) {\n        string ans = \"\";\n        for (int i = 0, j = 0; i < s.length(); i++) {\n            if (j < spaces.size() && i == spaces[j]) {\n                ans += \" \";\n                j++;\n            }\n            ans += s[i];\n        }\n        return ans;\n    }\n};"
+            },
+            "Q3": {
+                "solve_time": "00:19:11",
+                "fail_count": 1,
+                "code": "class Solution {\npublic:\n    long long fac(int n) {\n        long long ans = 0;\n        for (int i = 1; i <= n; ans += i++);\n        return ans;\n    }\n    long long getDescentPeriods(vector<int>& prices) {\n        long long n = 1;\n        long long ans = 0;\n        for (int i = 1; i < prices.size(); i++) {\n            if (prices[i] != prices[i-1]-1) {\n                // printf(\"%d %d\\n\", i, n);\n                ans += n*(n+1)/2;\n                n = 0;\n            }\n            n++;\n        }\n        // printf(\"%d %d\\n\", -1, n);\n        ans += n*(n+1)/2;\n        return ans;\n    }\n};"
+            },
+            "Q4": {
+                "solve_time": "01:20:22",
+                "fail_count": 4,
+                "code": "class Solution {\npublic:\n    int LIS(vector<int>& arr) {\n        int n = arr.size();\n        vector<int> tmp;\n        for (int i = 0; i < n; i++) {\n            // int x;\n            // scanf(\"%d\", &x);\n            vector<int>::iterator it = upper_bound(tmp.begin(), tmp.end(), arr[i]);\n            if (it == tmp.end()) \n                tmp.push_back(arr[i]);\n            else \n                *it = arr[i];\n        }\n        // printf(\"LIS = %d\", d.size());\n        return tmp.size();\n    }\n\n    int kIncreasing(vector<int>& arr, int k) {\n        int n = arr.size();\n        int ans = 0;\n        for (int i = 0; i < k; i++) {\n            vector<int> tmp;\n            for (int j = i; j < n; j += k) {\n                tmp.push_back(arr[j]);\n            }\n            // for (int i: tmp)\n            //     std::cout << i << ' ';\n            // // reverse(tmp.begin(), tmp.end());\n            // printf(\" | %d %d\\n\", i, LIS(tmp));\n            ans += tmp.size() - LIS(tmp);\n        }\n        return ans;\n    }\n};"
+            }
+        }
+    ],
+    "weekly-contest-278": [
+        {
+            "rank": 5314,
+            "username": "jasonisgod",
+            "score": 7,
+            "finish_time": "00:25:53",
+            "Q1": {
+                "solve_time": "00:03:53",
+                "fail_count": 1,
+                "code": "class Solution {\npublic:\n    int findFinalValue(vector<int>& nums, int original) {\n        sort(nums.begin(), nums.end());\n        for (int i: nums) {\n            if (i == original) {\n                original *= 2;\n            }\n        }\n        return original;\n    }\n};"
+            },
+            "Q2": {
+                "solve_time": "00:20:53",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    vector<int> maxScoreIndices(vector<int>& nums) {\n        int n = nums.size();\n        vector<int> sums(n+1);\n        sums[0] = 0;\n        for (int i = 0; i < n; i++) {\n            sums[i+1] = sums[i] + nums[i];\n        }\n        int high = 0;\n        vector<int> ans;\n        for (int i = 0; i <= n; i++) {\n            int score = (i+1) - sums[i] + (sums[n]-sums[i]);\n            // printf(\"%d \", score);\n            if (score > high) {\n                high = score;\n                ans.clear();\n            }\n            if (score == high) {\n                ans.push_back(i);\n            }\n        }\n        return ans;\n    }\n};"
+            },
+            "Q3": {},
+            "Q4": {}
+        }
+    ],
+    "weekly-contest-279": [
+        {
+            "rank": 2717,
+            "username": "jasonisgod",
+            "score": 12,
+            "finish_time": "01:04:51",
+            "Q1": {
+                "solve_time": "00:12:56",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    vector<int> sortEvenOdd(vector<int>& nums) {\n        int n = nums.size();\n        vector<int> odd, even, ans;\n        for (int i = 0; i < n; i++) {\n            if (i % 2 == 0) {\n                even.push_back(nums[i]);\n            } else {\n                odd.push_back(nums[i]);\n            }\n        }\n        sort(odd.begin(), odd.end(), greater<int>());\n        sort(even.begin(), even.end());\n        for (int i = 0; i < n; i++) {\n            if (i % 2 == 0) {\n                ans.push_back(even[i/2]);\n            } else {\n                ans.push_back(odd[i/2]);\n            }\n        }\n        return ans;\n    }\n};"
+            },
+            "Q2": {
+                "solve_time": "00:20:06",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    long long biggest(unsigned long long num) {\n        vector<int> v;\n        while (num > 0) {\n            v.push_back(num % 10);\n            num /= 10;\n        }\n        sort(v.begin(), v.end(), greater<int>());\n        long long ans = 0;\n        for (int i: v) {\n            ans = ans*10 + i;\n        }\n        return ans;\n    }\n    long long smallest(unsigned long long num) {\n        vector<int> v;\n        while (num > 0) {\n            v.push_back(num % 10);\n            num /= 10;\n        }\n        sort(v.begin(), v.end());\n        for (int i = 0; i < v.size(); i++) {\n            if (v[i] != 0) {\n                if (v[0] == 0) {\n                    v[0] = v[i];\n                    v[i] = 0;\n                }\n                break;\n            }\n        }\n        long long ans = 0;\n        for (int i: v) {\n            ans = ans*10 + i;\n        }\n        return ans;\n    }\n    long long smallestNumber(long long num) {\n        return num > 0? smallest(num): -biggest(-num);\n    }\n};"
+            },
+            "Q3": {
+                "solve_time": "00:44:51",
+                "fail_count": 4,
+                "code": "class Bitset {\n    int size;\n    int bits[100000+1] = {0};\n    int ones = 0;\n    bool flag = false;\npublic:\n    Bitset(int size) {\n        this->size = size;\n    }\n    \n    void fix(int idx) {\n        if (bits[idx] == flag) ones++;\n        bits[idx] = !flag;\n        // cout << \"fix \" << toString() << \" \" << ones << endl;\n    }\n    \n    void unfix(int idx) {\n        if (bits[idx] == !flag) ones--;\n        bits[idx] = flag;\n        // cout << \"unfix \" << toString() << \" \" << ones << endl;\n    }\n    \n    void flip() {\n        flag = !flag;\n        ones = size - ones;\n        // cout << \"flip \" << toString() << \" \" << ones << endl;\n    }\n    \n    bool all() {\n        // cout << \"all \" << (size == ones) << endl;\n        return size == ones;\n    }\n    \n    bool one() {\n        // cout << \"one \" << (ones >= 1) << endl;\n        return ones >= 1;\n    }\n    \n    int count() {\n        // cout << \"count \" << (ones) << endl;\n        return ones;\n    }\n    \n    string toString() {\n        string s = \"\";\n        for (int i = 0; i < size; i++) {\n            s += (bits[i] ^ flag? \"1\": \"0\");\n        }\n        return s;\n    }\n};\n\n/**\n * Your Bitset object will be instantiated and called as such:\n * Bitset* obj = new Bitset(size);\n * obj->fix(idx);\n * obj->unfix(idx);\n * obj->flip();\n * bool param_4 = obj->all();\n * bool param_5 = obj->one();\n * int param_6 = obj->count();\n * string param_7 = obj->toString();\n */"
+            },
+            "Q4": {}
+        }
+    ],
+    "weekly-contest-282": [
+        {
+            "rank": 5425,
+            "username": "jasonisgod",
+            "score": 12,
+            "finish_time": "01:20:11",
+            "Q1": {
+                "solve_time": "00:05:23",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int count = 0;\n        for (string word: words) {\n            if (word.find(pref) == 0)\n                count ++;\n        }\n        return count;\n    }\n};"
+            },
+            "Q2": {
+                "solve_time": "00:08:42",
+                "fail_count": 0,
+                "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        int ss[256] = {0};\n        int tt[256] = {0};\n        for (char c: s) {\n            ss[c]++;\n        }\n        for (char c: t) {\n            tt[c]++;\n        }\n        int count = 0;\n        for (int c = 'a'; c <= 'z'; c++) {\n            count += abs(ss[c] - tt[c]);\n        }\n        return count;\n    }\n};"
+            },
+            "Q3": {
+                "solve_time": "01:05:11",
+                "fail_count": 3,
+                "code": "class Solution {\npublic:\n    long long getSum(vector<int>& time, int total) {\n        long long sum = 0;\n        for (int t: time) {\n            sum += (total / t);\n        }\n        return sum;\n    }\n    long long minimumTime(vector<int>& time, int totalTrips) {\n        long long lb = 1, ub = 1e14;\n        long long mid = 1;\n        long long sum = 0;\n        long long minSum = 1e14;\n        long long ans = 1e14;\n        while (lb <= ub) {\n            mid = (lb + ub) / 2;\n            sum = 0;\n            for (int t: time) {\n                sum += (mid / t);\n            }\n            cout << \"lb \" << lb << \" ub \" << ub << \" mid:\" << mid << \" sum \" << sum << endl;\n            if (sum >= totalTrips && sum <= minSum && mid < ans) {\n                minSum = sum;\n                ans = mid;\n            }\n            if (sum < totalTrips) {\n                lb = mid+1;\n            } else {\n                ub = mid-1;\n            }\n        }\n        cout << \"ans \" << ans << endl;\n        return ans;\n    }\n};\n/*\n\nbinary serach time form 0 to 1e7 {\n    sum = 0\n    for bus in bus_list {\n        sum += (number of trips of this bus)\n    }\n    if sum enough {\n        return\n    }\n}\n        \n        \n*/"
+            },
+            "Q4": {}
+        }
+    ]
+}

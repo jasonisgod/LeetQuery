@@ -1,0 +1,22 @@
+{
+    "rank": 2458,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:08:57",
+    "Q1": {
+        "solve_time": "00:01:59",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    int countElements(vector<int>& nums) {\n        int minVal = INT_MAX, maxVal = INT_MIN;\n        for (int num: nums) {\n            minVal = min(minVal, num);\n            maxVal = max(maxVal, num);\n        }\n            \n        int count = 0;\n        \n        for (int num: nums)\n            count += (num != minVal && num != maxVal)? 1: 0;\n        \n        return count;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:05:43",
+        "fail_count": 0,
+        "code": "/*\nClarification:\n    Given:\n        vector<int> nums\n            even length, equal number of positive and negative integers.\n    Return:\n*/\n\nclass Solution {\npublic:\n    vector<int> rearrangeArray(vector<int>& nums) {\n        vector<int> posNums, negNums;\n        for (int num: nums) {\n            if (num > 0)\n                posNums.push_back(num);\n            else\n                negNums.push_back(num);\n        }\n        \n        vector<int> result;\n        for (int i=0; i<nums.size(); ++i) {\n            if (i % 2 == 0)   \n                result.push_back(posNums[i / 2]);\n            else\n                result.push_back(negNums[i / 2]);\n        } \n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:08:57",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<int> findLonely(vector<int>& nums) {\n        vector<int> result;\n        unordered_map<int, int> numMap;        \n        for (int num: nums)\n            ++numMap[num];\n        \n        for (int num: nums) {\n            if (numMap[num] == 1 && numMap.count(num-1) == 0 && numMap.count(num+1) == 0)\n                result.push_back(num);\n        }\n                    \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}

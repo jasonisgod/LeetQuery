@@ -1,0 +1,18 @@
+{
+    "rank": 5681,
+    "username": "qm4zirQ15o",
+    "score": 7,
+    "finish_time": "00:41:34",
+    "Q1": {
+        "solve_time": "00:02:57",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    bool isSameAfterReversals(int num) {\n        if(num == 0)\n            return true;\n        \n        if(num % 10 == 0)\n            return false;\n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:41:34",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<int> executeInstructions(int n, vector<int>& startPos, string s) {\n        vector<int> move(2, 0);\n        vector<int> ans(s.size(), 0);\n        vector<int> flag(s.size(), true);\n        vector<vector<int>> pos(s.size());\n        \n        for(int i=0; i<s.size(); i++){\n            pos[i].assign(startPos.begin(), startPos.end());\n            \n            if(s[i] == 'L'){\n                move[0] = 0;\n                move[1] = -1;\n            }\n            else if(s[i] == 'R'){\n                move[0] = 0;\n                move[1] = 1;\n            }\n            else if(s[i] == 'U'){\n                move[0] = -1;\n                move[1] = 0;\n            }\n            else if(s[i] == 'D'){\n                move[0] = 1;\n                move[1] = 0;\n            }\n            \n            for(int j=0; j<=i; j++){\n                if(flag[j]){\n                    if(pos[j][0] + move[0] >=0 && pos[j][0] + move[0] < n && pos[j][1] + move[1] >= 0 && pos[j][1] + move[1] < n){\n                        ans[j]++;\n                        pos[j][0] += move[0];\n                        pos[j][1] += move[1];\n                    }\n                    else\n                        flag[j] = false;\n                }\n                else\n                    continue;\n            }\n        }\n        return ans;\n    }\n}; "
+    },
+    "Q3": {},
+    "Q4": {}
+}

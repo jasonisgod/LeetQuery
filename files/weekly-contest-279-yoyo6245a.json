@@ -1,0 +1,18 @@
+{
+    "rank": 5445,
+    "username": "yoyo6245a",
+    "score": 7,
+    "finish_time": "00:25:07",
+    "Q1": {
+        "solve_time": "00:12:00",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<int> sortEvenOdd(vector<int>& nums) {\n        vector<int> odd, even, res;\n        for(int i=0; i<nums.size(); i++){\n            if(i % 2 == 0){\n                even.push_back(nums[i]);\n            }else{\n                odd.push_back(nums[i]);\n            }\n        }\n        sort(even.begin(), even.end());\n        sort(odd.begin(), odd.end());\n        for(int i=0; i<nums.size(); i++){\n            if(i % 2 == 0){\n                res.push_back(even.front());\n                even.erase(even.begin());\n            }else{\n                res.push_back(odd.back());\n                odd.pop_back();\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:25:07",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    long long smallestNumber(long long num) {\n        if(num == 0) return num;\n        long long abs_num = abs(num);\n        long long res = 0;\n        map<int, int> mp;\n        while(abs_num > 0){\n            mp[abs_num % 10]++;\n            abs_num /= 10;\n        }\n        if(num > 0){\n            int tmp;\n            for(int i=1; i<10; i++){\n                if(mp[i] > 0){\n                    tmp = i;\n                    mp[i]--;\n                    break;\n                }\n            }\n            res = tmp;\n            for(int i=0; i<10; i++){\n                while(mp[i] > 0){\n                    res *= 10;\n                    res += i;\n                    mp[i]--;\n                }\n            }\n        }else{\n            for(int i=9; i>=0;i--){\n                while(mp[i] > 0){\n                    res *= 10;\n                    res += i;\n                    mp[i]--;\n                }\n            }\n            res = -res;\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

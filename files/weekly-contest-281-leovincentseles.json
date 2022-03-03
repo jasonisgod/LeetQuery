@@ -1,0 +1,22 @@
+{
+    "rank": 1340,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:23:20",
+    "Q1": {
+        "solve_time": "00:03:07",
+        "fail_count": 0,
+        "code": "class Solution {\nprivate:\n    int digitSum(int num) {\n        int sum = 0;\n        string numStr = to_string(num);\n        for (char ch: numStr)\n            sum += (ch - '0');\n        return sum;\n    }\npublic:\n    int countEven(int num) {\n        int count = 0;\n        for (int i=1; i<=num; ++i)\n            count += (digitSum(i) % 2 == 0)? 1: 0;\n        return count;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:11:07",
+        "fail_count": 0,
+        "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* mergeNodes(ListNode* head) {\n        ListNode *root = new ListNode(0), *curr = root;\n        int sum = 0;\n        \n        for (ListNode *start=head, *end=head->next; end != nullptr; end=end->next) {\n            if (end->val != 0) {\n                sum += end->val;\n            } else {\n                start = end;\n                curr->next = new ListNode(sum);\n                curr = curr->next;\n                sum = 0;\n            }\n        }        \n        \n        return root->next;        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:23:20",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    string repeatLimitedString(string s, int repeatLimit) {\n        string result;\n        int streak = 0;\n        char streakCh = '0';\n        map<char, int> charMap;\n        for (char ch: s)\n            ++charMap[ch];\n        \n        while (!charMap.empty()) {\n            bool foundCh = false;\n            for (auto it=charMap.rbegin(); it!=charMap.rend(); ++it) {\n                if (it->first == streakCh && streak == repeatLimit)\n                    continue;                \n                \n                streak = (streakCh == it->first)? streak+1: 1;\n                streakCh = it->first;\n                foundCh = true;\n                result += it->first;\n                if (--it->second == 0)\n                    charMap.erase(it->first);\n                break;\n            }\n            \n            if (foundCh == false)\n                break;\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}
