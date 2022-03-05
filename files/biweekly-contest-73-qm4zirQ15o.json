@@ -1,0 +1,18 @@
+{
+    "rank": 5464,
+    "username": "qm4zirQ15o",
+    "score": 7,
+    "finish_time": "00:44:02",
+    "Q1": {
+        "solve_time": "00:16:33",
+        "fail_count": 3,
+        "code": "class Solution {\npublic:\n    int mostFrequent(vector<int>& nums, int key) {\n        unordered_set<int> next;\n        unordered_map<int, int> dic;\n            \n        for (int i = 0; i < nums.size(); i++) {\n            dic[nums[i]]++;\n            \n            if (i < nums.size()-1 && nums[i] == key && next.find(nums[i+1]) == next.end()) {\n                next.insert(nums[i+1]);\n            }\n        }\n        \n        int ans, ans_times = -1;\n        for(const auto& elem: next){\n            if (ans_times < dic[elem]) {\n                ans_times = dic[elem];\n                ans = elem;\n            }\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:29:02",
+        "fail_count": 0,
+        "code": "class Solution {\nprivate:\n    int convert(vector<int>& map, string num) {\n        int ans = 0;\n        for (int i = 0; i < num.size(); i++) {\n            ans = ans * 10 + map[num[i] - '0'];\n        }\n        return ans;\n    }\npublic:\n    vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {\n        vector<int> ans{};\n        \n        vector<pair<int, int>> arr;\n        int t, i = 0;\n        \n        for (auto& n: nums) {\n            int t = convert(mapping, to_string(n));\n            arr.push_back({t, i++});\n        }\n        \n        sort(arr.begin(), arr.end());\n        \n        for (int j = 0; j < nums.size(); j++) {\n            int idx = arr[j].second;\n            ans.push_back(nums[idx]);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}
