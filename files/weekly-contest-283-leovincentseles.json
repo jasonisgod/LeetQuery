@@ -1,0 +1,26 @@
+{
+    "rank": 451,
+    "username": "leovincentseles",
+    "score": 17,
+    "finish_time": "00:55:10",
+    "Q1": {
+        "solve_time": "00:05:59",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<string> cellsInRange(string s) {\n        vector<string> result;\n        string curr = \"  \";\n        char r1 = s[1], c1 = s[0], r2 = s[4], c2 = s[3];\n        \n        for (char col=c1; col<=c2; ++col) {\n            for (char row = r1; row<=r2; ++row) {\n                curr[0] = col; curr[1] = row;                \n                result.push_back(curr);\n            }\n        }\n        \n        return result;        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:20:06",
+        "fail_count": 0,
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    long long minimalKSum(vector<int>& nums, int k) {\n        sort(nums.begin(), nums.end());\n        LLI sum = 0;\n        LLI prevNum = 1;\n        \n        for (int i=0; i<nums.size() && k > 0; ++i) {\n            if (nums[i] > prevNum) {\n                LLI startNum = prevNum, endNum = min(startNum + (LLI)k - 1, (LLI)nums[i] - 1);\n                sum += (startNum + endNum) * (endNum - startNum + 1) / 2;\n                k -= (endNum - startNum + 1);\n            }            \n            \n            prevNum = nums[i] + 1;\n        }\n        \n        if (k > 0) {\n            LLI startNum = nums.back() + 1;\n            sum += (startNum + startNum + (LLI)k - 1) * (LLI)k / (LLI)2;\n        }            \n        \n        return sum;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:27:06",
+        "fail_count": 0,
+        "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {\n        unordered_set<TreeNode *> isChild;\n        unordered_map<int, TreeNode *> treeMap;\n        \n        for (vector<int> &description: descriptions) {\n            int parent = description[0], child = description[1];\n            bool isLeft = description[2];\n            \n            if (treeMap.count(parent) == 0)\n                treeMap[parent] = new TreeNode(parent);\n            \n            if (treeMap.count(child) == 0)\n                treeMap[child] = new TreeNode(child);\n            \n            if (isLeft)\n                treeMap[parent]->left = treeMap[child];\n            else\n                treeMap[parent]->right = treeMap[child];\n            \n            isChild.insert(treeMap[child]);\n        }\n        \n        for (auto &mapPair: treeMap) {\n            if (isChild.count(mapPair.second) == 0)\n                return mapPair.second;\n        }\n        \n        return nullptr;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "00:45:10",
+        "fail_count": 2,
+        "code": "/*\nSolution: Brute Force\n    Time: O(N^2)\n    \n\n*/\n\ntypedef long long int LLI;\n\nclass Solution {\nprivate:\n    int gcd(int a, int b) {\n        while ((a %= b) && (b %= a));\n        return a + b;\n    }\n    \npublic:\n    vector<int> replaceNonCoprimes(vector<int>& nums) {\n        list<int> numList(nums.begin(), nums.end());\n        \n        for (auto it=numList.begin(); it!=numList.end(); ++it) {\n            if (it == numList.begin())\n                continue;\n            \n            while (1) {\n                int prevNum = *prev(it), gcdVal = gcd(prevNum, *it);\n                if (gcdVal > 1) {\n                    *prev(it) = (LLI)(*prev(it)) * (LLI)(*it) / (LLI)gcdVal;\n                    it = prev(numList.erase(it));                \n                    if (it == numList.begin())\n                        break;\n                }            \n                else\n                    break;\n            }\n        }        \n        \n        return vector<int>(numList.begin(), numList.end());\n    }\n};"
+    }
+}

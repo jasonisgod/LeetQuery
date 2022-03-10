@@ -1,9 +1,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-        body { text-align: center; background-color: #222; }
+        body { margin: auto; max-width: 1280px; text-align: center; background-color: #222; }
         h1,h2,h3,h4,h5,p,div,pre,code,a,td { font-family: "Courier New";  }
         h1,h2,h3,h4,h5,p,div,pre,code,td { color: #bbb; }
+        thead { font-weight: bold; }
         a { color: cornflowerblue; }
         img { width: 30%; max-width: 200px; }
         p { margin: 1px; }
@@ -11,9 +12,9 @@
         #bb { color: #000; border-bottom: 1px solid #ddd; line-height: 0.1em; margin: 10px 0 20px; }
         .element::-webkit-scrollbar {display:none}
         ::-webkit-scrollbar { width: 0; background: transparent; }
-        td { padding: 5px 20px;  white-space: nowrap; font-size: 15px; }
+        td { padding: 5px 10px;  white-space: nowrap; font-size: 15px; }
         td.q { width: 10%; min-width: 100px; }
-        button { border-radius: 3px; margin: 0 10px; background-color: #bbb; font-size: 15px;} 
+        button { border-radius: 5px; border: 0; margin: 0 5px; background-color: #bbb; font-size: 10px;} 
         pre { margin: 1px; }
         code { border:#bbb solid 1px; border-radius: 15px; padding: 30px; margin: 0 30px; text-align: left;}
 </style>
@@ -25,10 +26,12 @@
 <script>
     // TODO: hljs.highlightAll();hljs.initLineNumbersOnLoad();  after every refresh
     $(document).ready(function(){ init(); });
-    setInterval(myTimer, 5000);
     var usernameList = ['leovincentseles','seali','jasonisgod','jackycaelum','qm4zirQ15o','yoyo6245a','wubinray87'];
     // TODO: shorten 'weekly-contest-283' to 'w283'
-    var contestNameList = ['weekly-contest-283', 'biweekly-contest-73']; 
+    var contestNameList = ['w283','b73','w282','w281','w280','w279','w278','w277','w276','w275','w274','w273','w272']; 
+    contestNameList.forEach((e, i, arr) => {
+        arr[i] = e.replace(/w/gi, 'weekly-contest-').replace(/b/gi, 'biweekly-contest-')
+    });
     var data = {};
     function init() {
         var box = $('#box');
@@ -39,15 +42,27 @@
             box.append(div);
         });
         myTimer();
-        // contestNameList.forEach(e => {
-        //     data[e] = 
-        // });
+        // setInterval(myTimer, 5000);
+        hljsUpdate();
     }
     function updateTables() {
         // TODO: sort rows by rank
         contestNameList.forEach(contestName => {
             console.log(contestName);
+            data[contestName].sort(function(a, b) {
+                 return a['rank'] - b['rank'];
+            });
             var table = $('<table></table>');
+            var tr = $('<thead></thead>');
+                tr.append($('<td>Rank</td>'));
+                tr.append($('<td>Username</td>'));
+                tr.append($('<td>Score</td>'));
+                tr.append($('<td>Time</td>'));
+                tr.append($('<td>Q1 </td>'));
+                tr.append($('<td>Q2 </td>'));
+                tr.append($('<td>Q3 </td>'));
+                tr.append($('<td>Q4 </td>'));
+            table.append(tr);
             data[contestName].forEach(e => {
                 console.log(e);
                 var tr = $('<tr></tr>');
@@ -57,7 +72,7 @@
                 tr.append($('<td></td>').text(e['finish_time']));
                 for (var i = 1; i <= 4; i++) {
                     if (e['Q' + i]['solve_time'] == undefined) {
-                        tr.append($('<td></td>'));
+                        tr.append($('<td>.............</td>'));
                         continue;
                     }
                     var id = contestName + '-' + e['username'];
@@ -69,7 +84,6 @@
                     var onclickCmd = "showCode('"+contestName+"','"+e['username']+"','"+('Q' + i)+"')";
                     var button = $('<button><b>&#60;/&#62;</b></button>').attr("id", 'btn-' + id).attr("onclick", onclickCmd);
                     var span2 = $('<span></span>').html(fail_count);
-                    // var input = $('<text></text>').attr("id", 'code-' + id).html(code).hide();
                     td.append(span1).append(button).append(span2);
                     tr.append(td);
                 }
@@ -84,11 +98,19 @@
     {
         console.log(contestName, username, question);
         data[contestName].forEach(e => {
-            if (e['username'] = username) {
-                // console.log(e[question]['code']);
-                $('#code').html(e[question]['code']);
+            if (e['username'] == username) {
+                var code = e[question]['code'];
+		code = code.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
+                $('#code').html(code);
+                // console.log(code);
             }
         });
+        hljsUpdate();
+        $([document.documentElement, document.body]).animate({ scrollTop: $("#code").offset().top }, 1000);
+    }
+    function hljsUpdate() {
+        hljs.highlightAll();
+        hljs.initLineNumbersOnLoad();
     }
     function myTimer() {
         data = {}
@@ -134,5 +156,4 @@ def leetquery():                                                                
         <br><br>
         <p>#jasonisgod &copy; Copyright 2022</p>
         <br><br>
-        <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
 </body>

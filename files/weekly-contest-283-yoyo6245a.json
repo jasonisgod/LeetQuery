@@ -1,0 +1,18 @@
+{
+    "rank": 6341,
+    "username": "yoyo6245a",
+    "score": 7,
+    "finish_time": "00:56:01",
+    "Q1": {
+        "solve_time": "00:25:05",
+        "fail_count": 0,
+        "code": "class Solution {\npublic:\n    vector<string> cellsInRange(string s) {\n        vector<string> res;\n        char c1 = s[0], c2;\n        int r1 = 0, r2 = 0;\n        int seperate;\n        for(int i=0; i<s.size(); i++){\n            if(s[i] == ':')\n                seperate = i;\n        }\n        for(int i=1; i<seperate; i++){\n            r1 *= 10;\n            r1 += s[i] - '0';\n        }\n        c2 = s[seperate+1];\n        for(int i=seperate+2; i<s.size(); i++){\n            r2 *= 10;\n            r2 += s[i] - '0';\n        }\n        for(int i=c1-'A'; i<=c2-'A'; i++){\n            for(int j=r1; j<=r2; j++){\n                string tmp = \"\";\n                tmp += 'A' + i;\n                tmp += '0' + j;\n                res.push_back(tmp);\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:46:01",
+        "fail_count": 2,
+        "code": "class Solution {\npublic:\n    long long minimalKSum(vector<int>& nums, int k) {\n        int idx = 0;\n        long long i = 1;\n        long long res = 0;\n        sort(nums.begin(), nums.end());\n        /*\n        for(int num: nums){\n            cout<<num<<\" \";\n        }\n        cout<<endl;*/\n        while(k > 0){\n            if(idx == nums.size()){\n                //cout<<i<<endl;\n                res += (i + i+k-1) * k / 2;\n                k = 0;\n            }\n            else if(k >= nums[idx] - i){\n                if(idx > 0 && nums[idx] == nums[idx-1]){\n                    idx++;\n                    continue;\n                }\n                k -= nums[idx] - i;\n                res += (i + nums[idx]-1) * (nums[idx] - i) / 2;\n                i = nums[idx] + 1;\n                idx++;\n            }else{\n                res += (i + i+k-1) * k / 2;\n                k = 0;\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}
