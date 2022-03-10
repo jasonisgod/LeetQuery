@@ -1,0 +1,30 @@
+code td {
+    font-family: "Consolas", "Courier New" !important;
+}
+
+code {
+    white-space: pre;
+}
+
+code div {
+    margin: initial;
+    overflow: initial;
+    display: initial;
+    font-family: "Consolas", "Courier New" !important;
+}
+
+.hljs-ln-numbers {
+    padding-right: 18px !important;
+    padding-left: 10px !important;
+    text-align: right;
+    font-weight: bold;
+    white-space: pre !important;    
+    /* border-right: 1px solid rgb(208, 208, 208);*/
+}
+
+.hljs-ln-line {
+    /*padding-top: 1px !important;
+    padding-bottom: 2px !important;*/
+    vertical-align: middle !important;
+    white-space: pre !important;
+}
