@@ -6,21 +6,25 @@
     "Q1": {
         "solve_time": "00:05:42",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    string firstPalindrome(vector<string>& words) {\n        for (string s: words) {\n            string ss = s;\n            reverse(ss.begin(), ss.end());\n            if (s == ss) {\n                return s;\n            }\n        }\n        return \"\";\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:08:52",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    string addSpaces(string s, vector<int>& spaces) {\n        string ans = \"\";\n        for (int i = 0, j = 0; i < s.length(); i++) {\n            if (j < spaces.size() && i == spaces[j]) {\n                ans += \" \";\n                j++;\n            }\n            ans += s[i];\n        }\n        return ans;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:19:11",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    long long fac(int n) {\n        long long ans = 0;\n        for (int i = 1; i <= n; ans += i++);\n        return ans;\n    }\n    long long getDescentPeriods(vector<int>& prices) {\n        long long n = 1;\n        long long ans = 0;\n        for (int i = 1; i < prices.size(); i++) {\n            if (prices[i] != prices[i-1]-1) {\n                // printf(\"%d %d\\n\", i, n);\n                ans += n*(n+1)/2;\n                n = 0;\n            }\n            n++;\n        }\n        // printf(\"%d %d\\n\", -1, n);\n        ans += n*(n+1)/2;\n        return ans;\n    }\n};"
     },
     "Q4": {
         "solve_time": "01:20:22",
         "fail_count": 4,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int LIS(vector<int>& arr) {\n        int n = arr.size();\n        vector<int> tmp;\n        for (int i = 0; i < n; i++) {\n            // int x;\n            // scanf(\"%d\", &x);\n            vector<int>::iterator it = upper_bound(tmp.begin(), tmp.end(), arr[i]);\n            if (it == tmp.end()) \n                tmp.push_back(arr[i]);\n            else \n                *it = arr[i];\n        }\n        // printf(\"LIS = %d\", d.size());\n        return tmp.size();\n    }\n\n    int kIncreasing(vector<int>& arr, int k) {\n        int n = arr.size();\n        int ans = 0;\n        for (int i = 0; i < k; i++) {\n            vector<int> tmp;\n            for (int j = i; j < n; j += k) {\n                tmp.push_back(arr[j]);\n            }\n            // for (int i: tmp)\n            //     std::cout << i << ' ';\n            // // reverse(tmp.begin(), tmp.end());\n            // printf(\" | %d %d\\n\", i, LIS(tmp));\n            ans += tmp.size() - LIS(tmp);\n        }\n        return ans;\n    }\n};"
     }
 }

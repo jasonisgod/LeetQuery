@@ -13,6 +13,14 @@ pre code.hljs{
     color:#d3cfc8;
 }
 
+.hljs-function {
+    color: #46c3af;
+}
+
+.hljs-params {
+    color:#d3cfc8;
+}
+
 .hljs td {
     color:#d3cfc8;
     cursor: text;
@@ -54,6 +62,10 @@ pre code.hljs{
 .hljs-attr,
 .hljs-meta-keyword {
     color: #dcdcaa;
+}
+
+span.class_ {
+    color: #46c3af;
 }
 
 .hljs-meta,

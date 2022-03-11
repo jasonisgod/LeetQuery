@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:11:11",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int countElements(vector<int>& nums) {\n        int res = 0;\n        int max = *max_element(nums.begin(), nums.end());\n        int min = *min_element(nums.begin(), nums.end());\n        for(int i=0; i<nums.size(); i++){\n            if(nums[i] != max && nums[i] != min)\n                res++;\n        }\n        return res;\n    }\n    bool larger(vector<int>& nums, int l, int r){\n        for(int i=l+1; i<=r; i++){\n            if(nums[i] <= nums[i-1])\n                return false;\n        }\n        return true;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:15:55",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> rearrangeArray(vector<int>& nums) {\n        queue<int> pos, neg;\n        vector<int> res;\n        for(int &num: nums){\n            if(num > 0)\n                pos.push(num);\n            else\n                neg.push(num);\n        }\n        while(!pos.empty() || !neg.empty()){\n            res.push_back(pos.front());\n            res.push_back(neg.front());\n            pos.pop();\n            neg.pop();\n        }\n        return res;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:24:39",
         "fail_count": 2,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> findLonely(vector<int>& nums) {\n        vector<int> res;\n        int n = nums.size();\n        if(n == 1) return vector<int>{nums[0]};\n        sort(nums.begin(), nums.end());\n        if(nums.size() > 1 && nums[1] != nums[0] + 1 && nums[1] != nums[0])\n            res.push_back(nums[0]);\n        for(int i=1; i<n-1; i++){\n            //cout<<\"num: \"<<nums[i]<<endl;\n            if((nums[i] != nums[i-1] && nums[i] != nums[i-1] + 1) && (nums[i] != nums[i+1] && nums[i] != nums[i+1] - 1)){\n                //cout<<\"num is in: \"<<nums[i]<<endl;\n                res.push_back(nums[i]);\n            }\n        }\n        if(nums.size() > 1 && nums[n-1] != nums[n-2] && nums[n-1] != nums[n-2]+1)\n            res.push_back(nums[n-1]);\n        return res;\n    }\n};"
     },
     "Q4": {}

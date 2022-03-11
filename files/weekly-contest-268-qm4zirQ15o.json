@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:15:33",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int maxDistance(vector<int>& colors) {\n        int ans=0;\n        int length = colors.size();\n        int f = colors[0], e = colors[length-1];\n        \n        for(int i=1; i<length; i++){\n            int a = colors[i];\n            int b = colors[length-i];\n            \n            if(f != b)\n                ans = max(ans, length-i);\n            if(e != a)\n                ans = max(ans, length-1-i);\n        }\n        \n        return ans;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:24:38",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int wateringPlants(vector<int>& plants, int capacity) {\n        int steps = 0, pos = -1;\n        int c = capacity;\n        \n        for(int i=0; i<plants.size(); i++){\n            int need = plants[i];\n            if(c >= need){\n                c -= need;\n                steps += 1;\n            }\n            else{\n                steps += (i+i+1);\n                c = capacity-need;\n            }\n                \n        }\n        \n        return steps;\n    }\n};"
     },
     "Q3": {
         "solve_time": "01:12:53",
         "fail_count": 2,
+        "lang": "cpp",
         "code": "class RangeFreqQuery {\nprivate:\n    vector<int> *values;\n    unordered_map<int, vector<int>> table;\n    \npublic:\n    RangeFreqQuery(vector<int>& arr) {\n        values = &arr;\n        \n        for(int i=0; i<arr.size(); i++){\n            int v = arr[i];\n            table[v].push_back(i);\n        }\n        /*\n        unordered_map<int, vector<int>>:: iterator it;\n        for (auto &p : table)\n            p.second = sort((p.second).begin(), (p.second).end());\n        */\n    }\n    \n    int query(int left, int right, int value) {\n        \n        vector<int> &arr = table[value];\n        \n        int count = 0, left_idx=-1, right_idx=-1;\n        \n        int lidx=0, ridx=arr.size()-1;\n        while(lidx <= ridx){\n            int midx = (lidx + ridx) / 2;\n            if(arr[midx] == left){\n                left_idx = midx;\n                break;\n            }\n            else if(arr[midx] > left)\n                ridx = midx-1;\n            else\n                lidx = midx+1;\n        }\n        if(left_idx == -1){\n            //if(arr[ridx] < left)\n            left_idx = ridx + 1;\n        }\n        \n        lidx=0, ridx=arr.size()-1;\n        while(lidx <= ridx){\n            int midx = (lidx + ridx) / 2;\n            if(arr[midx] == right){\n                right_idx = midx;\n                break;\n            }\n            else if(arr[midx] > right)\n                ridx = midx-1;\n            else\n                lidx = midx+1;\n        }\n        if(right_idx == -1){\n            right_idx = lidx - 1;\n        }\n        \n        return right_idx - left_idx + 1;\n    }\n};\n\n/**\n * Your RangeFreqQuery object will be instantiated and called as such:\n * RangeFreqQuery* obj = new RangeFreqQuery(arr);\n * int param_1 = obj->query(left,right,value);\n */"
     },
     "Q4": {}

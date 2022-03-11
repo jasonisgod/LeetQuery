@@ -6,11 +6,13 @@
     "Q1": {
         "solve_time": "00:35:34",
         "fail_count": 2,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> maxSubsequence(vector<int>& nums, int k) {\n        vector<int> ans(nums.begin(), nums.begin()+k);\n        \n        for(int i=k; i<nums.size(); i++){\n            auto mini = min_element(ans.begin(), ans.end()) - ans.begin();\n            \n            if(nums[i] > ans[mini]){\n                ans.erase(ans.begin() + mini);\n                ans.push_back(nums[i]);\n            }        \n        }\n        \n        return ans;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:56:26",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "class Solution {\nprivate:\n    bool non_increasing(vector<int>& s, int idx, int time){\n        for(int i=idx-time; i<idx; i++){\n            if(s[i]<s[i+1])\n                return false;\n        }\n        return true;\n    }\n    \n    bool non_decreasing(vector<int>& s, int idx, int time){\n        for(int i=idx+time; i>idx; i--){\n            if(s[i]<s[i-1])\n                return false;\n        }\n        return true;\n    }\npublic:\n    vector<int> goodDaysToRobBank(vector<int>& security, int time) {\n        if(2*time+1 > security.size())\n            return vector<int>{};\n        \n        vector<int> ans;\n        \n        if(time == 0){\n            for(int i=0; i<security.size(); i++)\n                ans.push_back(i);\n            return ans;\n        }\n        \n        \n        bool iflag = false, dflag = false;\n        for(int day=time; day < security.size()-time; day++){\n            if(!iflag)\n                iflag = non_increasing(security, day, time);\n            else\n                iflag = (security[day] <= security[day-1]);\n            \n            if(!dflag)\n                dflag = non_decreasing(security, day, time);\n            else\n                dflag = (security[day+time] >= security[day+time-1]);\n            \n            if(iflag && dflag)\n                ans.push_back(day);\n        }\n        \n        return ans;\n    }\n};"
     },
     "Q3": {},

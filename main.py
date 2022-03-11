@@ -18,13 +18,26 @@ def get_time_diff(d1, d2):
     diff = abs(d1 - d2)
     return f'{diff // 3600:02d}:{diff // 60 % 60:02d}:{diff % 60:02d}'
 
-def get_code(submission_id):
+def get_code(json_obj):
+    try:
+        code = json_obj['code']
+        return code
+    except Exception as e: print(e)
+    return ''
+
+def get_lang(json_obj):
+    try:
+        lang = json_obj['lang']
+        return lang
+    except Exception as e: print(e)
+    return ''
+
+def get_submission(submission_id):
     try:
         url = f'https://leetcode.com/api/submissions/{submission_id}/'
         res = my_reqeust(url)
         json_obj = res.json()
-        code = json_obj['code']
-        return code
+        return json_obj
     except Exception as e: print(e)
     return ''
 
@@ -82,10 +95,12 @@ def get_scoreboard(contest_name, username_list, start_time, questions, records):
             if question_id_str not in submissions.keys():
                 continue
             question = submissions[question_id_str]
+            submissions_json = get_submission(question['submission_id'])
             row[f'Q{i+1}'] = {
                 'solve_time': get_time_diff(start_time, question['date']),
                 'fail_count': question['fail_count'],
-                'code': get_code(question['submission_id']),
+                'lang': get_lang(submissions_json),
+                'code': get_code(submissions_json)
             }
         # print(row)
         scoreboard.append(row)
@@ -113,7 +128,7 @@ def query_contests(contest_name_list, username_list):
 
 def main():
     print(f'\rStart {SPACES}')
-    username_list = ['leovincentseles','jackycaelum','qm4zirQ15o','seali','jasonisgod','yoyo6245a','wubinray87']
+    username_list = ['leovincentseles','jackycaelum','qm4zirQ15o','seali','jasonisgod','yoyo6245a','wubinray87','lh070355']
     # username_list = ['seali']
     contest_name_list = ['biweekly-contest-73']
     query_contests(contest_name_list, username_list)

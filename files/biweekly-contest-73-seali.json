@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:07:43",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int mostFrequent(vector<int>& nums, int key) {\n        \n        unordered_map<int,int> counts;\n        \n        int size = nums.size();\n        \n        for(int i = 0 ; i< size-1; i++) {\n            if (nums[i]==key) {\n                if (counts.find(nums[i+1])==counts.end())\n                    counts[nums[i+1]] = 0;\n                counts[nums[i+1]]++;\n            }\n        }\n        \n        int max = -1;\n        \n        int output = -1;\n        \n        for(auto& pair_ : counts) {\n            int num = pair_.first;\n            int count = pair_.second;\n            if (count>max) {\n                max = count;\n                output = num;\n            }\n        }\n        return output;\n        \n        \n        \n        \n    }\n};"
     },
     "Q2": {
         "solve_time": "00:18:02",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "\nbool compare(pair<int,int>& a, pair<int,int>& b) {\n    \n    return a.second < b.second;\n}\n\nclass Solution {\npublic:\n    int change(vector<int>& mapping, int n) {\n        \n        stack<int> s;\n        \n        do {\n            int tmp = n%10;\n            s.push( mapping[tmp] );\n            n/=10;\n        }while(n>0);\n        \n        int output = 0;\n        \n        while(s.size()) {\n            output*= 10;\n            output += s.top();\n            s.pop();\n        }\n        return output;\n    }\n    \n    vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {\n        \n        vector< pair<int,int> > vec(nums.size());\n        \n        for(int i = 0 ; i<nums.size(); i++) {\n            vec[i].first = nums[i];\n            vec[i].second = change(mapping,nums[i]);\n        }\n        \n        sort(vec.begin(),vec.end(),compare);\n        \n        vector<int> output(nums.size());\n        \n        for(int i = 0 ; i<nums.size(); i++) \n            output[i] = vec[i].first;\n        \n        return output;\n        \n        \n    }\n};"
     },
     "Q3": {
         "solve_time": "00:36:23",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {\n        \n        vector<vector<int>> neighbor(n,vector<int>());\n        \n        vector<int> counts(n,0);\n        \n        vector<unordered_set<int>> tmp(n);\n            \n        vector<vector<int>> output(n);\n        \n        for(auto edge:edges) {\n            neighbor[edge[0]].push_back(edge[1]);\n            counts[edge[1]] ++;\n        }\n        \n        queue<int> q;\n        \n        for(int i = 0 ; i<n; i++) {\n            if(counts[i]==0)\n                q.push(i);\n        }\n        \n        \n        vector<bool> visited(n,false);\n        \n        \n        while(q.size()) {\n            int node = q.front(); q.pop();\n            if (visited[node])\n                continue;\n            visited[node] = true;\n            for (int i = 0 ; i<neighbor[node].size(); i++) {\n                int node_dir = neighbor[node][i];\n                tmp[node_dir].insert(node);\n                for (auto x : tmp[node] ) {\n                    tmp[node_dir].insert(x);\n                }\n                counts[node_dir]--;\n                if (!counts[node_dir])\n                    q.push(node_dir);\n            }\n        }\n        \n        for(int i = 0 ; i<n; i++) {\n            for(auto x : tmp[i]) {\n                output[i].push_back(x);\n            }\n        }\n        \n        for(int i = 0 ; i<n; i++)  {\n            sort(output[i].begin(),output[i].end());\n        }\n        return output;\n        \n    }\n};"
     },
     "Q4": {}

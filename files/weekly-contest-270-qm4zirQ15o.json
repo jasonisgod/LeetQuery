@@ -7,6 +7,7 @@
     "Q2": {
         "solve_time": "00:46:09",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    ListNode* deleteMiddle(ListNode* head) {\n        if(head->next == nullptr)\n            return nullptr;\n        \n        ListNode *fast = head, *slow = head, *slow_prev;\n        \n        while(fast != nullptr && fast->next != nullptr){\n            fast = fast->next->next;\n            slow_prev = slow;\n            slow = slow->next;\n        }\n        \n        slow_prev->next = slow->next;\n        delete slow;\n        return head;\n    }\n};"
     },
     "Q3": {},

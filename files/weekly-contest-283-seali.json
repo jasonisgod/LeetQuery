@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:35:56",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<string> cellsInRange(string s) {\n        pair<int,int> row = make_pair(s[1],s[4]);\n        pair<int,int> col = make_pair(s[0],s[3]);\n        \n        vector<string> output;\n        \n        for(int c = col.first; c <= col.second; c++) {\n            for(int r = row.first; r <= row.second; r++) {\n                string tmp;\n                tmp += c;\n                tmp += r;\n                output.push_back(tmp);\n            }\n        }\n        \n        return output;\n        \n    }\n};"
     },
     "Q2": {
         "solve_time": "01:14:26",
         "fail_count": 4,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    \n    int min(int a, int b) {\n        return a<b? a:b;\n    }\n    \n    long long minimalKSum(vector<int>& nums, int k) {\n        \n        nums.push_back(0);\n        nums.push_back(INT_MAX);\n        \n        sort(nums.begin(),nums.end());\n        \n        long long output = 0;\n        \n\n        for(int i = 0 ; i < nums.size()-1; i++) {\n            \n            \n            if (k == 0)\n                return output;\n            \n            long long begin = nums[i]+1;\n            long long end = nums[i+1]-1;\n            \n            if (begin<=end) {\n            \n                int count = min(end-begin+1,k);\n                \n                output += (begin+begin+count-1)*count/2;\n\n                k -= count;\n                \n            }\n            \n        }\n        \n        return output;\n\n        \n    }\n};"
     },
     "Q3": {
         "solve_time": "00:50:32",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {\n        \n        unordered_map<int,TreeNode*> map;\n        \n        for(auto description:descriptions) {\n            \n            int parent = description[0];\n            int child = description[1];\n            \n            if (map.find(parent)==map.end())\n                map[parent] = new TreeNode(parent);\n            if (map.find(child)==map.end())\n                map[child] = new TreeNode(child);\n            \n            if (description[2])\n                map[parent]->left = map[child];\n            else\n                map[parent]->right = map[child];\n        }\n        \n        for (auto description: descriptions) {\n            if(map.find(description[1])!=map.end())\n                map.erase(description[1]);\n        }\n        \n        return map.begin()->second;\n        \n    }\n};"
     },
     "Q4": {}
