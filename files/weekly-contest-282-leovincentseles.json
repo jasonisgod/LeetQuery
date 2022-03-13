@@ -1,21 +1,24 @@
 {
-    "rank": 936,
+    "rank": 930,
     "username": "leovincentseles",
     "score": 12,
     "finish_time": "00:09:30",
     "Q1": {
         "solve_time": "00:01:24",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int count = 0;\n        for (string &word: words) {\n            if (word.find(pref) == 0)\n                ++count;\n        }\n        return count;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:04:10",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        int sCount[26] = {0}, tCount[26] = {0};\n        for (char ch: s)\n            ++sCount[ch - 'a'];\n        for (char ch: t)\n            ++tCount[ch - 'a'];\n        \n        int result = 0;\n        for (int i=0; i<26; ++i)\n            result += max(sCount[i], tCount[i]) - min(sCount[i], tCount[i]);\n        \n        return result;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:09:30",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "typedef long long int LLI;\n\nclass Solution {\nprivate:\n    bool doable(vector<int>& time, int totalTrips, LLI totalTime) {\n        LLI count = 0;\n        for (int i=0; i<time.size(); ++i) {\n            count += totalTime / time[i];\n            if (count >= totalTrips)\n                return true;\n        }\n        \n        return false;\n    }\npublic:\n    long long minimumTime(vector<int>& time, int totalTrips) {\n        LLI left = 0, right = 1e14;\n        \n        while (left < right) {\n            LLI mid = (left + right) / 2;\n            if (doable(time, totalTrips, mid))\n                right = mid;\n            else\n                left = mid + 1;\n        }\n        \n        return right;\n    }\n};"
     },
     "Q4": {}

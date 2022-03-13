@@ -6,11 +6,13 @@
     "Q1": {
         "solve_time": "00:03:53",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int findFinalValue(vector<int>& nums, int original) {\n        sort(nums.begin(), nums.end());\n        for (int i: nums) {\n            if (i == original) {\n                original *= 2;\n            }\n        }\n        return original;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:20:53",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> maxScoreIndices(vector<int>& nums) {\n        int n = nums.size();\n        vector<int> sums(n+1);\n        sums[0] = 0;\n        for (int i = 0; i < n; i++) {\n            sums[i+1] = sums[i] + nums[i];\n        }\n        int high = 0;\n        vector<int> ans;\n        for (int i = 0; i <= n; i++) {\n            int score = (i+1) - sums[i] + (sums[n]-sums[i]);\n            // printf(\"%d \", score);\n            if (score > high) {\n                high = score;\n                ans.clear();\n            }\n            if (score == high) {\n                ans.push_back(i);\n            }\n        }\n        return ans;\n    }\n};"
     },
     "Q3": {},

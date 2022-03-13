@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:11:45",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    string capitalizeTitle(string title) {\n        int  init = 0, pos = title.find(' ');\n        while(pos != string::npos){\n            string sub = title.substr(init, pos-init);\n            transform(sub.begin(), sub.end(), sub.begin(), ::tolower);\n            \n            if(sub.size() > 2){\n                sub[0] -= 32;\n            }\n            \n            title.replace(init, pos-init, sub);\n            init = pos + 1;\n            pos = title.find(' ', init);\n        }\n        \n        pos = title.size();\n        string sub = title.substr(init, pos-init);\n        transform(sub.begin(), sub.end(), sub.begin(), ::tolower);\n\n        if(sub.size() > 2){\n            sub[0] -= 32;\n        }\n\n        title.replace(init, pos-init, sub);\n        \n        return title;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:21:01",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    int pairSum(ListNode* head) {\n        int count = 1;\n        ListNode *fast = head, *slow = head;\n        while(fast->next->next != nullptr){\n            fast = fast->next->next;\n            slow = slow->next;\n            count += 1;\n        }\n        slow = slow->next;\n        fast = head;\n        \n        vector<int> arr(count, 0);\n        for(int i=0; i<count; i++){\n            arr[i] += fast->val;\n            arr[count-1-i] += slow->val;\n            fast = fast->next;\n            slow = slow->next;\n        }\n        \n        return *max_element(arr.begin(), arr.end());\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:42:24",
         "fail_count": 2,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int longestPalindrome(vector<string>& words) {\n        unordered_map<string, int> table;\n        \n        for(auto &w: words){\n            table[w] += 1;\n        }\n        \n        int ans = 0;\n        bool flag = false;\n        unordered_set<string> meet;\n        for(auto e: table){\n            string word = e.first;\n            int time = e.second;\n            \n            if(meet.find(word) != meet.end())\n                continue;\n            \n            if(word[0] == word[1]){\n                if(time % 2 == 0)\n                    ans += time * 2;\n                else{\n                    ans += (time-1)*2;\n                    if(!flag){\n                        ans += 2;\n                        flag = true;\n                    }\n                }\n            }\n            else{\n                string inverse_w = word.substr(1, 1);\n                inverse_w += word[0];\n                if(table.find(inverse_w) == table.end())\n                    continue;\n                \n                int t_inv = table[inverse_w];\n                ans += min(time, t_inv)*4;\n                meet.insert(inverse_w);\n            }\n        }\n        \n        return ans;\n    }\n};"
     },
     "Q4": {}

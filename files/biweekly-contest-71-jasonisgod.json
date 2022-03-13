@@ -6,11 +6,13 @@
     "Q1": {
         "solve_time": "00:06:23",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int minimumSum(int num) {\n        vector<int> v;\n        for (int i = 0; i < 4; i++) {\n            v.push_back(num % 10);\n            num /= 10;\n        }\n        sort(v.begin(), v.end());\n        return (v[0] + v[1])*10 + v[2] + v[3];\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:11:45",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> pivotArray(vector<int>& nums, int pivot) {\n        vector<int> low, mid, high, ans;\n        for (int x: nums) {\n            if (x == pivot) {\n                mid.push_back(x);\n            } else if (x > pivot) {\n                high.push_back(x);\n            } else {\n                low.push_back(x);\n            }\n        }\n        for (int x: low) ans.push_back(x);\n        for (int x: mid) ans.push_back(x);\n        for (int x: high) ans.push_back(x);\n        return ans;\n    }\n};"
     },
     "Q3": {},

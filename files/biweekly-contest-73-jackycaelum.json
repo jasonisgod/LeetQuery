@@ -6,11 +6,13 @@
     "Q1": {
         "solve_time": "00:06:35",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int mostFrequent(vector<int>& nums, int key) {\n        unordered_map<int, int> map;\n        \n        for (int i=0; i<nums.size()-1; i++) {\n            if (nums[i] == key) {\n                map[nums[i+1]]++;\n            }\n        }\n        \n        int mmax = INT_MIN, ans;\n        for (auto &mapPair: map) {\n            if (mapPair.second > mmax) {\n                mmax = mapPair.second;\n                ans = mapPair.first;\n            }\n        }\n        \n        return ans;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:52:23",
         "fail_count": 4,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {\n        vector<int> nnums;\n        map<int, vector<int>> map;\n        for (int i=0; i<nums.size(); i++) {\n            int n = nums[i];\n            string new_n = \"\";\n            if (n == 0) {\n                new_n += to_string(mapping[n%10]);\n            }\n                  \n            while (n) {\n                string digit = to_string(mapping[n%10]);\n                n /=10;\n                \n                new_n += digit;\n            }\n            reverse(new_n.begin(), new_n.end());\n            int t = stoi(new_n);\n            nnums.push_back(t);\n            \n            if (map.count(t) > 0)\n                map[t].push_back(i);\n            else\n                map.insert({t, {i}});\n            \n        }\n        \n        vector<int> ans;\n        /*\n        for (int i=0; i<nums.size(); i++) {\n            \n            int min_index, min_value = INT_MAX;\n            for (int j=0; j<nnums.size(); j++) {\n                if (nnums[j] < min_value) {\n                    min_value = nnums[j];\n                    min_index = j;\n                }\n            }\n            //auto mmin = min_element(nnums.begin(), nnums.end());\n            ans.push_back(nums[min_index]);\n            \n            nnums[min_index] = INT_MAX;\n        }\n        */\n        \n        while (!map.empty()) {\n            auto mapPair = map.begin();\n            \n            for (auto n: mapPair->second)\n                ans.push_back(nums[n]);\n            \n            map.erase(map.begin());\n        }\n        \n        \n        return ans;\n    }\n};"
     },
     "Q3": {},

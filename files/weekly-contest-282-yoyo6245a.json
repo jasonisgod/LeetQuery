@@ -1,16 +1,18 @@
 {
-    "rank": 8390,
+    "rank": 8343,
     "username": "yoyo6245a",
     "score": 7,
     "finish_time": "00:12:56",
     "Q1": {
         "solve_time": "00:05:22",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int res = 0;\n        for(string word: words){\n            if(word.find(pref) == 0)\n                res++;\n        }\n        return res;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:12:56",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        vector<int> vec_s(26);\n        vector<int> vec_t(26);\n        for(char c: s){\n            vec_s[c - 'a']++;\n        }\n        for(char c: t){\n            vec_t[c - 'a']++;\n        }\n        int res = 0;\n        for(int i=0; i<26; i++){\n            //cout<<\"i: \"<<i<<\": \"<<vec_s[i]<<\", \"<<vec_t[i]<<endl;\n            res += abs(vec_s[i] - vec_t[i]);\n        }\n        return res;\n    }\n};"
     },
     "Q3": {},

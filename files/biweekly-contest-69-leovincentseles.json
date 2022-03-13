@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:08:14",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\nprivate:\n    vector<string> words;\n    void parseStr(string &sentence) {\n        int start = 0, end;\n        \n        while ((end = sentence.find(\" \", start)) != string::npos) {\n            words.push_back(sentence.substr(start, end-start));\n            start = sentence.find_first_not_of(\" \", end);\n        }\n        \n        words.push_back(sentence.substr(start));\n    }\npublic:\n    string capitalizeTitle(string title) {\n        string result;        \n        parseStr(title);\n        \n        for (string &word: words) {\n            for (char &ch: word)\n                if (ch >= 'A' && ch <= 'Z')\n                    ch = ch - 'A' + 'a';\n            \n            if (word.size() > 2)\n                word[0] = word[0] + 'A' - 'a';\n            \n            result += word + \" \";                \n        }\n        \n        result.resize(result.size() - 1);     \n        return result;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:11:42",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n    Return:\n*/\n\n/**\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     ListNode *next;\n *     ListNode() : val(0), next(nullptr) {}\n *     ListNode(int x) : val(x), next(nullptr) {}\n *     ListNode(int x, ListNode *next) : val(x), next(next) {}\n * };\n */\nclass Solution {\npublic:\n    int pairSum(ListNode* head) {        \n        vector<ListNode *> nodeArr;\n        \n        while (head != nullptr) {\n            nodeArr.push_back(head);\n            head = head->next;\n        }\n        \n        int maxVal = 0;\n        for (int head=0, tail=nodeArr.size()-1; head<tail; ++head, --tail) {\n            int sum = nodeArr[head]->val + nodeArr[tail]->val;            \n            maxVal = max(maxVal, sum);\n        }\n        \n        return maxVal;        \n    }\n};"
     },
     "Q3": {
         "solve_time": "00:28:01",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        vector<string> words\n            words[i] consists of two lowercase letters\n    Return:\n        The longest palindrome length\n        \nSolution: Brute Force\n    Time Complexity: O(N!)\n    Space Complexity: O(N)\n    \nSolution: Hash table\n    unordered_map<string, pair<int, int>> wordMap;\n    count the equal first\n    \n*/\n\nclass Solution {\npublic:\n    int longestPalindrome(vector<string>& words) {\n        unordered_map<string, pair<int, int>> wordMap;\n        unordered_map<string, int> sameMap;\n        \n        for (string &word: words) {\n            if (word[0] == word[1])\n                ++sameMap[word];\n            else {\n                string key = word;\n                sort(key.begin(), key.end());\n                if (word[0] < word[1])\n                    ++wordMap[key].first;\n                else\n                    ++wordMap[key].second;                \n            }\n        }\n        \n        int result = 0;\n        \n        for (auto &mapPair: sameMap) {\n            if (mapPair.second % 2 == 1) {\n                result += 2;\n                mapPair.second--;\n                break;\n            }\n        }\n        \n        for (auto &mapPair: sameMap) {\n            result += 2 * (mapPair.second - mapPair.second % 2);\n        }\n        \n        for (auto &mapPair: wordMap)\n            result += min(mapPair.second.first, mapPair.second.second) * 2 * 2;\n        \n        return result;\n    }\n};"
     },
     "Q4": {}

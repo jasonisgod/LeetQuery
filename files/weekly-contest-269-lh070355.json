@@ -1,0 +1,20 @@
+{
+    "rank": 6611,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "01:03:28",
+    "Q1": {
+        "solve_time": "00:12:16",
+        "fail_count": 0,
+        "lang": "ruby",
+        "code": "# @param {Integer[]} nums\n# @param {Integer} target\n# @return {Integer[]}\ndef target_indices(nums, target)\n  sort_nums = nums.sort\n  index_ary = []\n\n  sort_nums.each_with_index do |num, index|\n    if num == target\n      index_ary << index\n    end\n  end\n    \n  index_ary\nend"
+    },
+    "Q2": {
+        "solve_time": "00:48:28",
+        "fail_count": 3,
+        "lang": "ruby",
+        "code": "# @param {Integer[]} nums\n# @param {Integer} k\n# @return {Integer[]}\ndef get_averages(nums, k)\n  return nums if k == 0\n  return [-1] * nums.length if nums.length < (2 * k + 1)\n\n  sub_ary_length = 2 * k + 1\n  sum = nil\n  k_r_ary = [-1] * k\n\n  (nums.length - k * 2).times do |time|\n    index = time + k\n    sub_ary = nums[time..index + k]\n\n    if sum.nil?\n      sum = sub_ary.sum\n    else\n      sum -= nums[time - 1]\n      sum += nums[index + k]\n    end\n\n    k_r_ary << sum / sub_ary_length\n  end\n\n  k_r_ary.concat([-1] * k)\n\nend"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:02:47",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    bool checkString(string s) {\n        int last_a = -2, first_b = s.size();\n        \n        for(int i=0; i<s.size(); i++){\n            if(s[i] == 'a')\n                last_a = i;\n            if(s[i] == 'b' && first_b > i)\n                first_b = i;\n            \n            if(last_a >= first_b)\n                return false;\n        }\n        return true;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:09:05",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int numberOfBeams(vector<string>& bank) {\n        int prev = 0, total_num = 0;\n        \n        for(auto row: bank){\n            int beam_num = 0;\n            for(char c: row){\n                if(c == '1')\n                    beam_num += 1;\n            }\n            \n            if(prev!=0){\n                total_num += beam_num * prev;\n            }\n            \n            if(beam_num != 0)\n                prev = beam_num;\n        }\n        return total_num;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:13:33",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    bool asteroidsDestroyed(int mass, vector<int>& asteroids) {\n        sort(asteroids.begin(), asteroids.end());\n        \n        long m = mass;\n        for(int i=0; i<asteroids.size(); i++){\n            if(m < asteroids[i])\n                return false;\n            else if(i == asteroids.size() - 1)\n                return true;\n            else\n                m += asteroids[i];\n        }\n        return true;\n    }\n};"
     },
     "Q4": {}
