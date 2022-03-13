@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:02:53",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<string> divideString(string s, int k, char fill) {\n        vector<string> result;\n        \n        for (int head=0; head<s.size(); head+=k) {\n            string currStr = s.substr(head, k);\n            currStr.resize(k, fill);\n            result.push_back(currStr);\n        }        \n        \n        return result;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:14:20",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        int target\n            start from 1\n        int maxDoubles\n            The number of times can use the double\n    Return:\n        int result\n            minimum steps to reach the target\n            \nTarget: 10 \n    start: 1 -> 2 -> 4 -> 8 -> 9 -> 10\n    \n            \nSolution: Brute Force\n\nSolution: Dynamic Programming\n    1. dp[i][j]: \n    \nSolution: Greedy\n\n*/\n\nclass Solution {\npublic:\n    int minMoves(int target, int maxDoubles) {\n        int steps = 0;\n        \n        while (target > 1) {\n            if (maxDoubles > 0) {\n                if ((target & 1) == 1) {\n                    --target;\n                    ++steps;\n                } else {\n                    target >>= 1;                    \n                    --maxDoubles;\n                    ++steps;\n                }                                \n            } else {\n                steps += (target - 1);\n                target = 1;\n            }                        \n        }                \n        \n        return steps;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:32:40",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        vector<vector<int>> questions\n            questions[i] = [pointsi, brainpoweri]\n            \n    Return:\n        LLI result;\n\nSolution: Dynamic Programming + Heap\n    1. dp[j] The maximum points can get when solve the jth problem\n    \n\n       i = 1\n    [[1,1],[2,2],[3,3],[4,4],[5,5]]\n\n    minHeap.push({currMax, unavailabel until > 3})\n\n[1, 1]\n*/\n\ntypedef long long int LLI;\n\nclass Cmp {\npublic:\n    bool operator()(const pair<LLI, int> &lhs, const pair<LLI, int> &rhs) {\n        return lhs.second > rhs.second;\n    }  \n};\n\nclass Solution {\npublic:\n    long long mostPoints(vector<vector<int>>& questions) {\n        priority_queue<pair<LLI, int>, vector<pair<LLI, int>>, Cmp> minHeap;\n        minHeap.push({0, -1});\n        \n        vector<LLI> dp(questions.size(), 0);\n        LLI maxVal = 0;\n        \n        for (int i=0; i<questions.size(); ++i) {\n            LLI point = questions[i][0];\n            int power = questions[i][1];\n            \n            LLI preMax = 0;\n            while (!minHeap.empty() && minHeap.top().second < i) {\n                preMax = max(preMax, minHeap.top().first);\n                minHeap.pop();                \n            }\n            \n            minHeap.push({preMax, -1});\n            dp[i] = minHeap.top().first + point;\n            maxVal = max(maxVal, dp[i]);\n            minHeap.push({dp[i], i+power});\n        }\n                \n        return maxVal;\n    }\n};"
     },
     "Q4": {}

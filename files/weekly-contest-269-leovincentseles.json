@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:03:41",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> targetIndices(vector<int>& nums, int target) {\n        vector<int> result;\n        sort(nums.begin(), nums.end());\n\n        for (int i=0; i<nums.size(); ++i) {\n            if (nums[i] == target)\n                result.push_back(i);\n        }\n\n        return result;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:21:25",
         "fail_count": 2,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> getAverages(vector<int>& nums, int k) {\n        vector<int> result(nums.size(), -1);\n\n        long long int sum = 0;\n        for (int i=0; i<2*k+1 && i<nums.size(); ++i) {\n            sum += nums[i];\n        }\n\n        for (int i=k; i<nums.size(); ++i) {\n            if (i + k >= nums.size())\n                break;\n\n            result[i] = sum / (2*k+1);\n            sum = sum - nums[i - k];\n\n            if (i + k + 1< nums.size())\n                sum = sum + nums[i + k + 1];\n        }\n\n        return result;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:33:57",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int minimumDeletions(vector<int>& nums) {\n        int minIdx = -1, minVal = INT_MAX;\n        int maxIdx = -1, maxVal = INT_MIN;\n\n        for (int i=0; i<nums.size(); ++i) {\n            if (nums[i] < minVal) {\n                minIdx = i;\n                minVal = nums[i];\n            }\n\n            if (nums[i] > maxVal) {\n                maxIdx = i;\n                maxVal = nums[i];\n            }\n        }\n\n        int len = nums.size();\n        int &leftIdx = (minIdx > maxIdx)? maxIdx: minIdx;\n        int &rightIdx = (minIdx > maxIdx)? minIdx: maxIdx;\n\n        int leftLen = leftIdx - 0 + 1;\n        int rightLen = len - rightIdx;\n        int count = 0;\n\n        if (leftLen <= rightLen) {\n            rightIdx -= leftLen;\n            len -= leftLen;\n            count += leftLen;\n\n            if (rightIdx >= 0) {\n                if (rightIdx - 0 + 1 > len - rightIdx)\n                    count += len - rightIdx;                \n                else\n                    count += rightIdx - 0 + 1;\n            }\n\n        } else {\n            len -= rightLen;\n            count += rightLen;\n\n            if (leftIdx < len) {\n                if (leftIdx - 0 + 1 > len - leftIdx)\n                    count += len - leftIdx;\n                else\n                    count += leftIdx - 0 + 1;\n            }\n        }\n\n        return count;\n    }\n};"
     },
     "Q4": {}

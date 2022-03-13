@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:03:33",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        string s\n    Return\n        bool result\n            true: if every a appears before every b\n*/\n\nclass Solution {\npublic:\n    bool checkString(string s) {\n        int pos = s.find(\"b\");\n        \n        if (pos == string::npos || pos == s.size() - 1)\n            return true;\n        \n        return s.find(\"a\", pos + 1) == string::npos;        \n    }\n};"
     },
     "Q2": {
         "solve_time": "00:08:51",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        vector<string> bank\n        \n    Return:\n        int result\n            the number of laser beams\n            \n    Time Complexity: O(N)\n    Space Complexity: O(N)\n\n*/\n\nclass Solution {\npublic:\n    int numberOfBeams(vector<string>& bank) {\n        vector<int> nums;\n        \n        for (string &row: bank) {\n            int ones = 0;\n            for (char ch: row)\n                if (ch == '1')\n                    ++ones;\n            \n            if (ones != 0)\n                nums.push_back(ones);\n        }\n        \n        int result = 0;\n        for (int i=0; i+1<nums.size(); ++i)\n            result += nums[i] * nums[i+1];\n        \n        return result;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:13:41",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "/*\nClarification:\n    Given:\n        int mass\n        vector<int> asteroids\n        \n    Return:\n        bool result\n            if we can collide with all the asteroids\n*/\n\ntypedef long long int LLI;\n\nclass Solution {\npublic:\n    bool asteroidsDestroyed(int mass, vector<int>& asteroids) {\n        sort(asteroids.begin(), asteroids.end());\n        LLI weight = mass;\n        \n        for (int asteroid: asteroids) {\n            if (weight >= asteroid)    \n                weight += asteroid;\n            else\n                return false;\n        }\n        \n        return true;\n    }\n};"
     },
     "Q4": {}

@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:04:17",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int mostFrequent(vector<int>& nums, int key) {\n        unordered_map<int, int> numMap;\n        \n        for (int i=1; i<nums.size(); ++i) {\n            if (nums[i - 1] == key)\n                ++numMap[nums[i]];            \n        }\n        \n        int maxKey = 0, maxTimes = -1;\n        \n        for (auto &mapPair: numMap) {\n            if (mapPair.second > maxTimes) {\n                maxTimes = mapPair.second;\n                maxKey = mapPair.first;\n            }\n        }\n        \n        return maxKey;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:15:53",
         "fail_count": 1,
+        "lang": "cpp",
         "code": "int getNum(int num, vector<int>& mapping) {\n    string numStr = to_string(num);\n    \n    for (char &ch: numStr)\n        ch = mapping[ch - '0'] + '0';\n    \n    return stoi(numStr);\n}\n\nclass Cmp {\npublic:\n    bool operator()(const pair<int, int> &lhs, const pair<int, int> &rhs) {\n        return lhs.second < rhs.second;\n    }\n};\n\nclass Solution {\npublic:\n    vector<int> sortJumbled(vector<int>& mapping, vector<int>& nums) {\n        vector<pair<int, int>> numPair;\n        numPair.reserve(nums.size());\n        \n        for (int num: nums)\n            numPair.push_back({num, getNum(num, mapping)});\n        \n        stable_sort(numPair.begin(), numPair.end(), Cmp());\n        \n        vector<int> result;\n        result.reserve(nums.size());\n        \n        for (auto &p: numPair)\n            result.push_back(p.first);\n        \n        return result;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:41:21",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\nprivate:\n    unordered_map<int, vector<int>> graph;\npublic:\n    vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {\n        vector<int> indegree(n, 0);\n        vector<unordered_set<int>> result(n);\n        for (vector<int> &edge: edges) {\n            int from = edge[0], to = edge[1];\n            graph[from].push_back(to);\n            ++indegree[to];\n        }\n        \n        queue<int> zeroQueue;\n        \n        for (int i=0; i<n; ++i) {\n            if (indegree[i] == 0)\n                zeroQueue.push(i);\n        }\n        \n        while (!zeroQueue.empty()) {\n            int node = zeroQueue.front();   zeroQueue.pop();\n            \n            for (int neighbor: graph[node]) {\n                for (int num: result[node])\n                    result[neighbor].insert(num);\n                result[neighbor].insert(node);\n                if (--indegree[neighbor] == 0)\n                    zeroQueue.push(neighbor);\n            }            \n        }\n        \n        vector<vector<int>> realResult(n);\n        \n        for (int i=0; i<n; ++i) {\n            realResult[i].reserve(result[i].size());\n            for (int num: result[i])\n                realResult[i].push_back(num);\n            \n            sort(realResult[i].begin(), realResult[i].end());\n        }\n            \n        return realResult;        \n    }\n};"
     },
     "Q4": {}

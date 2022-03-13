@@ -1,16 +1,18 @@
 {
-    "rank": 9192,
+    "rank": 9164,
     "username": "jackycaelum",
     "score": 7,
     "finish_time": "00:17:28",
     "Q1": {
         "solve_time": "00:09:07",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int prefixCount(vector<string>& words, string pref) {\n        int result = 0;\n        bool isAns = true;\n        for (string &word: words) {\n            if (word.size() < pref.size())\n                continue;\n            \n            for (int i=0; i<pref.size(); i++) {\n                if (word[i] != pref[i])\n                {\n                    isAns = false;\n                    break;\n                }\n                else\n                {\n                    isAns = true;\n                }            \n            }\n            \n            if (isAns)\n                result++;\n            \n            \n        }\n        return result;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:17:28",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int minSteps(string s, string t) {\n        unordered_map<char, int> umap1;\n        unordered_map<char, int> umap2;\n        \n        for (char &c: s) {\n            umap1[c]++;\n        }\n        for (char &c: t) {\n            umap2[c]++;\n        }\n        int result = 0;\n        \n        for (char &c: t) {\n            if (umap1.count(c) > 0) {\n                umap1[c]--;\n                if (umap1[c] == 0)\n                    umap1.erase(c);\n            }\n            else {\n                result++;\n            }\n        }\n        for (char &c: s) {\n            if (umap2.count(c) > 0) {\n                umap2[c]--;\n                if (umap2[c] == 0)\n                    umap2.erase(c);\n            }\n            else {\n                result++;\n            }\n        }\n        return result;\n        \n    }\n};"
     },
     "Q3": {},

@@ -6,16 +6,19 @@
     "Q1": {
         "solve_time": "00:08:26",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int maxDistance(vector<int>& colors) {\n        int maxDiff = INT_MIN;\n\n        for (int i=0, j=colors.size()-1; i<j; ++i) {\n            if (colors[i] != colors[j]) {\n                maxDiff = j - i;\n                break;\n            }\n        }\n\n        for (int i=0, j=colors.size()-1; i<j; --j) {\n            if (colors[i] != colors[j]) {\n                maxDiff = max(maxDiff, j - i);\n                break;\n            }\n        }\n\n        return maxDiff;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:29:23",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int wateringPlants(vector<int>& plants, int capacity) {\n        int distance = 1, can = capacity;\n\n        for (int i=0; i<plants.size(); ++i) {\n            can -= plants[i];\n\n            if (i + 1 < plants.size()) {\n                if (can < plants[i + 1]) {\n                    distance += i + 1;\n                    distance += i + 1;\n                    can = capacity;\n                }\n\n                distance += 1;\n            }\n        }\n        \n        return distance;\n    }\n};"
     },
     "Q3": {
         "solve_time": "01:02:54",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class RangeFreqQuery {\nprivate:\n    unordered_map<int, vector<int>> occurMap;\n\n    int mySearch(vector<int> &occurList, int target, bool isLeft) {\n        /* [2, 4, 6, 8] */\n        int left = 0, right = occurList.size() - 1;\n\n        while (left <= right) {\n            \n            int mid = (left + right) / 2;            \n\n            if (occurList[mid] > target) {\n                right = mid - 1;\n            }\n            else if (occurList[mid] < target) {\n                left = mid + 1;\n            }\n            else {\n                return mid;\n            }            \n        }\n\n        if (isLeft)\n            return left;\n        return right;\n    }\n\npublic:\n    RangeFreqQuery(vector<int>& arr) {\n        for (int i=0; i<arr.size(); ++i) {\n            occurMap[arr[i]].push_back(i);\n        }        \n    }\n    \n    int query(int left, int right, int value) {\n        unordered_map<int, vector<int>>::iterator it = occurMap.find(value);\n\n        if (it == occurMap.end()) {            \n            return 0;\n        }\n\n        vector<int> &occurList = it->second;\n    \n        int leftIdx = mySearch(occurList, left, true);\n        int rightIdx = mySearch(occurList, right, false);        \n        return rightIdx - leftIdx + 1;\n    }\n};"
     },
     "Q4": {}

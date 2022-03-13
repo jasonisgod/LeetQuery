@@ -6,11 +6,13 @@
     "Q1": {
         "solve_time": "00:02:33",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int findFinalValue(vector<int>& nums, int original) {\n        int tmp = original;\n        while(find(nums.begin(), nums.end(), tmp) != nums.end()){\n            tmp *= 2;\n        }\n        return tmp;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:20:40",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> maxScoreIndices(vector<int>& nums) {\n        int n = nums.size();\n        vector<int> left(n, 0), right(n, 0);\n        int tmp_l = 0, tmp_r = 0, res_num = 0;\n        vector<int> res;\n        for(int i=0; i<n; i++){\n            if(nums[i] == 0){\n                tmp_l++;\n            }\n            left[i] = tmp_l;\n        }\n        for(int i=n-1; i>=0; i--){\n            if(nums[i] == 1){\n                tmp_r++;\n            }\n            right[i] = tmp_r;\n        }\n        res_num = right[0];\n        for(int i=1; i<n; i++){\n            res_num = max(left[i-1]+right[i], res_num);\n            //cout<<i<<\": \"<<\"res_num: \"<<res_num<<\" left: \"<<left[i-1]<<\" right: \"<<right[i]<<endl;\n        }\n        res_num = max(left[n-1], res_num);\n        //cout<<\"res_num: \"<<res_num<<endl;\n        \n        if(right[0] == res_num)\n            res.push_back(0);\n        for(int i=1; i<n; i++){\n            if(left[i-1] + right[i] == res_num){\n                res.push_back(i);\n            }\n        }\n        if(res_num == left[n-1])\n            res.push_back(n);\n        return res;\n    }\n};"
     },
     "Q3": {},

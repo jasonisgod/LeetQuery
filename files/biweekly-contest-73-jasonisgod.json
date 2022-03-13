@@ -6,6 +6,7 @@
     "Q1": {
         "solve_time": "01:23:59",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    int mostFrequent(vector<int>& nums, int key) {\n        set<int> s;\n        for (int x: nums) {\n            s.insert(x);\n        }\n        int n = nums.size();\n        int mx = 0;\n        int ans = 0;\n        for (int target: s) {\n            int count = 0;\n            for (int i = 0; i <= n-2; i++) {\n                if (nums[i] == key && nums[i + 1] == target)\n                    count++;\n            }\n            if (count > mx) {\n                mx = count;\n                ans = target;\n            }\n        }\n        return ans;\n    }\n};"
     },
     "Q2": {},

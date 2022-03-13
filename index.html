@@ -26,9 +26,9 @@
 <script>
     // TODO: hljs.highlightAll();hljs.initLineNumbersOnLoad();  after every refresh
     $(document).ready(function(){ init(); });
-    var usernameList = ['leovincentseles','seali','jasonisgod','jackycaelum','qm4zirQ15o','yoyo6245a','wubinray87'];
+    var usernameList = ['leovincentseles','seali','jasonisgod','jackycaelum','qm4zirQ15o','yoyo6245a','wubinray87','lh070355'];
     // TODO: shorten 'weekly-contest-283' to 'w283'
-    var contestNameList = ['w283','b73','w282','w281','w280','w279','w278','w277','w276','w275','w274','w273','w272']; 
+    var contestNameList = ['w283','b73','w282','w281','w280','w279','w278','w277','w276','w275','w274','w273','w272','w269'];
     contestNameList.forEach((e, i, arr) => {
         arr[i] = e.replace(/w/gi, 'weekly-contest-').replace(/b/gi, 'biweekly-contest-')
     });
@@ -101,6 +101,15 @@
             if (e['username'] == username) {
                 var code = e[question]['code'];
 		code = code.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
+                $('#code').removeAttr("class");
+                try {
+                    var lang = e[question]['lang'].trim();
+                    console.log(lang);
+                    $('#code').addClass('language-' + lang);
+                } catch (e) {
+                    console.log(e);
+                }
+
                 $('#code').html(code);
                 // console.log(code);
             }

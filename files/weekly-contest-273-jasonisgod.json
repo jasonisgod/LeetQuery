@@ -6,21 +6,25 @@
     "Q1": {
         "solve_time": "00:03:30",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    bool isSameAfterReversals(int num) {\n        return num == 0 || num % 10 != 0;\n    }\n};"
     },
     "Q2": {
         "solve_time": "00:10:26",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> executeInstructions(int n, vector<int>& startPos, string s) {\n        vector<int> ans;\n        int m = s.length();\n        for (int i = 0; i < m; i++) {\n            int count = 0;\n            int row = startPos[0], col = startPos[1];\n            for (int j = i; j < m; j++) {\n                if (s[j] == 'L') col--;\n                if (s[j] == 'R') col++;\n                if (s[j] == 'U') row--;\n                if (s[j] == 'D') row++;\n                if (row < 0 || row >= n || col < 0 || col >= n) {\n                    break;\n                }\n                count++;\n            }\n            ans.push_back(count);\n        }\n        return ans;\n    }\n};"
     },
     "Q3": {
         "solve_time": "00:33:44",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    struct Data {\n        long long sum;\n        int last;\n        int count;\n    };\n    vector<long long> getDistances(vector<int>& arr) {\n        int n = arr.size();\n        vector<long long> ans(n);\n        for (int d = 0; d < 2; d++) {\n            map<int, Data> m;\n            for (int ii = 0; ii < n; ii++) {\n                int i = (d == 0? ii: n-1-ii);\n                if (m.find(arr[i]) == m.end()) {\n                    m[arr[i]] = {0, i, 1};\n                } else {\n                    m[arr[i]].sum += abs(m[arr[i]].last - i) * m[arr[i]].count;\n                    m[arr[i]].last = i;\n                    m[arr[i]].count++;\n                    ans[i] += m[arr[i]].sum;\n                }\n            }\n        }\n        return ans;\n    }\n};"
     },
     "Q4": {
         "solve_time": "01:19:02",
         "fail_count": 0,
+        "lang": "cpp",
         "code": "class Solution {\npublic:\n    vector<int> recoverArray(vector<int>& nums) {\n        int n = nums.size();\n        sort(nums.begin(), nums.end());\n        for (int i = 1; i < n; i++) {\n            if ((nums[i] - nums[0]) % 2 == 1 || nums[i] == nums[0]) {\n                continue;\n            }\n            int count = 0;\n            int k = (nums[i] - nums[0]) / 2;\n            vector<int> ans;\n            unordered_multiset<int> set(nums.begin(), nums.end());\n            for (int j = 0; j < n && ans.size() < n/2; j++) {\n                auto a = set.find(nums[j]);\n                auto b = set.find(nums[j] + 2*k);\n                if (a == set.end()) {\n                    continue;\n                }\n                if (b == set.end()) {\n                    break;\n                }\n                ans.push_back(nums[j] + k);\n                set.erase(a);\n                set.erase(b);\n            }\n            if (ans.size() == n/2) {\n                return ans;\n            }\n        }\n        return vector<int>();\n    }\n};"
     }
 }
