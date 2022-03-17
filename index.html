@@ -34,6 +34,14 @@
         arr[i] = e.replace(/w/gi, 'weekly-contest-').replace(/b/gi, 'biweekly-contest-')
     });
     var data = {};
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        var modal = document.getElementById("codeModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
     function init() {
         var box = $('#box');
         contestNameList.forEach(contestName => {
@@ -183,14 +191,4 @@
     <br><br>
     <p>#jasonisgod &copy; Copyright 2022</p>
     <br><br>
-
-    <script>
-        // When the user clicks anywhere outside of the modal, close it
-        var modal = document.getElementById("codeModal");
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 </body>
