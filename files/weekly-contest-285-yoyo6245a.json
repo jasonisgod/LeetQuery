@@ -1,0 +1,25 @@
+{
+    "rank": 3139,
+    "username": "yoyo6245a",
+    "score": 12,
+    "finish_time": "01:34:30",
+    "Q1": {
+        "solve_time": "00:11:34",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countHillValley(vector<int>& nums) {\n        int res = 0;\n        if(nums.size() <= 2) return 0;\n        for(int i=1; i<nums.size()-1; i++){\n            int l = i-1;\n            int r = i+1;\n            int small = 0;\n            if(l >= 0 && nums[l] == nums[i]){\n                continue;\n            }\n            while(r <= nums.size()-1 && nums[r] == nums[i]){\n                r++;\n            }\n            //cout<<l<<\", \"<<i<<\", \"<<r<<endl;\n            if(l >= 0 && nums[l] != nums[i]){\n                if(nums[l] < nums[i])\n                    small = 1;\n                else small = 2;\n            }\n            if(r < nums.size() && nums[r] != nums[i]){\n                if(nums[r] < nums[i] && small == 1){\n                    res++;\n                    //cout<<\"++ \"<<l<<\", \"<<i<<\", \"<<r<<endl;\n                }\n                else if(nums[r] > nums[i] && small == 2){\n                    //cout<<\"++ \"<<l<<\", \"<<i<<\", \"<<r<<endl;\n                    res++;\n                }\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:27:17",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countCollisions(string dirs) {\n        int res = 0;\n        int st = 0;\n        for(int i=0; i<dirs.size(); i++){\n            if(dirs[i] == 'R'){\n                st++;\n            }else if(dirs[i] == 'S'){\n                res += st;\n                st = 0;\n            }else if(dirs[i] == 'L'){\n                if(i > 0){\n                    if(dirs[i-1] == 'S'){\n                        dirs[i] = 'S';\n                        res++;\n                    }else if(dirs[i-1] == 'R'){\n                        dirs[i] = 'S';\n                        res += st + 1;\n                    }\n                }\n                st = 0;\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:09:30",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> res;\n    int max = 0;\n    vector<int> maximumBobPoints(int numArrows, vector<int>& alice) {\n        vector<int> bob(12, 0);\n        back(numArrows, alice, 11, bob, 0);\n        return res;\n    }\n    void back(int num, vector<int>& alice, int idx, vector<int> bob, int score){\n        if(idx == 0){\n            if(score > max){\n                //cout<<\"score: \"<<score<<endl;\n                bob[0] = num;\n                res = bob;\n                max = score;\n            }\n            return;\n        }\n        back(num, alice, idx-1, bob, score);\n        if(num > alice[idx]){\n            bob[idx] = alice[idx] + 1;\n            back(num - alice[idx] - 1, alice, idx-1, bob, score+idx);\n        }\n    }\n};"
+    },
+    "Q4": {}
+}

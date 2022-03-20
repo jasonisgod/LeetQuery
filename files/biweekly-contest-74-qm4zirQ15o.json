@@ -1,0 +1,25 @@
+{
+    "rank": 3408,
+    "username": "qm4zirQ15o",
+    "score": 12,
+    "finish_time": "00:53:33",
+    "Q1": {
+        "solve_time": "00:05:15",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool divideArray(vector<int>& nums) {\n        int pairs = nums.size() / 2;\n        int elems = nums.size() / pairs;\n        \n        unordered_map<int, int> table;\n        for (auto n: nums) {\n            table[n]++;\n        }\n        \n        for (auto &it: table) {\n            if (it.second % elems != 0)\n                return false;\n        }\n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:38:33",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long maximumSubsequenceCount(string text, string pattern) {\n        \n        string tmp = \"\";\n        for (char ch: text) {\n            if (ch == pattern[0] || ch == pattern[1])\n                tmp += ch;\n        }\n        \n        if (pattern[0] == pattern[1]) {\n            return ((long long)tmp.size() * ((long long)tmp.size() + 1)) / 2 ;\n        }\n        \n        string case1 = tmp + pattern[1], case2 = pattern[0] + tmp;\n        long long c1 = 0, c2 = 0, a1 = 0, a2 = 0;\n        \n        for (int i = tmp.size(); i >= 0 ; i--) {\n            if (case1[i] == pattern[1])\n                c1++;\n            else\n                a1 += c1;\n            \n            if (case2[i] == pattern[1])\n                c2++;\n            else\n                a2 += c2;\n        }\n        \n        return max(a1, a2);\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:33:55",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int halveArray(vector<int>& nums) {\n        priority_queue<double> pq;\n        \n        double ans = 0;\n        for (auto n: nums) {\n            ans += n;\n            pq.push(n);\n        }\n        \n        double tar = ans / 2;\n        \n        double minus = 0;\n        int count = 0;\n        while (minus < tar) {\n            double top = (pq.top()) / 2;\n            minus += top;\n            pq.pop();\n            pq.push(top);\n            count++;\n        }\n        \n        return count;\n    }\n};"
+    },
+    "Q4": {}
+}

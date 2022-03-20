@@ -1,0 +1,30 @@
+{
+    "rank": 1184,
+    "username": "leovincentseles",
+    "score": 18,
+    "finish_time": "01:27:35",
+    "Q1": {
+        "solve_time": "00:01:50",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool divideArray(vector<int>& nums) {\n        unordered_map<int, int> numMap;\n        \n        for (int num: nums)\n            ++numMap[num];\n        \n        for (auto &mapPair: numMap)\n            if (mapPair.second % 2 != 0)\n                return false;\n        return true;        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:24:51",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    long long maximumSubsequenceCount(string text, string pattern) {\n        // inclusion counter\n        vector<LLI> aBefore(text.size(), 0);\n        vector<LLI> bAfter(text.size(), 0);\n        LLI maxVal = 0;\n        \n        aBefore[0] = (text[0] == pattern[0]);\n        bAfter.back() = (text.back() == pattern[1]);\n        \n        for (int i=1; i<aBefore.size(); ++i)\n            aBefore[i] = aBefore[i-1] + ((text[i] == pattern[0])? 1: 0);\n        \n        for (int i=((int)bAfter.size())-2; i>=0; --i)\n            bAfter[i] = bAfter[i+1] + ((text[i] == pattern[1])? 1: 0);\n        \n        LLI sum = bAfter[0];\n        for (int i=0; i+1<text.size(); ++i)\n            if (text[i] == pattern[0])\n                sum += bAfter[i+1];\n        \n        maxVal = max(maxVal, sum);\n        \n        sum = aBefore.back();\n        for (int i=text.size()-1; i>0; --i)\n            if (text[i] == pattern[1])\n                sum += aBefore[i-1];\n        \n        maxVal = max(maxVal, sum);\n        \n        return maxVal;        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:07:44",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    int halveArray(vector<int>& nums) {\n        LLI sum = accumulate(nums.begin(), nums.end(), 0ULL);\n        double currSum = sum;\n        int count = 0;\n        priority_queue<double> maxHeap(nums.begin(), nums.end());\n        \n        while (currSum > sum / 2.0) {\n            double maxVal = maxHeap.top();\n            maxHeap.pop();\n            currSum -= maxVal / 2;\n            maxHeap.push(maxVal / 2);        \n            ++count;\n        }\n        \n        return count;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:22:35",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "/*\n\nSolution: Dynamic Programming\n    for each index:\n        put[numCarpets]: minimum space previous\n        noput[numCarpets]: minimum space previous\n\n    put[index][i] = min(put[index-len][i+1], noput[index-len][i+1]);\n    noput[index][i] = (char == '1') + min(put[index-1][i], noput[index-1][i]);\n\n*/\n\nclass Solution {\npublic:\n    int minimumWhiteTiles(string floor, int numCarpets, int carpetLen) {\n        vector<vector<int>> put(floor.size()+1, vector<int>(numCarpets, 0));\n        vector<vector<int>> noput(floor.size()+1, vector<int>(numCarpets+1, 0));\n        int len = carpetLen;\n        \n        for (int i=1; i<=floor.size(); ++i) {\n            for (int j=0; j<=numCarpets; ++j) {\n                if (j == numCarpets)\n                    noput[i][j] = (floor[i-1] == '1') + noput[i-1][j];\n                else\n                    noput[i][j] = (floor[i-1] == '1') + min(put[i-1][j], noput[i-1][j]);                \n            }          \n                \n        \n            for (int j=0; j<numCarpets; ++j) {\n                if (i <= len)\n                    put[i][j] = 0;\n                else if (j == numCarpets - 1)\n                    put[i][j] = noput[i-len][j+1];\n                else\n                    put[i][j] = min(put[i-len][j+1], noput[i-len][j+1]);                \n            }                            \n        }\n        \n        int result = floor.size();\n        \n        for (int i=0; i<numCarpets; ++i)\n            result = min(result, put.back()[i]);\n        for (int i=0; i<=numCarpets; ++i)\n            result = min(result, noput.back()[i]);        \n\n        return result;\n    }\n};"
+    }
+}

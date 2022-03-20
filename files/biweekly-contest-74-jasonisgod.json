@@ -1,0 +1,30 @@
+{
+    "rank": 1248,
+    "username": "jasonisgod",
+    "score": 18,
+    "finish_time": "01:31:28",
+    "Q1": {
+        "solve_time": "00:17:16",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool divideArray(vector<int>& nums) {\n        const int MAX = 500;\n        int arr[MAX+1] = {0};\n        for (int i = 0; i < nums.size(); i++) {\n            arr[nums[i]]++;\n        }\n        for(int i = 0; i <= MAX; i++) {\n            if (arr[i] % 2 != 0) return false;\n        }\n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:26:28",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    long long maximumSubsequenceCount(string text, string pattern) {\n        const int MAX = 100000;\n        char a = pattern[0], b = pattern[1];\n        int n = text.length();\n        int arr[MAX+2] = {0};\n        for (int i = n-1; i >= 0; i--) {\n            arr[i] = (text[i] == b? 1: 0) + arr[i+1];\n        }\n        int na = 0, nb = 0;\n        for (int i = 0; i < n; i++) {\n            if (text[i] == a) na++;\n            if (text[i] == b) nb++;\n        }\n        // for (int i = 0; i < n; i++) {\n        //     cout << arr[i] << \" \";\n        // }\n        \n        if (a == b) {\n            return ((LLI)(na)) * (na+1) / 2;\n        }\n        \n        long long sum = 0;\n        for (int i = 0; i < n; i++) {\n            if (text[i] == a) {\n                sum += arr[i];\n            }\n        }\n        // cout << sum << endl;\n        return sum + max(na, nb);\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:14:15",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    int halveArray(vector<int>& nums) {\n        double sum = 0;\n        priority_queue<double> pq;\n        for (int x: nums) {\n            sum += x;\n            pq.push(x);\n        }\n        double half = sum/2;\n        int count = 0;\n        while (sum > half) {\n            double x = pq.top();\n            pq.pop();\n            sum -= x/2;\n            pq.push(x/2);\n            count++;\n        }\n        return count;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:14:55",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumWhiteTiles(string floor, int n, int len) {\n        string s = floor;\n        int nn = floor.length();\n        if (n * len >= nn) {\n            return 0;\n        }\n        int count = 0;\n        for (char c: s) {\n            if (c == '1') count++;\n        }\n        // cout << count << endl;\n        for (int i = 0; i < n; i++) {\n            int window = 0;\n            int mx = 0;\n            int idx = 0;\n            for (int j = 0; j <= nn; j++) {\n                if (j < len) {\n                    if (s[j] == '1') window++;\n                } else {\n                    if (window > mx) {\n                        mx = window;\n                        idx = j-len;\n                    }\n                    if (j == nn) break;\n                    if (s[j-len] == '1') window--; \n                    if (s[j] == '1') window++;\n                }\n            }\n            // cout << \"i=\" << i << \" w=\" << window << \" idx=\" << idx << endl;\n            for (int j = 0; j < len; j++) {\n                if (s[idx+j] == '1') count--;\n                s[idx+j] = '0';\n            }\n            if (count == 0) {\n                return 0;\n            }\n        }\n        return count;\n    }\n};"
+    }
+}

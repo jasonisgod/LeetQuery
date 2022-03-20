@@ -1,0 +1,20 @@
+{
+    "rank": 5175,
+    "username": "seali",
+    "score": 7,
+    "finish_time": "00:48:11",
+    "Q1": {
+        "solve_time": "00:48:11",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countHillValley(vector<int>& nums) {\n        \n        vector<int> tmp;\n        \n        tmp.push_back(nums[0]);\n        \n        for(auto num :nums) {\n            if (num != tmp[tmp.size()-1])\n                tmp.push_back(num);\n        }\n        \n        int output = 0;\n        \n        for (int i = 0 ; i < tmp.size(); i++) {\n\n            if ( i == 0) {\n                continue;\n            } else if (i == tmp.size()-1) {\n                continue;\n            } else {\n                if (tmp[i] > tmp[i-1] && tmp[i] > tmp[i+1])\n                    output ++;\n                else if (tmp[i] < tmp[i-1] && tmp[i] < tmp[i+1])\n                    output ++;\n            }\n            \n        }\n        return output;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:36:10",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countCollisions(string directions) {\n        \n        int output = 0 ;\n        \n        int size = directions.size();\n        \n        vector<int> dp_left(size);\n        \n        dp_left[0] = 0;\n        \n        for (int i = 1 ; i < size; i++) {\n            dp_left[i] = (dp_left[i-1] || directions[i-1] == 'S' || directions[i-1] == 'R')? 1 : 0;\n        }\n        \n        vector<int> dp_right(size);\n        \n        dp_right[size-1] = 0;\n        \n        for (int i = size-2 ; i >=0; i--) {\n            dp_right[i] = (dp_right[i+1] || directions[i+1] == 'S' || directions[i+1] == 'L')? 1 : 0;\n        }\n        \n        for (int i = 0 ; i < size; i++) {\n            if (directions[i] == 'L')\n                output += dp_left[i] == 1? 1:0;\n        }\n        for (int i = size-1 ; i>=0 ; i--) {\n            if (directions[i] == 'R')\n                output += dp_right[i] == 1? 1:0;\n        }\n        \n        \n        \n        return output ;\n        \n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}
