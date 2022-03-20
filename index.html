@@ -15,16 +15,24 @@
         td { padding: 5px 10px;  white-space: nowrap; font-size: 15px; }
         td.q { width: 10%; min-width: 100px; }
         button { border-radius: 5px; border: 0; margin: 0 5px; background-color: #bbb; font-size: 10px;} 
-        pre { margin: 1px; }
-        code { border:#bbb solid 1px; border-radius: 15px; padding: 30px; margin: 0 30px; text-align: left;}
+        /*pre { margin: 1px; }
+        code { border:#bbb solid 1px; border-radius: 15px; padding: 30px; margin: 0 30px; text-align: left;}*/
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
 <link rel="stylesheet" href="./css/vscode.css">
 <link rel="stylesheet" href="./css/code.css">
+<link rel="stylesheet" href="./css/modal.css">
 <script>
     $(document).ready(function(){ init(); });
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        var modal = document.getElementById("codeModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
     var baseUrl = location.href.substring(0, location.href.lastIndexOf('/'));
     console.log(baseUrl);
     var usernameList = [
@@ -163,7 +171,9 @@
             }
         });
         hljsUpdate();
-        $([document.documentElement, document.body]).animate({ scrollTop: $("#code").offset().top }, 1000);
+        var codeModal = document.getElementById("codeModal");        
+        codeModal.style.display = "block";        
+        // $([document.documentElement, document.body]).animate({ scrollTop: $("#code").offset().top }, 1000);
     }
     function hljsUpdate() {
         hljs.highlightAll();
@@ -210,25 +220,39 @@
         // TODO: replace by $.when(fetch1, fetch2, fetch3, ...)
         setTimeout(updateTables, 2000);
     }
+    function closeModal() {
+        var codeModal = document.getElementById("codeModal");        
+        codeModal.style.display = "none"; 
+    }
 </script>
-<body>
-        <br><br>
-        <h1>LeetQuery</h1>
-        <h6 id="bb">Blackbox Contest</h6>
-        <p>Sponsored by Google Chen</p>
-        <p>Hosted by Jason Che</p>
-        <p>Premium Leader Jacky Lin</p>
-        <br><br>
-        <img src="https://assets.leetcode.com/users/leetcode/avatar_1568224780.png">
-        <br><br>
-        <div id="box"></div>
-        <br><br>
-        <div><pre><code id="code" class="language-python">def leetquery():
-    username_list = ['leovincentseles','jasonisgod','jackycaelum']
-    contest_name_list = ['weekly-contest-{i}' for i in range(1,999)]
-    query_contests(contest_name_list, username_list)
-        </code></pre></div>
-        <br><br>
-        <p>#jasonisgod &copy; Copyright 2022</p>
-        <br><br>
+<body>    
+    <!-- The Code Modal -->
+    <div id="codeModal" class="modal">
+        <!-- Modal content -->
+        <div id="modalContent" class="modal-hide">
+            <!--<div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>-->
+            <div id="codeDiv">
+                <pre><code id="code"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+    <h1>LeetQuery</h1>
+    <h6 id="bb">Blackbox Contest</h6>
+    <p>Sponsored by Google Chen</p>
+    <p>Hosted by Jason Che</p>
+    <p>Premium Leader Jacky Lin</p>
+    <br><br>
+    <img src="https://assets.leetcode.com/users/leetcode/avatar_1568224780.png">
+    <br><br>
+    <div id="box"></div>
+    <br><br>
+    
+    <br><br>
+    <p>#jasonisgod &copy; Copyright 2022</p>
+    <br><br>
 </body>

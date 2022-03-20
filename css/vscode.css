@@ -5,7 +5,7 @@
 pre code.hljs{
     display:block;
     overflow-x:auto;
-    padding:1em
+    padding: 8px;
 }
 
 .hljs {
@@ -24,7 +24,8 @@ pre code.hljs{
 .hljs td {
     color:#d3cfc8;
     cursor: text;
-    line-height: 22px;
+    line-height: 21px;
+    font-size: 15px;
 }
 
 .hljs td::selection {
@@ -74,10 +75,13 @@ span.class_ {
 .hljs-symbol,
 .hljs-bullet,
 .hljs-addition,
-.hljs-variable,
 .hljs-template-tag,
 .hljs-template-variable {    
     color: #569cd6;
+}
+
+.hljs-variable {
+    color: #81c6e0;
 }
 
 .hljs-string {
