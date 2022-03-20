@@ -1,0 +1,25 @@
+{
+    "rank": 648,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:39:35",
+    "Q1": {
+        "solve_time": "00:03:59",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {\n        unordered_set<int> idxSet;        \n        \n        for (int i=0; i<nums.size(); ++i) {\n            if (nums[i] == key) {\n                for (int j=i-k; j<=i+k; ++j) {\n                    if (j < 0 || j >= nums.size())\n                        continue;\n                    idxSet.insert(j);\n                }\n            }\n        }\n        \n        vector<int> result(idxSet.begin(), idxSet.end());\n        sort(result.begin(), result.end());\n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:14:54",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int digArtifacts(int n, vector<vector<int>>& artifacts, vector<vector<int>>& dig) {\n        vector<vector<int>> grid(n, vector<int>(n, 0));\n        vector<int> count(artifacts.size()+1, 0);\n        int id = 1, result = 0;\n        \n        for (vector<int> &artifact: artifacts) {\n            int row1 = artifact[0], col1 = artifact[1], row2 = artifact[2], col2 = artifact[3];\n            for (int row=row1; row<=row2; ++row) {\n                for (int col=col1; col<=col2; ++col) {\n                    grid[row][col] = id;    \n                    ++count[id];\n                }\n            }\n            \n            ++id;\n        }\n        \n        for (vector<int> &adig: dig) {\n            int row = adig[0], col = adig[1];\n            // printf(\"%d, %d, %d\\n\", n, row, col);\n            if (grid[row][col] != 0) {\n                if (--count[grid[row][col]] == 0)\n                    ++result;\n                grid[row][col] = 0;\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:39:35",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "/*\n    0 (0, 2, 3), 1 , 2, 3, 4, 5, 6\n    \n\n*/\nclass Solution {\npublic:\n    int maximumTop(vector<int>& nums, int k) {\n        if (nums.size() == 1)\n            return (k % 2 == 0)? nums[0]: -1;\n        \n        if (k <= 1)\n            return nums[k];\n                            \n        if (k - 1 >= nums.size())\n            return *max_element(nums.begin(), nums.end());\n        \n        int maxVal = *max_element(nums.begin(), nums.begin()+k-1);\n        if (k < nums.size())\n            maxVal = max(maxVal, nums[k]);\n        \n        return maxVal;\n    }\n};"
+    },
+    "Q4": {}
+}

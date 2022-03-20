@@ -1,0 +1,25 @@
+{
+    "rank": 2422,
+    "username": "jackycaelum",
+    "score": 12,
+    "finish_time": "01:24:25",
+    "Q1": {
+        "solve_time": "00:06:16",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {\n        unordered_set<int> uset;\n        vector<int> ans;\n        \n        for (int i=0; i<nums.size(); i++) {\n            if (nums[i] == key)\n                uset.insert(i);          \n        }\n        \n        for (int i=0; i<nums.size(); i++) {\n            for (auto &index: uset) {\n                if (abs(i - index) <= k) {\n                    ans.push_back(i);     \n                    break;\n                }                        \n            }\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:34:25",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int digArtifacts(int n, vector<vector<int>>& artifacts, vector<vector<int>>& dig) {\n        int ans = 0;\n        \n        vector<vector<int>> art;       \n        for (int i=0; i<n; i++) {\n            vector<int> v;\n            for (int j=0; j<n; j++) {\n                v.push_back(0);\n            }\n            art.push_back(v);\n        }\n        \n        unordered_map<int, int> umap;\n        for (int n=0; n<artifacts.size(); n++) {\n            vector<int> &a = artifacts[n];\n            int x1=a[0], x2=a[2], y1=a[1], y2=a[3];\n            \n            for (int i=x1; i<=x2; i++) {\n                for (int j=y1; j<=y2; j++) {\n                    art[i][j] = n+1;\n                    umap[n+1]++;\n                }\n            } \n        }\n        \n        for (auto &d: dig) {\n            int x=d[0], y=d[1];\n            \n            int num = art[x][y];\n            // art[x][y] = 0;\n            umap[num]--;\n            \n            if (umap[num] > 0)\n                continue;\n            else if (umap[num] == 0)\n                ans++;\n            \n            // if (x-1>=0 && art[x-1][y] == num)\n            //     continue;\n            // if (y-1>=0 && art[x][y-1] == num)\n            //     continue;\n            // if (x+1<art.size() && art[x+1][y] == num)\n            //     continue;\n            // if (y+1<art[0].size() && art[x][y+1] == num)\n            //     continue;\n            \n            // bool find = false;\n            // for (int i=0; i<art.size(); i++) {\n            //     for (int j=0; j<art[0].size(); j++) {\n            //         if (art[i][j] == num) {\n            //             find = true;\n            //             break;\n            //         }            \n            //     }\n            // }\n            // if (find)\n            //     continue;\n            // else\n            //     ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:54:25",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int maximumTop(vector<int>& nums, int k) {\n        if (nums.size() == 0)\n            return -1;\n        \n        if (k == 0)\n            return nums[0];\n        \n        if (nums.size() == 1 && k%2 == 1)\n            return -1;\n        \n        if (nums.size() == 1)\n            return nums[0];\n        \n        if (k == 1)\n            return nums[1];\n        \n        if (nums.size() < k) {\n            auto it = max_element(nums.begin(), nums.end());\n            return (*it);\n        }\n        \n        if (nums.size() == k) {\n            auto it = max_element(nums.begin(), nums.end()-1);\n            return (*it);\n        }    \n        \n        vector<int> re_pile;\n        for (int i=0; i<k-1; i++) {\n            re_pile.push_back(nums[0]);\n            nums.erase(nums.begin());\n        }\n        \n        auto it = max_element(re_pile.begin(), re_pile.end());\n        if (nums[1] > (*it))\n            return nums[1];\n        else\n            return (*it);\n        \n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 2537,
+    "username": "yoyo6245a",
+    "score": 12,
+    "finish_time": "01:27:28",
+    "Q1": {
+        "solve_time": "00:25:28",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {\n        vector<int> res;\n        int l = 0, r, idx = 0;\n        int n = nums.size();\n        for(int i=0; i<n; i++){\n            if(nums[i] == key){\n                l = i-k < 0? 0:i-k;\n                if(l < idx) l = idx;\n                r = i+k >= n-1? n-1:i+k;\n                if(idx > r) l = r+1;\n                idx = r+1;\n                //cout<<i<<\": \"<<l<<\", \"<<r<<\" idx: \"<<idx<<endl;\n                for(int j=l; j<=r; j++){\n                    //cout<<i<<\" push \"<<j<<endl;\n                    res.push_back(j);\n                }\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:35:55",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int digArtifacts(int n, vector<vector<int>>& artifacts, vector<vector<int>>& dig) {\n        vector<vector<bool>> D(n, vector<bool>(n, false));\n        int res = 0;\n        for(vector<int> d: dig){\n            D[d[0]][d[1]] = true;\n        }\n        for(vector<int> art: artifacts){\n            bool flag = true;\n            for(int i=art[0]; i<=art[2]; i++){\n                if(!flag) break;\n                for(int j=art[1]; j<=art[3]; j++){\n                    if(!flag) break;\n                    if(D[i][j] == false){\n                        flag = false;\n                    }\n                }\n            }\n            if(flag) res++;\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:07:28",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int maximumTop(vector<int>& nums, int k) {\n        int n = nums.size();\n        int max = -1, sec = -1, idx = 0;\n        if(nums.size() == 1){\n            if(k % 2 == 1)\n                return -1;\n            else\n                return nums[0];\n        }\n        int res = 0;\n        for(int i=0; i<=k; i++){\n            if(i == n) break;\n            if(sec == -1){\n                sec = nums[i];\n            }\n            if(nums[i] > sec){\n                sec = nums[i];\n            }\n            if(nums[i] >= max){\n                sec = max;\n                max = nums[i];\n                idx = i;\n            }\n            //cout<<nums[i]<<\": \"<<max<<\", \"<<sec<<endl;\n        }\n        if(sec == -1 && k <= n){\n            sec = nums[k];\n        }\n        //cout<<max<<\", \"<<sec<<endl;\n        if(k - idx == 1)\n            return sec;\n        else \n            return max;\n        return res;\n    }\n};"
+    },
+    "Q4": {}
+}

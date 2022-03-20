@@ -1,0 +1,25 @@
+{
+    "rank": 2562,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "01:27:57",
+    "Q1": {
+        "solve_time": "00:05:57",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def findKDistantIndices(self, nums: List[int], key: int, k: int) -> List[int]:\n        ans = []\n        n = len(nums)\n        for i in range(n):\n            if key in nums[max(0, i-k):min(n, i+k+1)]:\n                ans.append(i)\n        return ans"
+    },
+    "Q2": {
+        "solve_time": "00:31:24",
+        "fail_count": 0,
+        "lang": "java",
+        "code": "class Solution {\n    public int digArtifacts(int n, int[][] arts, int[][] dig) {\n        int MAX = 100000;\n        int[][] map = new int[n][n];\n        for (int i = 0; i < n; i++)\n            for (int j = 0; j < n; j++)\n                map[i][j] = -1;\n        int[] nums = new int[MAX];\n        int[] cnts = new int[MAX];\n        int k = arts.length;\n        for (int i = 0; i < k; i++) {\n            int[] t = arts[i];\n            int xmin = Math.min(t[1], t[3]);\n            int ymin = Math.min(t[0], t[2]);\n            int xmax = Math.max(t[1], t[3]);\n            int ymax = Math.max(t[0], t[2]);\n            for (int y = ymin; y <= ymax; y++)\n                for (int x = xmin; x <= xmax; x++)\n                    map[y][x] = i;\n            cnts[i] = (ymax-ymin+1)*(xmax-xmin+1);\n        }\n        int ans = 0;\n        for (int i = 0; i < dig.length; i++) {\n            int x = dig[i][1];\n            int y = dig[i][0];\n            int v = map[y][x];\n            map[y][x] = -2;\n            if (v < 0) {\n                continue;\n            } else {\n                cnts[v]--;\n                if (cnts[v] == 0) {\n                    ans++;\n                }\n            }\n        }\n        return ans;\n        \n        // for (int i = 0; i < n; i++) {\n        //     for (int j = 0; j < n; j++)\n        //         System.out.printf(\"%d \", map[i][j]);\n        //     System.out.println();\n        // }\n        // for (int i = 0; i < k; i++) {\n        //     System.out.printf(\":%d %d\\n\", i, cnts[i]);\n        // }\n        // System.out.println();\n        // System.out.println();\n        // return 0;\n    }\n}"
+    },
+    "Q3": {
+        "solve_time": "01:12:57",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int kmax(vector<int>& nums, int k) {\n        if (nums.size() == 1) {\n            return nums[0];\n        }\n        priority_queue <int> pq;\n        for (int x: nums) {\n            pq.push(x);\n        }\n        int first = pq.top(); pq.pop();\n        int second = pq.top(); pq.pop();\n        if (k == 1) return first;\n        if (k == 2) return second;\n        return -1;\n    }\n    int maximumTop(vector<int>& nums, int k) {\n        int n = nums.size();\n        if (n == 1) {\n            if (k % 2 == 0) {\n                return nums[0];\n            } else {\n                return -1;\n            }\n        }\n        if (k == 0) {\n            return nums[0];\n        }\n        if (k == 1) {\n            if (n == 0) {\n                return -1;\n            } else {\n                return nums[1];\n            }\n        }\n        int first = kmax(nums, 1);\n        int second = kmax(nums, 2);\n        // cout << first << \" \" << second << endl;\n        int last = nums[n-1];\n        if (k > n) {\n            return first;\n        } else if (k == n) {\n            if (last == first) {\n                return second;\n            } else {\n                return first;\n            }\n        } else {\n            vector<int> v(nums.begin(), nums.begin()+k-1);\n            int tmp = kmax(v, 1);\n            return max(tmp, nums[k]);\n        }\n        return -1;\n    }\n};\n\n// int first = -1, second = -1;\n// for (int i = 0; i < n; i++) {\n//     first = max(first, nums[i]);\n// }\n//         sort(nums.begin(), nums.end(), greater<>);\n//         int first = nums[0];\n//         int second = nums[1];"
+    },
+    "Q4": {}
+}
