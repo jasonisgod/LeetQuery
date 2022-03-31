@@ -127,12 +127,12 @@ def query_contests(contest_name_list, username_list):
     return
 
 def main():
-    print(f'\rStart {SPACES}')
-    username_list = ['leovincentseles','jackycaelum','qm4zirQ15o','seali','jasonisgod','yoyo6245a','wubinray87','lh070355']
-    # username_list = ['seali']
     contest_name_list = ['biweekly-contest-73']
+    username_list = json.load(open('username.json', 'r'))
+    print(contest_name_list)
+    print(username_list)
     query_contests(contest_name_list, username_list)
-    print(f'\rFinished {SPACES}')
+    print(f'\r{SPACES}')
 
 for i in range(5): main()
 
