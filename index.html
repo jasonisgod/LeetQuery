@@ -34,36 +34,31 @@
         }
     }
     var baseUrl = location.href.substring(0, location.href.lastIndexOf('/'));
-    console.log(baseUrl);
-    var usernameList = [
-        'leovincentseles',
-        'jasonisgod',
-        'jackycaelum',
-        'seali',
-        'qm4zirQ15o',
-        'yoyo6245a',
-        'wubinray87',
-        'lh070355',
-        'a_n_d_r_e_w_chen',
-        'mian5102'
-    ];
-    // var contestNameList = ['w285','b74','w284','w283','b73','w282','w281','w280','w279','w278','w277','w276','w275','w274','w273','w272','w269'];
-    var contestNameList = ['w285','b74','w284'];
-    // var contestNameList = ['w285','b74','w284','w283','w282'];
-    var data = {};
+    var tableData = {};
+    var usernameList = [];
+    var contestNameList = [];
     var handicapList = {};
     function init() {
-        initTables();
-        fetchHandicap();
-        fetchBoard();
-        hljsUpdate();
-        setTimeout(updateTables, 2000);
+        setTimeout(() => {
+            fetchFile('handicap.json', json => handicapList = json);
+            fetchFile('username.json', json => usernameList = json);
+            fetchFile('contest.json', json => contestNameList = json);
+        }, 0);
+        setTimeout(() => {
+            console.log(handicapList);
+            console.log(usernameList);
+            console.log(contestNameList);
+            fetchBoard();
+        }, 1000);
+        setTimeout(() => {
+            console.log(tableData);
+            initTables();
+            updateTables();
+            hljsUpdate();
+        }, 5000);
         // setTimeout(() => location.reload(), 30000);
     }
     function initTables() {
-        contestNameList.forEach((e, i, arr) => {
-            arr[i] = e.replace(/w/gi, 'weekly-contest-').replace(/b/gi, 'biweekly-contest-')
-        });
         contestNameList.forEach(contestName => {
             var h3 = $('<h3>').html(contestName);
             $('#box').append(h3);
@@ -73,17 +68,17 @@
     }
     function updateTables() {
         contestNameList.forEach(contestName => {
-            if (data[contestName].length == 0) {
+            if (tableData[contestName].length == 0) {
                 $('#' + contestName).html('[ No Data ]');
                 return;
             }
             // console.log(contestName);
-            data[contestName].forEach(e => {
+            tableData[contestName].forEach(e => {
                 e['handicap'] = getHandicap(contestName, e['username']);
                 e['black_time'] = getBlackTime(e['handicap'], e['finish_time']);
                 // console.log(contestName, e['username'], e['handicap'], e['black_time']);
             });
-            data[contestName].sort(function(a, b) {
+            tableData[contestName].sort(function(a, b) {
                 var aScore = parseInt(a['score']);
                 var bScore = parseInt(b['score']);
                 if (aScore != bScore) return bScore - aScore;
@@ -105,7 +100,7 @@
                 tr.append($('<td>(Rank)</td>'));
             table.append(tr);
             var count = 1;
-            data[contestName].forEach(e => {
+            tableData[contestName].forEach(e => {
                 var tr = $('<tr></tr>');
                 tr.append($('<td></td>').text(count)); count++;
                 tr.append($('<td></td>').html(e['username'].padEnd(15).replaceAll(' ', '&nbsp')));
@@ -136,8 +131,6 @@
             });
             $('#' + contestName).html('').append(table);
         });
-        console.log(handicapList);
-        console.log(data);
     }
     function getHandicap(contestName, username) {
         var handicap = handicapList[contestName + '-' + username];
@@ -151,7 +144,7 @@
     }
     function showCode(contestName, username, question) {
         // console.log(contestName, username, question);
-        data[contestName].forEach(e => {
+        tableData[contestName].forEach(e => {
             if (e['username'] == username) {
                 var code = e[question]['code'];
 		code = code.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
@@ -180,39 +173,27 @@
         hljs.initLineNumbersOnLoad();
     }
     function fetchBoard() {
-        data = {}
+        tableData = {}
         contestNameList.forEach(contestName => {
-            data[contestName] = [];
+            tableData[contestName] = [];
             usernameList.forEach(username => {
-                var headers = new Headers();
-                headers.append('Content-Type', 'application/json');
-                headers.append('Accept', 'application/json');
                 var url = (baseUrl) + '/files/' + contestName + '-' + username + '.json';
-                fetch(url, {
-                    mode: 'cors',
-                    credentials: 'include',
-                    method: 'GET',
-                    headers: headers
-                }).then(response => response.json())
-                    .then(json => data[contestName].push(json))
-                    .catch(error => console.log(error.message));
+                fetchFile(url, json => tableData[contestName].push(json));
             });
         });
     }
-    function fetchHandicap() {
+    function fetchFile(url, func) {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Accept', 'application/json');
-        var url = (baseUrl) + '/handicap.json';
         fetch(url, {
             mode: 'cors',
             credentials: 'include',
             method: 'GET',
             headers: headers
         }).then(response => response.json())
-            .then(json => handicapList = json)
+            .then(json => func(json))
             .catch(error => console.log(error.message));
-
     }
     function myTimer() {
         fetchHandicap();
