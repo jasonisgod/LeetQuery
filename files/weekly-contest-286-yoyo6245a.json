@@ -1,0 +1,15 @@
+{
+    "rank": 11161,
+    "username": "yoyo6245a",
+    "score": 3,
+    "finish_time": "00:09:19",
+    "Q1": {
+        "solve_time": "00:09:19",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {\n        sort(nums1.begin(), nums1.end());\n        nums1.erase( unique( nums1.begin(), nums1.end() ), nums1.end() );\n        sort(nums2.begin(), nums2.end());\n        nums2.erase( unique( nums2.begin(), nums2.end() ), nums2.end() );\n        int i=0, j=0;\n        vector<vector<int>> res(2, vector<int>());\n        while(i < nums1.size() || j < nums2.size()){\n            //cout<<i<<\", \"<<j<<endl;\n            if(i == nums1.size()){\n                res[1].push_back(nums2[j++]);\n            }else if(j == nums2.size()){\n                res[0].push_back(nums1[i++]);\n            }else{\n                if(nums1[i] > nums2[j]){\n                    res[1].push_back(nums2[j++]);\n                }else if(nums2[j] > nums1[i]){\n                    res[0].push_back(nums1[i++]);\n                }else{\n                    i++;\n                    j++;\n                }\n            }\n        }\n        return res;\n        \n    }\n};"
+    },
+    "Q2": {},
+    "Q3": {},
+    "Q4": {}
+}

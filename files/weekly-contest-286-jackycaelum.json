@@ -1,0 +1,20 @@
+{
+    "rank": 7200,
+    "username": "jackycaelum",
+    "score": 7,
+    "finish_time": "00:39:45",
+    "Q1": {
+        "solve_time": "00:05:26",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {\n        unordered_set<int> uset1;\n        unordered_set<int> uset2;\n        unordered_set<int> aset1;\n        unordered_set<int> aset2;\n        \n        vector<int> ans1;\n        vector<int> ans2;\n        vector<vector<int>> ans;\n        \n        for (int &n: nums1) {\n            uset1.insert(n);\n        }   \n        for (int &n: nums2) {\n            uset2.insert(n);\n        }\n        \n        for (int &n: nums1) {\n            if (uset2.count(n) == 0 && aset1.count(n) == 0) {  \n                ans1.push_back(n);\n                aset1.insert(n);\n            }\n        }\n        ans.push_back(ans1);\n        \n        for (int &n: nums2) {\n            if (uset1.count(n) == 0 && aset2.count(n) == 0) {  \n                ans2.push_back(n);\n                aset2.insert(n);\n            }\n        }\n        ans.push_back(ans2);\n        \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:29:45",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minDeletion(vector<int>& nums) {\n        int ans = 0;\n        \n        for (int i=0; i<nums.size();) {\n            int index = i+1;\n            while (index < nums.size() && nums[i] == nums[index]) {\n                ans++;\n                index++;\n            }\n            i = index+1;\n        }\n        \n        if ((nums.size()-ans) % 2 == 1)\n            ans++;\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

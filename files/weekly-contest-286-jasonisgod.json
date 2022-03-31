@@ -1,0 +1,25 @@
+{
+    "rank": 3771,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "01:33:25",
+    "Q1": {
+        "solve_time": "01:00:51",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums1\n * @param {number[]} nums2\n * @return {number[][]}\n */\nvar findDifference = function(nums1, nums2) {\n    var a = nums1.filter(x => !nums2.includes(x));\n    var b = nums2.filter(x => !nums1.includes(x));\n    return [[...new Set(a)], [...new Set(b)]];\n};"
+    },
+    "Q2": {
+        "solve_time": "01:03:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minDeletion(vector<int>& nums) {\n        vector<int> v;\n        int i = 0;\n        while (nums.size() > i+1) {\n            if (nums[i] != nums[i + 1]) {\n                v.push_back(nums[i]);\n                v.push_back(nums[i + 1]);\n                i++;\n            }\n            i++;\n        }\n        return nums.size() - v.size();\n    }\n};\n"
+    },
+    "Q3": {
+        "solve_time": "00:57:39",
+        "fail_count": 6,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    int numDigits(LLI number)\n    {\n        int digits = 0;\n        if (number < 0) digits = 1;\n        while (number) {\n            number /= 10;\n            digits++;\n        }\n        return digits;\n    }\n    LLI nthPalindrome(LLI n, int k)\n    {\n        int tmp = (k & 1) ? (k / 2) : (k/2 - 1);\n        LLI p = 1;\n        for (int i = 0; i < tmp; i++) {\n            p *= 10;\n        }\n        p += n - 1;\n        LLI ans = p;\n        int first = p;\n        while (first >= 10) {\n            first /= 10;\n        }\n        if (k & 1) p /= 10;\n        \n        while (p > 0)\n        {\n            if (numDigits(ans) > k) return -1;\n            ans = ans * 10 + p % 10;\n            p /= 10;\n        }\n        ans = ans - ans%10 + first;\n        return ans;\n    }\n    vector<long long> kthPalindrome(vector<int>& queries, int intLength) {\n        vector<LLI> v;\n        for (int q: queries) {\n            LLI ans = nthPalindrome(q, intLength);\n            v.push_back(ans);\n        }\n        return v;\n    }\n};"
+    },
+    "Q4": {}
+}

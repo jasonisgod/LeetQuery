@@ -1,0 +1,25 @@
+{
+    "rank": 1491,
+    "username": "leovincentseles",
+    "score": 13,
+    "finish_time": "02:01:18",
+    "Q1": {
+        "solve_time": "00:03:11",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {\n        unordered_set<int> numSet1, numSet2;\n        \n        for (int num: nums1)\n            numSet1.insert(num);\n        \n        for (int num: nums2)\n            numSet2.insert(num);\n        \n        vector<vector<int>> result(2, vector<int>());\n        \n        for (int num: numSet1)\n            if (numSet2.count(num) == 0)\n                result[0].push_back(num);\n        \n        for (int num: numSet2)\n            if (numSet1.count(num) == 0)\n                result[1].push_back(num);\n        \n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:23:03",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "/*\n[1,1,2,2,3,3]\n[1,2,2,3,3]\n\n[7,1,2,2,1,7,5,8,0,2,0,7,4,1,4,3,6,9,4]\n[7,1,2,1,7,5,8,0,2,0,7,4,1,4,3,6,9,4]\n\n*/\n\nclass Solution {\npublic:\n    int minDeletion(vector<int>& nums) {\n        int result = 0;\n        vector<int> arr;\n        arr.push_back(nums[0]);\n        \n        for (int i=1, j=1; i<nums.size(); ++i) {\n            if (j % 2 == 1 && nums[i] == arr[j-1]) {\n                ++result;\n            } else {\n                arr.push_back(nums[i]);\n                ++j;\n            }\n        }\n        \n        if (arr.size() % 2 == 1)\n            ++result;\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {
+        "solve_time": "01:21:18",
+        "fail_count": 6,
+        "lang": "cpp",
+        "code": "/*\n\nDynamic Programming:\n    N * K * K\n\n*/\n\nclass Solution {\nprivate:    \n    int prefixSum[1001][2001] = {0};\n    int mem[1001][2001] = {0};\n    int maxPick(vector<vector<int>>& piles, int n, int k) {\n        if (k == 0 || n == 0)\n            return 0;\n        \n        if (mem[n][k] != 0)\n            return mem[n][k];\n        \n        int maxVal = 0;\n        for (int i=0; i<=min(k, (int)piles[n-1].size()); ++i)\n            maxVal = max(maxVal, maxPick(piles, n-1, k-i) + prefixSum[n-1][i]);\n        \n        return mem[n][k] = maxVal;\n    }\n    \npublic:\n    int maxValueOfCoins(vector<vector<int>>& piles, int k) {    \n        for (int i=0; i<piles.size(); ++i) {\n            int sum = 0;\n            \n            for (int j=0; j<k; ++j) {\n                if (j < piles[i].size()) {\n                    sum += piles[i][j];\n                }\n                prefixSum[i][j+1] = sum;\n            }\n        }\n    \n        return maxPick(piles, piles.size(), k);\n        /*\n        for (int i=1; i<=piles.size(); ++i) {\n            for (int j=0; j<=k; ++j) {\n                mem[i][j] = mem[i-1][j] + prefixSum[i-1][j];\n            }\n        }*/\n    }\n};"
+    }
+}
