@@ -1,0 +1,25 @@
+{
+    "rank": 751,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:24:54",
+    "Q1": {
+        "solve_time": "00:04:17",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int mostWordsFound(vector<string>& sentences) {\n        int ans = -1;\n        for(auto s : sentences) {\n            int cnt = 1;\n            for(char c : s) {\n                if(c == ' ')\n                    cnt++;\n            }\n            ans = max(ans, cnt);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:28:28",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {\n        \n        map<string, pair<int, vector<string>>> nodes;\n        set<string> p;\n        \n        for(int i = 0; i < recipes.size(); i++) {\n            for(auto ingre : ingredients[i]) {\n                nodes[ingre].second.push_back(recipes[i]);\n                nodes[recipes[i]].first++;\n            }\n        }\n        vector<string> ans;\n\n        queue<string> q;\n        for(auto sup : supplies) {\n            q.push(sup);\n        }\n        \n        while(!q.empty()) {\n            \n            auto x = q.front();\n            q.pop();\n            \n            for(auto nxt : nodes[x].second) {\n                nodes[nxt].first--;\n                if(nodes[nxt].first == 0) {\n                    q.push(nxt);\n                    ans.push_back(nxt);\n                }\n            }\n        }\n        \n        return ans;\n        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:09:54",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool canBeValid(string s, string locked) {\n        \n        if(s.length() % 2)\n            return false;\n        \n        int n1 = s.length() / 2, n2 = n1;\n        int st = 0;\n        \n        for(int i = 0; i < s.length(); i++) {\n            if(locked[i] == '1') {\n                if(s[i] == '(')\n                    n1--;\n                else\n                    n2--;\n            }\n        }\n        \n        for(int i = 0; i < s.length(); i++) {\n         \n            // not locked\n            if(locked[i] == '0') {\n                if(n1 > 0) {\n                    s[i] = '(';\n                    n1--;\n                }\n                else {\n                    s[i] = ')';\n                    n2--;\n                }\n                    \n            }\n            \n            if(s[i] == '(') {\n                st++;\n            }\n            else {\n                st--;\n                if(st < 0)\n                    return false;\n            }\n        }\n        return st == 0;\n\n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,20 @@
+{
+    "rank": 6641,
+    "username": "wing9537",
+    "score": 7,
+    "finish_time": "00:33:46",
+    "Q1": {
+        "solve_time": "00:24:09",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number} num\n * @return {number}\n */\nvar minimumSum = function(num) {\n    var arr = num.toString().split('').sort((a, b) => a - b);\n    return Number(arr[0] + arr[3]) + Number(arr[1] + arr[2]);\n};"
+    },
+    "Q2": {
+        "solve_time": "00:33:46",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums\n * @param {number} pivot\n * @return {number[]}\n */\nvar pivotArray = function(nums, pivot) {\n    var before = [];\n    var between = [];\n    var after = [];\n    \n    nums.forEach((num) => {\n        if (num > pivot) after.push(num);\n        if (num < pivot) before.push(num);\n        if (num == pivot) between.push(num);\n    });\n    return [...before, ...between, ...after];\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

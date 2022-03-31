@@ -1,0 +1,25 @@
+{
+    "rank": 3051,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:46:22",
+    "Q1": {
+        "solve_time": "00:06:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool isSameAfterReversals(int num) {\n        \n        if(num == 0)\n            return true;\n        return (num % 10) != 0;\n        \n        // vector<int> ns;\n        // while(num) {\n        //     ns.push_back(num % 10);\n        //     num /= 10;\n        // }\n        // for(int i = ns.size() - 1; i >= 0; i--) {\n        //     if(ns[i] == 0)\n        //         ns.erase(ns.begin() + i);\n        // }\n        // for(int i = 0; i < ns.size() / 2; i++) {\n        //     if(ns[i] != ns[ns.size() - 1 - i])\n        //         return false;\n        // }\n        // return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:01:36",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> executeInstructions(int n, vector<int>& startPos, string s) {\n        \n        vector<int> ans(s.length(), 0);\n            \n        for(int i = 0; i < s.length(); i++) {\n            \n            int r = startPos[0], c = startPos[1];\n            int l;\n            bool stop = false;\n            for(l = 0; i + l < s.length(); l++) {\n                switch(s[i + l]) {\n                    case 'R':\n                        c += 1;\n                        if(c >= n) stop = true;\n                        break;\n                        \n                    case 'L':\n                        c -= 1;\n                        if(c < 0) stop = true;\n                        break;\n                        \n                    case 'U':\n                        r -= 1;\n                        if(r < 0) stop = true;\n                        break;\n                        \n                    case 'D':\n                        r += 1;\n                        if(r >= n) stop = true;\n                        \n                        break;\n                }\n                if(stop)\n                    break;\n            }\n            ans[i] = l;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:26:22",
+        "fail_count": 4,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<long long> getDistances(vector<int>& arr) {\n\n        long long n = arr.size();\n        \n        map<long long, long long> cnt;\n        map<long long, long long> sum;\n        \n        vector<long long> smallSum(n, 0), smallCnt(n, 0);\n        vector<long long> ans(n, 0);\n        \n        for(long long i = 0; i < arr.size(); i++) {\n            \n            smallSum[i] = sum[ arr[i] ];\n            smallCnt[i] = cnt[ arr[i] ];\n            \n            cnt[ arr[i] ]++;\n            sum[ arr[i] ] += i;\n        }\n        \n        for(long long i = 0; i < arr.size(); i++) {\n            ans[i] = i * smallCnt[i] - smallSum[i] + \n                     (sum[ arr[i] ] - smallSum[i]) - i * (cnt[ arr[i] ] - smallCnt[i]);\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

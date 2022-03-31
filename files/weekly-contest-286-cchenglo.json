@@ -1,0 +1,25 @@
+{
+    "rank": 3076,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:16:52",
+    "Q1": {
+        "solve_time": "00:04:44",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {\n\n        map<int, int> m1, m2;\n        for(int &n : nums1)\n            m1[n]++;\n        for(int &n : nums2)\n            m2[n]++;\n        \n        vector<vector<int>> ans(2);\n        \n        for(auto it : m1) {\n            if(m2[it.first] == 0) {\n                ans[0].push_back(it.first);\n            }\n                \n        }\n        \n        for(auto it : m2) {\n            if(m1[it.first] == 0) {\n                ans[1].push_back(it.first);\n            }\n                \n        }\n\n        \n        return ans;\n        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:06:52",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minDeletion(vector<int>& nums) {\n        \n        int ans = 0;\n        \n        for(int i = 0; i < nums.size(); ) {\n            \n            int n0 = nums[i];\n            \n            int j = i + 1;\n            \n            int toAdd = 0;  // avoid add twice (for even length)\n            \n            while(j < nums.size() && n0 == nums[j]) {\n                toAdd++;\n                j++;\n            }\n            \n            // for even length\n            if(j == nums.size()) {\n                ans += (nums.size() - i);\n                break;\n                cout << i << \" \" << j << endl;\n            }\n                \n            ans += toAdd;\n            \n            i = j + 1;   \n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:58:43",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "typedef long long ll;\n\nclass Solution {\n    vector<long long> p10;\n    ll genPalin(vector<int> &nums, int len) {\n        ll palin = 0;\n        for(int i = 0; i < len; i++) {\n            palin = palin + (i < nums.size() ? nums[i] : nums[len - 1 - i]) * p10[len - 1 - i];\n            // cout << i << \" \" << palin << \" \" << endl;\n        }\n            \n        return palin;\n    }\npublic:\n    vector<long long> kthPalindrome(vector<int>& queries, int intLength) {\n        \n        ll p = 1;\n        for(int i = 0; i <= 14; i++) {\n            p10.push_back(p);\n            p *= 10;\n        }\n        p10.push_back(p);\n        \n        // cout << \"p10\" << endl;\n        // for(int p : p10)\n        //     cout << p << endl;\n        \n        vector<ll> ans;\n        \n        vector<int> ns(intLength / 2 + intLength % 2);\n        \n        for(int q : queries) {\n            q--; // index from 1\n            \n            int t = intLength / 2 + intLength % 2;\n            \n            if(q >= (int)(9*pow(10, t - 1))) {\n                ans.push_back(-1);\n                continue;\n            }\n            \n            // int i = 0;\n            // ns[i] = q % 9 + 1;\n            // q /= 9;\n            // for(i = 1; i < t; i++) {\n            //     ns[i] = q % 10;\n            //     q /= 10;\n            // }\n            \n            int i;\n            for(i = t - 1; i >= 1; i--) {\n                ns[i] = q % 10;\n                q /= 10;\n            }\n            ns[0] = q % 9 + 1;\n            \n            // if(ns[0] > 9)\n            //     ans.push_back(-1);\n            // else\n            \n            // for(int n : ns)\n            //     cout << n << \" \";\n            // cout << endl;\n            \n            ans.push_back(genPalin(ns, intLength));\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

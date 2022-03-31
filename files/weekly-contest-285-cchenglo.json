@@ -1,0 +1,25 @@
+{
+    "rank": 2687,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:24:38",
+    "Q1": {
+        "solve_time": "00:28:01",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countHillValley(vector<int>& nums) {\n        vector<int> ns;\n        for(int i = 0; i < nums.size(); i++) {\n            if(ns.size() && ns.back() == nums[i])\n                ;\n            else\n                ns.push_back(nums[i]);\n        }\n        int ans = 0;\n        for(int i = 1; i < ns.size() - 1; i++) {\n            if((ns[i] > ns[i+1] && ns[i] > ns[i-1]) ||\n               (ns[i] < ns[i+1] && ns[i] < ns[i-1]))\n                ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:38:46",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countCollisions(string directions) {\n        int ans = 0;\n        queue<int> q;\n        \n        for(int i = 0; i < directions.size() - 1; i++)\n            q.push(i);\n        \n         while(!q.empty()) {\n             \n            int i = q.front();\n            q.pop();\n             \n            if(i < 0 || i >= directions.size())\n                continue;\n             \n            string cars = directions.substr(i, 2);\n             \n            if(cars == \"RL\") {\n                q.push(i-1);\n                q.push(i);\n                q.push(i+1);\n                ans += 2;\n                directions[i] = 'S';\n                directions[i+1] = 'S';\n            }\n            else if(cars == \"SL\") {\n                q.push(i);\n                q.push(i+1);\n                ans += 1;\n                directions[i+1] = 'S';\n            }\n            else if(cars == \"RS\") {\n                q.push(i-1);\n                q.push(i);\n                ans += 1;\n                directions[i] = 'S';\n            }\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:09:38",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> maximumBobPoints(int numArrows, vector<int>& aliceArrows) {\n        \n        \n        int maxPt = 0, maxTake = 0;\n        \n        for(int i = 0; i < (1 << 12); i++) {\n            \n            int pt = 0, cost = 0;\n            for(int j = 0; j < 12; j++) {\n                if(i & (1 << j)) {\n                    pt += j;\n                    cost = cost + aliceArrows[j] + 1;\n                }\n            }\n            if(pt > maxPt && cost <= numArrows) {\n                maxPt = pt;\n                maxTake = i;\n            }\n        }\n        \n        \n        vector<int> bob(12, 0);\n\n        int curCost = 0;\n        for(int i = 0; i < 12; i++) {\n            if(maxTake & (1 << i)) {\n                bob[i] = aliceArrows[i] + 1;\n                curCost += bob[i];\n            }\n        }\n        bob[0] = numArrows - curCost;\n\n        \n\n        \n        return bob;\n    }\n};"
+    },
+    "Q4": {}
+}

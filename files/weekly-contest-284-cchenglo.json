@@ -1,0 +1,25 @@
+{
+    "rank": 867,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:46:38",
+    "Q1": {
+        "solve_time": "00:06:13",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> findKDistantIndices(vector<int>& nums, int key, int k) {\n        \n        vector<int> keys;\n        for(int i = 0; i < nums.size(); i++)\n            if(nums[i] == key)\n                keys.push_back(i);\n        \n        set<int> s;\n        for(int &key : keys) {\n            for(int i = max(0, key - k); i < min((int)nums.size(), key + k + 1); i++)\n                s.insert(i);\n        }\n        \n        vector<int> ans;\n        for(auto i : s)\n            ans.push_back(i);\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:30:02",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "// topological sort\n\nclass Solution {\npublic:\n    int digArtifacts(int n, vector<vector<int>>& artifacts, vector<vector<int>>& dig) {\n\n        int ans = 0;\n        vector<vector<vector<int>>> grid2artif;\n        for(int i = 0; i < n; i++) {\n            grid2artif.push_back({});\n            for(int j = 0; j < n; j++)\n                grid2artif[i].push_back({});\n        }\n        \n        \n        vector<int> artiCnt(artifacts.size(), -1);\n        \n        for(int i = 0; i < artifacts.size(); i++) {\n            int r1 = artifacts[i][0],\n                c1 = artifacts[i][1],\n                r2 = artifacts[i][2],\n                c2 = artifacts[i][3];\n            \n            for(int r = r1; r <= r2; r++) {\n                for(int c = c1; c <= c2; c++) {\n                    grid2artif[r][c].push_back(i);\n                }\n            }\n            \n            artiCnt[i] = (r2 - r1 + 1) * (c2 - c1 + 1);\n        }\n\n\n        for(auto d : dig) {\n            int r = d[0],\n                c = d[1];\n            \n            for(int a : grid2artif[r][c])\n                artiCnt[a]--;\n        }\n        \n        for(int a : artiCnt) {\n            if(a == 0)\n                ans++;\n        }\n\n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:41:38",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\n    int get(vector<int>& nums, int i) {\n        if(i < 0 || i >= nums.size())\n            return -1;\n        else\n            return nums[i];\n    }\npublic:\n    int maximumTop(vector<int>& nums, int k) {\n        \n        if(nums.size() == 1 && k % 2 == 1)\n            return -1;\n        \n        \n        int ans = -1;\n        \n        for(int i = 0; i < k - 1 && i < nums.size(); i++)\n            ans = max(ans, get(nums, i));\n        \n        ans = max(ans, get(nums, k));\n        \n        return ans;\n        \n    }\n};"
+    },
+    "Q4": {}
+}
