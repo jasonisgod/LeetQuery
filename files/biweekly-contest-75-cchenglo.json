@@ -1,0 +1,20 @@
+{
+    "rank": 5078,
+    "username": "cchenglo",
+    "score": 7,
+    "finish_time": "00:04:32",
+    "Q1": {
+        "solve_time": "00:01:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minBitFlips(int start, int goal) {\n        int diff = start ^ goal;\n        int ans = 0;\n        while (diff) {\n            ans ++;\n            diff = diff & (diff - 1);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:04:32",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int triangularSum(vector<int>& nums) {\n        for (int i = 0; i < nums.size() - 1; i++) {\n            for (int j = 0; j < nums.size() - 1 - i; j++) {\n                nums[j] = (nums[j] + nums[j + 1]) % 10;\n            }\n        }  \n        return nums[0];\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

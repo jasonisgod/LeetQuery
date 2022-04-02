@@ -1,0 +1,25 @@
+{
+    "rank": 3524,
+    "username": "wing9537",
+    "score": 12,
+    "finish_time": "00:56:55",
+    "Q1": {
+        "solve_time": "00:15:00",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number} start\n * @param {number} goal\n * @return {number}\n */\nvar minBitFlips = function(start, goal) {\n    var arr1 = (''+start.toString(2)).split('');\n    var arr2 = (''+goal.toString(2)).split('');\n    var count = 0, index = 0;\n    \n    while (arr1.length < arr2.length) {\n        arr1.splice(0, 0, '0');\n    }\n    while (arr2.length < arr1.length) {\n        arr2.splice(0, 0, '0');\n    }\n    for (var i = 0; i < arr1.length; i++) {\n        if (arr1[i] != arr2[i]) count++;\n    }\n    return count;\n};"
+    },
+    "Q2": {
+        "solve_time": "00:23:35",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar triangularSum = function(nums) {\n    while (nums.length > 1) {\n        var newNums = new Array(nums.length - 1);\n        for (let i = 0; i < nums.length - 1; i++) {\n            newNums[i] = (nums[i] + nums[i + 1]) % 10;\n        }\n        nums = newNums;\n    }\n    return nums[0];\n};"
+    },
+    "Q3": {
+        "solve_time": "00:51:55",
+        "fail_count": 1,
+        "lang": "javascript",
+        "code": "/**\n * @param {string} s\n * @return {number}\n */\nvar numberOfWays = function(s) {\n    var len = s.length;\n    var left0 = new Array(len);\n    var left1 = new Array(len);\n    var right0 = new Array(len);\n    var right1 = new Array(len);\n    var result = 0;\n    \n    left0[0] = (s[0] == '0' ? 1 : 0);\n    left1[0] = (s[0] == '1' ? 1 : 0);\n    right0[len - 1] = (s[len - 1] == '0' ? 1 : 0);\n    right1[len - 1] = (s[len - 1] == '1' ? 1 : 0);\n    \n    for (let i = 1; i < len; i++) {\n        left0[i] = left0[i - 1] + (s[i] == '0' ? 1 : 0);\n        left1[i] = left1[i - 1] + (s[i] == '1' ? 1 : 0);\n    }\n    for (let i = len - 2; i >= 0; i--) {\n        right0[i] = right0[i + 1] + (s[i] == '0' ? 1 : 0);\n        right1[i] = right1[i + 1] + (s[i] == '1' ? 1 : 0);\n    }\n    for (let i = 0; i < len; i++) {\n        if (s[i] == '0') result += (left1[i] * right1[i]);\n        if (s[i] == '1') result += (left0[i] * right0[i]);\n    }\n    return result;\n};"
+    },
+    "Q4": {}
+}

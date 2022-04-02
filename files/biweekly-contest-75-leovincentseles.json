@@ -1,0 +1,25 @@
+{
+    "rank": 2951,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:44:23",
+    "Q1": {
+        "solve_time": "00:02:06",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minBitFlips(int start, int goal) {\n        int result = 0;\n        \n        for (int i=0; i<32; ++i) {\n            int mask = 1 << i;\n            result += (start & (mask)) != (goal & (mask));\n        }\n        \n        return result;        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:07:32",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int triangularSum(vector<int>& nums) {                \n        for (int left=0, right=nums.size()-1; left<right; ++left)\n            for (int i=right; i>=left+1; --i)\n                nums[i] = (nums[i] + nums[i-1]) % 10;                                \n        \n        return nums.back();\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:39:23",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "/*\n\n\"001101\"\n[2, 2, 1, 1]\n\n\"0001100100\"\n[3, 2, 2, 1, 2]\n\nDynamic Programming\ndp[i][j]: looks runlength[0 ... i-1] with length j selected\n\ndp[i][j] = sum(dp[i-2-2*k][j-1])*runlength[i-1];\n\n*/\n\ntypedef long long int LLI;\n\nclass Solution {\npublic:\n    long long numberOfWays(string s) {\n        char prevCh = ' ';\n        vector<int> runLength;\n        LLI dp[100001][4] = {0};\n        \n        for (char ch: s) {\n            if (ch != prevCh)\n                runLength.push_back(1);\n            else\n                ++runLength.back();\n            prevCh = ch;\n        }\n                \n        LLI prevOdd[4] = {0}, prevEven[4] = {0}, result = 0;\n        prevOdd[0] = prevEven[0] = 1;\n        \n        for (int i=1; i<=runLength.size(); ++i) {\n            \n            for (int j=1; j<=3; ++j) {\n                if (i % 2 == 0) {                    \n                    dp[i][j] = prevOdd[j-1] * runLength[i-1];\n                    prevEven[j] += dp[i][j];\n                } else {\n                    dp[i][j] = prevEven[j-1] * runLength[i-1];\n                    prevOdd[j] += dp[i][j];\n                }                    \n            }\n        \n            result += dp[i][3];\n        }\n    \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}
