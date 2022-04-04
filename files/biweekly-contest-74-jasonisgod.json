@@ -1,8 +1,8 @@
 {
-    "rank": 4697,
+    "rank": 1248,
     "username": "jasonisgod",
-    "score": 12,
-    "finish_time": "01:26:28",
+    "score": 18,
+    "finish_time": "01:31:28",
     "Q1": {
         "solve_time": "00:17:16",
         "fail_count": 0,
@@ -21,5 +21,10 @@
         "lang": "cpp",
         "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    int halveArray(vector<int>& nums) {\n        double sum = 0;\n        priority_queue<double> pq;\n        for (int x: nums) {\n            sum += x;\n            pq.push(x);\n        }\n        double half = sum/2;\n        int count = 0;\n        while (sum > half) {\n            double x = pq.top();\n            pq.pop();\n            sum -= x/2;\n            pq.push(x/2);\n            count++;\n        }\n        return count;\n    }\n};"
     },
-    "Q4": {}
+    "Q4": {
+        "solve_time": "01:14:55",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumWhiteTiles(string floor, int n, int len) {\n        string s = floor;\n        int nn = floor.length();\n        if (n * len >= nn) {\n            return 0;\n        }\n        int count = 0;\n        for (char c: s) {\n            if (c == '1') count++;\n        }\n        // cout << count << endl;\n        for (int i = 0; i < n; i++) {\n            int window = 0;\n            int mx = 0;\n            int idx = 0;\n            for (int j = 0; j <= nn; j++) {\n                if (j < len) {\n                    if (s[j] == '1') window++;\n                } else {\n                    if (window > mx) {\n                        mx = window;\n                        idx = j-len;\n                    }\n                    if (j == nn) break;\n                    if (s[j-len] == '1') window--; \n                    if (s[j] == '1') window++;\n                }\n            }\n            // cout << \"i=\" << i << \" w=\" << window << \" idx=\" << idx << endl;\n            for (int j = 0; j < len; j++) {\n                if (s[idx+j] == '1') count--;\n                s[idx+j] = '0';\n            }\n            if (count == 0) {\n                return 0;\n            }\n        }\n        return count;\n    }\n};"
+    }
 }

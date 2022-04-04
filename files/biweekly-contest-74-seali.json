@@ -1,8 +1,8 @@
 {
-    "rank": 3031,
+    "rank": 961,
     "username": "seali",
-    "score": 12,
-    "finish_time": "00:48:09",
+    "score": 18,
+    "finish_time": "01:12:09",
     "Q1": {
         "solve_time": "00:03:04",
         "fail_count": 0,
@@ -21,5 +21,10 @@
         "lang": "cpp",
         "code": "class Solution {\npublic:\n    int halveArray(vector<int>& nums) {\n        \n        double sum = 0;\n        \n        priority_queue<double> pq;\n        \n        for (auto num : nums) {\n            sum+=num;\n            pq.push(num);\n        }\n        double target = sum/2;\n        int i = 0;\n        \n        while(pq.size()) {\n            \n            double num = pq.top(); pq.pop();\n            num/=2;\n            sum-=num;\n            i++;\n            if (sum<=target)\n                break;\n            pq.push(num);\n            \n        }\n        \n        return i;\n    }\n};"
     },
-    "Q4": {}
+    "Q4": {
+        "solve_time": "01:07:09",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumWhiteTiles(string floor, int numCarpets, int carpetLen) {\n        \n        if (numCarpets*carpetLen >= floor.size())\n            return 0;\n        \n        int size = floor.size();\n        \n        for (int k = 0 ; k < numCarpets; k++) {\n            \n            int max_ = 0;\n            int index = 0;\n        \n            vector<int> counts(floor.size() - carpetLen + 1);\n\n            int tmp = 0;\n\n            for(int i = 0 ; i < carpetLen; i++) {\n                tmp += floor[i] == '1' ? 1:0; \n                max_ =   tmp; \n                index = 0;\n            }\n\n            counts[0] = tmp;\n\n            for (int i = 1; i+carpetLen-1 < size; i++) {\n                tmp += floor[i+carpetLen-1] == '1'? 1:0;\n                tmp -= floor[i-1] == '1' ? 1:0;\n                counts[i] = tmp;\n                if (tmp>max_) {\n                    max_ = tmp;\n                    index = i;\n                }\n            } \n            \n            for (int i = 0; i < carpetLen; i++) {\n                floor[index+i] = '0';\n            }\n\n        }\n        int output = 0;\n        for(int i = 0 ; i<size; i++)\n            output += floor[i] == '1'? 1:0;\n        \n        return output;\n    }\n};"
+    }
 }
