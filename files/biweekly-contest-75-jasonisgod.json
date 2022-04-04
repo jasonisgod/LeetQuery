@@ -1,0 +1,25 @@
+{
+    "rank": 2710,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:39:22",
+    "Q1": {
+        "solve_time": "00:36:00",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number} start\n * @param {number} goal\n * @return {number}\n */\nvar minBitFlips = function(start, goal) {\n    var cnt = 0;\n    var a = (start.toString(2)+'').split('');\n    var b = (goal.toString(2)+'').split('');\n    while (a.length < b.length) {\n        a.splice(0, 0, '0');\n    }\n    while (b.length < a.length) {\n        b.splice(0, 0, '0');\n    }\n    for (var i = 0; i < a.length; i++) {\n        if (a[i] != b[i]) cnt += 1;\n    }\n    return cnt;\n};"
+    },
+    "Q2": {
+        "solve_time": "00:39:22",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "var triangularSum = function(nums) {\n    while (nums.length > 1) {\n        var n = nums.length;\n        var tmp = [];\n        for (let i = 0; i < n-1; i++) {\n            var t = (nums[i] + nums[i + 1]) % 10;\n            tmp[i] = t;\n        }\n        nums = tmp;\n    }\n    return nums[0];\n};"
+    },
+    "Q3": {
+        "solve_time": "00:31:41",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    long long numberOfWays(string s) {\n        int n = s.length();\n        vector<int> L0(n), R0(n), L1(n), R1(n);\n        L0[0] = (s[0] == '0'? 1: 0);\n        L1[0] = (s[0] == '1'? 1: 0);\n        R0[n-1] = (s[n-1] == '0'? 1: 0);\n        R1[n-1] = (s[n-1] == '1'? 1: 0);\n        for (int i = 1; i < n; i++) {\n            L0[i] = L0[i-1] + (s[i] == '0'? 1: 0);\n            L1[i] = L1[i-1] + (s[i] == '1'? 1: 0);\n        }\n        for (int i = n-2; i >= 0; i--) {\n            R0[i] = R0[i+1] + (s[i] == '0'? 1: 0);\n            R1[i] = R1[i+1] + (s[i] == '1'? 1: 0);\n        }\n        LLI ans = 0;\n        for (int i = 0; i < n; i++) {\n            if (s[i] == '0') ans += ((LLI)L1[i]) * R1[i];\n            if (s[i] == '1') ans += ((LLI)L0[i]) * R0[i];\n        }\n        // for (int i = 0; i < n; i++) cout << L0[i] << \" \"; cout << endl; \n        // for (int i = 0; i < n; i++) cout << R0[i] << \" \"; cout << endl;\n        // for (int i = 0; i < n; i++) cout << L1[i] << \" \"; cout << endl;\n        // for (int i = 0; i < n; i++) cout << R1[i] << \" \"; cout << endl;\n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,20 @@
+{
+    "rank": 8104,
+    "username": "mian5102",
+    "score": 7,
+    "finish_time": "00:36:04",
+    "Q1": {
+        "solve_time": "00:24:33",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minBitFlips(int start, int goal) {\n        string startStr = \"\";\n        string goalStr = \"\";\n        while (start>0) {\n            int temp = start%2;\n            startStr.insert(0, to_string(temp));\n            start /= 2;\n        }\n        while (goal>0) {\n            int temp = goal%2;\n            goalStr.insert(0, to_string(temp));\n            goal /= 2;\n        }\n        while (goalStr.length() < startStr.length()) goalStr.insert(0, \"0\");\n        while (goalStr.length() > startStr.length()) startStr.insert(0, \"0\");\n        \n        int minBit = 0;\n        for (int i=0; i<startStr.length(); i++)\n            if (startStr[i] != goalStr[i])\n                minBit++;\n        \n        return minBit;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:36:04",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int triangularSum(vector<int>& nums) {\n        while (nums.size() > 1) {\n            int n = nums.size();\n            int i=0;\n            while (i+1 < n) {\n                nums[i] = (nums[i]+nums[i+1]) % 10;\n                i++;\n            }\n            nums.resize(n-1);\n        }\n        \n        return nums[0];\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 4526,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "01:24:40",
+    "Q1": {
+        "solve_time": "00:02:13",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minBitFlips(int start, int goal) {\n        \n        int output = 0;\n        \n        while(start || goal) {\n            \n            output += goal%2 == start%2 ? 0:1;\n            start /= 2;\n            goal /= 2;\n            \n        }\n        \n        return output;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:07:22",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    vector<vector<int>> memo; \n    int recursive(vector<int>& nums, int start, int end) {\n        \n        if (memo[start][end]!= -1)\n            return memo[start][end];\n        \n        if (start == end )\n            return memo[start][end] = nums[start] %10;\n        \n        return memo[start][end] = (recursive(nums, start, end-1) + recursive(nums, start+1, end)) % 10;\n        \n    }\npublic:\n    int triangularSum(vector<int>& nums) {\n        \n        memo = vector<vector<int>>(nums.size(), vector<int>(nums.size(),-1));\n        \n        return recursive(nums, 0, nums.size()-1);\n        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:24:40",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    vector<vector<vector<long long>>> memo;\n    long long recursive(string& s, int k, int index, int last_one) {\n        \n        \n        if (k == 0)\n            return 1;\n        if (index == s.size())\n            return 0;\n        \n        if ( memo[last_one-48][k][index] != -1 )\n            return memo[last_one-48][k][index];\n        \n        return memo[last_one-48][k][index] = recursive(s, k, index+1, last_one) + (last_one == s[index]? 0 :  recursive(s, k-1, index+1, s[index]));\n            \n    }\npublic:\n    long long numberOfWays(string s) {\n        \n        int size = s.size();\n        \n        memo = vector<vector<vector<long long>>>(3, vector<vector<long long>>(3+1, vector<long long>(s.size()+1, -1 )));\n        \n        return recursive(s, 3, 0, 50);\n        \n        \n    }\n};"
+    },
+    "Q4": {}
+}
