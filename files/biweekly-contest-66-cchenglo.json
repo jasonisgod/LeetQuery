@@ -1,0 +1,25 @@
+{
+    "rank": 859,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:21:25",
+    "Q1": {
+        "solve_time": "00:05:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countWords(vector<string>& words1, vector<string>& words2) {\n        map<string, int> m1, m2;\n        for(string w : words1)\n            m1[w]++;\n        for(string w : words2)\n            m2[w]++;\n        int ans = 0;\n        for(auto it = m1.begin(); it != m1.end(); it++) {\n            if(it->second == 1 && m2[it->first] == 1)\n                ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:14:56",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumBuckets(string street) {\n        street = \"X\" + street + \"X\";\n        int ans = 0;\n        for(int i = 1; i < street.length() - 1; i++) {\n            if(street[i] == '.' && street[i-1] == 'H' && street[i+1] == 'H') {\n                street[i] = 'B';\n                street[i-1] = 'h';\n                street[i+1] = 'h';\n                ans++;\n            }\n        }\n        for(int i = 1; i < street.length() - 1; i++) {\n            if(street[i] == '.' && (street[i-1] == 'H' || street[i+1] == 'H')) {\n                street[i] = 'B';\n                if(street[i-1] == 'H') street[i-1] = 'h';\n                if(street[i+1] == 'H') street[i+1] = 'h';\n                ans++;\n            }\n        }\n        for(int i = 1; i < street.length() - 1; i++) {\n            if(street[i] == 'H')\n                return -1;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:21:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minCost(vector<int>& startPos, vector<int>& homePos, vector<int>& rowCosts, vector<int>& colCosts) {\n        int robotR = startPos[0], robotC = startPos[1];\n        int homeR = homePos[0], homeC = homePos[1];\n        int dr = 1, dc = 1;\n        if(robotR > homeR)\n            dr = -1;\n        if(robotC > homeC)\n            dc = -1;\n        int totalCost = 0;\n        while(robotR != homeR) {\n            robotR += dr;\n            totalCost += rowCosts[robotR];\n        }\n        while(robotC != homeC) {\n            robotC += dc;\n            totalCost += colCosts[robotC];\n        }\n        return totalCost;\n    }\n};"
+    },
+    "Q4": {}
+}

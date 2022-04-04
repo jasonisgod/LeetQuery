@@ -1,0 +1,25 @@
+{
+    "rank": 3074,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:48:54",
+    "Q1": {
+        "solve_time": "00:03:32",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool divideArray(vector<int>& nums) {\n        map<int, int> m;\n        for(int n : nums)\n            m[n]++;\n        for(auto it : m)\n            if(it.second % 2 != 0)\n                return false;\n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:33:54",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long maximumSubsequenceCount(string text, string pattern) {\n        int n = text.length();\n        vector<int> c0(n, 0), c1(n, 0);\n        vector<bool> cal(n, false);\n        int cnt0 = 0, cnt1 = 0;\n        for(int i = 0; i < text.length(); i++) {\n            if(text[i] == pattern[0]) {\n                cnt0++;\n                cal[i] = true;                \n            }\n            c0[i] = cnt0;\n        }\n        if(pattern[0] == pattern[1])\n            cnt1 = -1;\n        for(int i = text.length() - 1; i >= 0; i--) {\n            if(text[i] == pattern[1])\n                cnt1++;\n            c1[i] = cnt1;\n        }\n\n        long long ans = 0, extra = 0;\n        for(int i = 0; i < n; i++) {\n            // cout << (cal[i] ? \"O\" : \"X\") << \"i \" << c0[i] << \" \" << c1[i] << endl;\n            if(cal[i])\n                ans += (long long)(c1[i]);\n            extra = max(extra, (long long)c0[i]);\n            extra = max(extra, (long long)c1[i]);\n        }\n        cout << ans << \" \" << extra << endl;\n        return ans + extra;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:07:47",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int halveArray(vector<int>& nums) {\n        priority_queue<double> pq;\n        double sum = 0, target = 0;\n        for(int n : nums) {\n            sum += (double)n;\n            pq.push((double)n);\n        }\n        target = sum / 2;\n        int ans = 0;\n        while(sum > target) {\n            double x = pq.top();\n            pq.pop();\n            x /= 2;\n            sum -= x;\n            pq.push(x);\n            ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

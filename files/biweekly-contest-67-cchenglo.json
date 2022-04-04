@@ -1,0 +1,25 @@
+{
+    "rank": 1573,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "02:11:25",
+    "Q1": {
+        "solve_time": "00:07:24",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> maxSubsequence(vector<int>& nums, int k) {\n        \n        vector<pair<int, int>> t;\n        \n        for(int i = 0; i < nums.size(); i++) {\n            t.push_back({i, nums[i]});\n        }\n        \n        sort(t.begin(), t.end(), [](pair<int, int> a, pair<int, int> b){\n            return a.second > b.second;\n        });\n        \n        sort(t.begin(), t.begin() + k);\n        \n        vector<int> ans(k);\n        \n        for(int i = 0; i < k; i++) {\n            ans[i] = t[i].second;\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:15:37",
+        "fail_count": 6,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> goodDaysToRobBank(vector<int>& security, int time) {\n        \n        vector<int> ans;\n        \n        int n = security.size();\n        \n        vector<int> inc(n, 1), dec(n, 1);\n\n        for(int i = 1; i < n; i++) {\n            if(security[i-1] >= security[i])\n                dec[i] = dec[i-1] + 1;\n        }\n        for(int i = n - 2; i >= 0; i--) {\n            if(security[i] <= security[i+1])\n                inc[i] = inc[i+1] + 1;\n        }\n        \n        for(int i = 0; i < n; i++) {\n            if(inc[i] > time && dec[i] > time)\n                ans.push_back(i);\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:26:25",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "/*\n\u662f\u6703\u9023\u9396\u7684 @@ --> union find\n\ndirected graph \u7684 max connected-componenets\n*/\n\nclass Solution {\n    long long square(long long a) {\n        return a * a;\n    }\n    long long calDisSq(vector<int> p1, vector<int> p2) {\n        return square(p1[0] - p2[0]) + square(p1[1] - p2[1]);\n    }\npublic:\n    int maximumDetonation(vector<vector<int>>& bombs) {\n        \n        int maxBomb = -1;\n        \n        int n = bombs.size();\n        \n        // detonates[i] will detonates the elements stored in the array\n        vector<vector<int>> detonates(n);\n        \n        \n        for(int i = 0; i < n; i++) {\n            \n            long long sqRadius = square(bombs[i][2]);\n            \n            for(int j = 0; j < n; j++) {\n                \n                if(calDisSq(bombs[i], bombs[j]) <= sqRadius) {\n                    detonates[i].push_back(j);\n                }                    \n            }\n        }\n                   \n        for(int i = 0; i < n; i++) {\n            \n            int curBomb = 0;\n            vector<bool> bombed(n, false);            \n            queue<int> q;\n            bombed[i] = true;\n            q.push(i);\n            \n            while(!q.empty()) {\n                int b = q.front();\n                q.pop();\n                curBomb++;\n                for(int nb : detonates[b]) {\n                    if(!bombed[nb]) {\n                        bombed[nb] = true;\n                        q.push(nb);\n                    }\n                }\n            }\n            maxBomb = max(maxBomb, curBomb);\n            if(maxBomb == n)\n                break;\n        }\n\n        \n        return maxBomb;\n    }\n};"
+    },
+    "Q4": {}
+}
