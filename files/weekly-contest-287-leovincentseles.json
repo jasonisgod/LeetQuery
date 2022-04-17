@@ -1,0 +1,30 @@
+{
+    "rank": 254,
+    "username": "leovincentseles",
+    "score": 18,
+    "finish_time": "00:29:44",
+    "Q1": {
+        "solve_time": "00:04:28",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int convertTime(string current, string correct) {\n        int currHour = stoi(current.substr(0, 2)), currMin = stoi(current.substr(3, 2));\n        int correctHour = stoi(correct.substr(0, 2)), correctMin = stoi(correct.substr(3, 2));\n        \n        int result = 0;\n        int diff = correctHour * 60 + correctMin - currHour * 60 - currMin;\n        result += diff / 60;\n        diff = diff % 60;\n        result += diff / 15;\n        diff = diff % 15;\n        result += diff / 5;\n        diff = diff % 5;\n        result += diff;\n        \n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:09:36",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findWinners(vector<vector<int>>& matches) {\n        unordered_map<int, pair<int, int>> games;\n        vector<vector<int>> result(2);\n        \n        for (auto &m: matches) {\n            ++games[m[0]].first;\n            ++games[m[1]].second;\n        }\n        \n        for (auto &mapPair: games) {\n            if (mapPair.second.second == 0)\n                result[0].push_back(mapPair.first);\n            else if (mapPair.second.second == 1)\n                result[1].push_back(mapPair.first);\n        }\n        \n        sort(result[0].begin(), result[0].end());\n        sort(result[1].begin(), result[1].end());\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:16:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\nprivate:\n    bool doable(vector<int>& candies, LLI target, LLI k) {\n        if (target == 0)\n            return true;\n        \n        for (int num: candies) {\n            if ((k -= num / target) <= 0)\n                return true;\n        }\n        \n        return false;\n    }\npublic:\n    int maximumCandies(vector<int>& candies, long long k) {\n        LLI left = 0, right = 1e7+1;\n        \n        while (left < right) {\n            LLI mid = left + (right - left) / 2;\n            \n            if (doable(candies, mid, k) == false)\n                right = mid;\n            else\n                left = mid + 1;\n        }\n        \n        return right - 1;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "00:29:44",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Encrypter {\nprivate:\n    unordered_map<char, string> keyMap;\n    unordered_map<string, int> strCount;\npublic:\n    Encrypter(vector<char>& keys, vector<string>& values, vector<string>& dictionary) {\n        for (int i=0; i<keys.size(); ++i)\n            keyMap[keys[i]] = values[i];\n        \n        for (string &s: dictionary) {\n            string en = encrypt(s);\n            if (en == \"\")\n                continue;\n            ++strCount[en];\n        }\n            \n    }\n    \n    string encrypt(string word1) {\n        string result;\n        for (char ch: word1) {\n            if (keyMap.count(ch) == 0)\n                return \"\";\n            result += keyMap[ch];\n        }            \n        return result;\n    }\n    \n    int decrypt(string word2) {\n        return strCount[word2];\n    }\n};\n\n/**\n * Your Encrypter object will be instantiated and called as such:\n * Encrypter* obj = new Encrypter(keys, values, dictionary);\n * string param_1 = obj->encrypt(word1);\n * int param_2 = obj->decrypt(word2);\n */"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "rank": 497,
+    "username": "leovincentseles",
+    "score": 18,
+    "finish_time": "01:05:39",
+    "Q1": {
+        "solve_time": "00:04:48",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    string merge(string &s, int k) {\n        string result;\n        \n        for (int i=0; i<s.size(); i+=k) {\n            int sum = 0;\n            for (int j=i; j<min(i+k, (int)s.size()); ++j)\n                sum += s[j] - '0';\n            result += to_string(sum);\n        }\n        \n        return result;\n    }\npublic:\n    string digitSum(string s, int k) {\n        while (s.size() > k)\n            s = merge(s, k);\n        \n        return s;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:10:51",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "/*\n\n2*x+3*y = k\n\n*/\nclass Solution {\npublic:\n    int minimumRounds(vector<int>& tasks) {\n        unordered_map<int, int> taskMap;\n        for (int task: tasks)\n            ++taskMap[task];\n        \n        int result = 0;\n        for (auto &mapPair: taskMap) {\n            int times = mapPair.second;\n            \n            while (times%3 != 0) {\n                if (times == 1)\n                    return -1;\n                times -= 2;\n                ++result;\n            }\n            \n            result += times / 3;\n        }\n     \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:34:00",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "/*\n0, 1, 2, 3: up, down, left, right\n*/\nclass Solution {\nprivate:\n    int count(int num, int fact) {\n        int result = 0;\n        while (num != 0 && num % fact == 0) {\n            num /= fact;\n            ++result;\n        }\n        \n        return result;\n    }\npublic:\n    int maxTrailingZeros(vector<vector<int>>& grid) {\n        int M = grid.size(), N = grid[0].size();\n        vector<vector<vector<int>>> two(M, vector<vector<int>>(N, vector<int>(4, 0)));\n        vector<vector<vector<int>>> five(M, vector<vector<int>>(N, vector<int>(4, 0)));        \n        \n        for (int col=0; col<N; ++col) {\n            for (int row=1; row<M; ++row) {\n                two[row][col][0] = two[row-1][col][0] + count(grid[row-1][col], 2);\n                five[row][col][0] = five[row-1][col][0] + count(grid[row-1][col], 5);\n            }\n            \n            for (int row=M-2; row>=0; --row) {\n                two[row][col][1] = two[row+1][col][1] + count(grid[row+1][col], 2);\n                five[row][col][1] = five[row+1][col][1] + count(grid[row+1][col], 5);\n            }\n        }\n        \n        for (int row=0; row<M; ++row) {\n            for (int col=1; col<N; ++col) {\n                two[row][col][2] = two[row][col-1][2] + count(grid[row][col-1], 2);\n                five[row][col][2] = five[row][col-1][2] + count(grid[row][col-1], 5);\n            }\n            \n           for (int col=N-2; col>=0; --col) {\n                two[row][col][3] = two[row][col+1][3] + count(grid[row][col+1], 2);\n                five[row][col][3] = five[row][col+1][3] + count(grid[row][col+1], 5);\n            }\n        }\n        \n        int result = 0;\n        for (int row=0; row<M; ++row) {\n            for (int col=0; col<N; ++col) {\n                int currTwo = count(grid[row][col], 2), currFive = count(grid[row][col], 5);\n                result = max(result, min(currTwo + two[row][col][0] + two[row][col][2], \n                             currFive + five[row][col][0] + five[row][col][2]));\n                result = max(result, min(currTwo + two[row][col][0] + two[row][col][3], \n                             currFive + five[row][col][0] + five[row][col][3]));\n                result = max(result, min(currTwo + two[row][col][1] + two[row][col][2], \n                             currFive + five[row][col][1] + five[row][col][2]));\n                result = max(result, min(currTwo + two[row][col][1] + two[row][col][3], \n                             currFive + five[row][col][1] + five[row][col][3]));\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:05:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "struct NTreeNode {\n    char ch;\n    vector<NTreeNode *> child;\n};\n\nclass Solution {\nprivate:\n    int result = 0;\n    NTreeNode *buildTree(vector<int> &parent, string &s, vector<NTreeNode> &arr) {\n        NTreeNode *root = nullptr;\n        \n        for (int node=0; node<parent.size(); ++node) {\n            if (parent[node] == -1)\n                root = &arr[node];\n            else\n                arr[parent[node]].child.push_back(&arr[node]);\n            \n            arr[node].ch = s[node];\n        }\n        \n        return root;\n    }\n    \n    int dfs(NTreeNode *curr) {                                \n        int currLen = 1;\n        priority_queue<int> childLen;\n        for (NTreeNode *child: curr->child) {\n            int len = dfs(child);\n            if (child->ch != curr->ch)\n                childLen.push(len);\n        }\n        \n        int otherLen = 0;\n        if (!childLen.empty()) {\n            currLen += childLen.top();\n            childLen.pop();\n            \n            if (!childLen.empty()) {\n                otherLen = childLen.top();\n                childLen.pop();\n            }\n        }\n               \n        result = max(result, currLen + otherLen);\n        return currLen;\n    }\npublic:\n    int longestPath(vector<int>& parent, string s) {\n        vector<NTreeNode> treeArray(parent.size());\n        NTreeNode *root = buildTree(parent, s, treeArray);\n                \n        dfs(root);\n        \n        return result;\n    }\n};"
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 4647,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:28:42",
+    "Q1": {
+        "solve_time": "00:02:08",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int findClosestNumber(vector<int>& nums) {\n        int ans = INT_MAX;\n        for (int n : nums) {\n            if (abs(n) < abs(ans))\n                ans = n;\n            else if (abs(n) == abs(ans))\n                ans = max(ans, n);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:13:42",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long waysToBuyPensPencils(int total, int cost1, int cost2) {\n        long long c1 = max(cost1, cost2), c2 = min(cost1, cost2);\n        long long ans = 0;\n        for (long long c = total; c >= 0; c -= c1) {\n            ans += (c / c2) + 1;\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:34:49",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class ATM {\n    vector<long long> notes;  // 20 50 100 200 500\n    vector<long long> ns;\npublic:\n    ATM() : notes(5, 0), ns({20, 50, 100, 200, 500}) {\n    \n    }\n    \n    void deposit(vector<int> banknotesCount) {\n        for (int i = 0; i < 5; i++)\n            notes[i] += (long long)banknotesCount[i];\n    }\n    \n    vector<int> withdraw(int a) {\n        \n        vector<long long> delta(5, 0);\n        long long amount = a;\n        \n        \n        // for (int i = 4; i >= 0; i--)\n        //     cout << \"i = \" << i << \" \" << notes[i] << endl;\n        // cout << endl;\n        \n        for (int i = 4; i >= 0; i--) {\n            \n            // cout << \"i = \" << i << \" \" << notes[i] << endl;\n            \n            if (notes[i] == 0)\n                continue;\n            \n            delta[i] = min(amount / ns[i], notes[i]);\n            // cout << amount << \" \" << ns[i] << endl;\n            // cout << \"delta = \" << delta[i] << endl;\n            // cout << \"notes = \" << notes[i] << endl;\n            // if (delta[i] > notes[i])\n            //     return {-1};\n            \n            amount = amount - ns[i] * delta[i];\n        }\n        if (amount != 0)\n            return {-1};\n            \n        for (int i = 0; i < 5; i++)\n            notes[i] -= delta[i];\n        \n        return {(int)delta[0], (int)delta[1], (int)delta[2], (int)delta[3], (int)delta[4]};\n    }\n};\n\n"
+    },
+    "Q4": {}
+}

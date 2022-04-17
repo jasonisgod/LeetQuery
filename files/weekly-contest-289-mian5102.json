@@ -1,0 +1,20 @@
+{
+    "rank": 9625,
+    "username": "mian5102",
+    "score": 7,
+    "finish_time": "01:08:32",
+    "Q1": {
+        "solve_time": "00:36:48",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string digitSum(string s, int k) {\n        while (s.length() > k) {\n            int len = s.length();\n            string new_s = \"\";\n            int group = ceil(double(len) / double(k));\n            for (int i=0; i<group; i++) {\n                int temp_sum = 0;\n                for (int j=0; j<k; j++) {\n                    if (i*k+j == len) break;\n                    temp_sum += (s[i*k+j]-48);\n                }\n                new_s += to_string(temp_sum);\n                cout << new_s << endl;\n            }\n            s = new_s;\n        }\n        return s;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:03:32",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumRounds(vector<int>& tasks) {\n        sort(tasks.begin(), tasks.end());\n        int idx = 0;\n        int ans = 0;\n        while (idx < tasks.size()) {\n            int query = tasks[idx];\n            int i=idx;\n            int count = 0;\n            while (i<tasks.size() and tasks[i]==query) {\n                count++;\n                i++;\n            }\n            if (count < 2) return -1;\n            if (count%3 == 0)\n                ans += count/3;\n            else\n                ans += count/3+1;\n            idx = i;\n        }\n        \n        return ans;\n        \n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 3940,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "01:21:29",
+    "Q1": {
+        "solve_time": "00:17:24",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int largestInteger(int num) {\n        \n        string num_s = std::to_string(num);\n        vector<char> odd, even;\n        \n        for(int i = 0 ; i < num_s.size(); i++) {\n            if (num_s[i] % 2)\n                odd.push_back(num_s[i]);\n            else\n                even.push_back(num_s[i]);\n        }\n        sort(odd.begin(), odd.end(), std::greater<char>());\n        sort(even.begin(), even.end(), std::greater<char>());\n        \n        int i=0, j=0;\n        \n        string tmp;\n        \n        for(int index = 0 ; index < num_s.size(); index++) {\n            if (num_s[index] % 2)\n                tmp += odd[i++];\n            else\n                tmp += even[j++];\n        }\n        \n        \n        return std::stoi(tmp);\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:01:29",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string minimizeResult(string expression) {\n        \n        string output = \"(\";\n        output += expression + \")\";\n\n        \n        int plus_index = 0;\n        \n        for(int i = 0 ; i < expression.size(); i++) {\n            if (expression[i] == '+') {\n                plus_index = i;\n                break;\n            }\n        }\n        \n        int minumum = std::stoi(expression.substr(0,plus_index)) + std::stoi(expression.substr(plus_index+1 , expression.size                  ()- plus_index));\n        \n        \n        int first, second, third, fourth;\n        for(int i = 0 ; i < plus_index; i++) {\n            first = i == 0? 1 : std::stoi(expression.substr(0,i));\n            second = std::stoi(expression.substr(i,plus_index-i));\n            \n            for(int j = plus_index+1; j < expression.size(); j++) {\n                third = std::stoi(expression.substr(plus_index+1, j-plus_index));\n                fourth = j == expression.size()-1? 1 : std::stoi(expression.substr(j+1, expression.size()-j));\n                \n                if (first * (second+third) * fourth < minumum) {\n                    minumum = first * (second+third) * fourth;\n                    output = expression.substr(0,i) + \"(\" + expression.substr(i,plus_index-i) + \"+\" + \n                        expression.substr(plus_index+1, j-plus_index) + \")\" + expression.substr(j+1, expression.size()-j);\n                }\n            }\n            \n            \n        \n        }\n        \n        return output;\n    }\n};\n/*\n\n+ == 3\n\"247+38\"\n\n\n\n*/"
+    },
+    "Q3": {
+        "solve_time": "00:05:47",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    \npublic:\n    long long maximumProduct(vector<int>& nums, int k) {\n        \n        long long output = 1;\n        \n        priority_queue<int, vector<int>, std::greater<int>> pq(nums.begin(), nums.end());\n        \n        \n        while(k) {\n            \n            int top = pq.top(); pq.pop();\n            top += 1;\n            pq.push(top);\n            k --;\n        }\n        \n        while(pq.size()){\n            int top = pq.top(); pq.pop();\n            output *= top;\n            output %= int (1e9+7);\n        }\n        \n        return output;\n        \n    }\n};"
+    },
+    "Q4": {}
+}

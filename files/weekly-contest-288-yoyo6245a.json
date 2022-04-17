@@ -1,0 +1,15 @@
+{
+    "rank": 8934,
+    "username": "yoyo6245a",
+    "score": 5,
+    "finish_time": "00:51:38",
+    "Q1": {},
+    "Q2": {},
+    "Q3": {
+        "solve_time": "00:36:38",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int maximumProduct(vector<int>& nums, int k) {\n        int hash[1200000] = {0};\n        int small = INT_MAX;\n        long long res = 1;\n        for(int num: nums){\n            hash[num]++;\n            if(num < small) small = num;\n        }\n        while(k > 0){\n            if(hash[small] > 0){\n                hash[small]--;\n                hash[small+1]++;\n                k--;\n            }else{\n                small++;\n            }\n        }\n        int res_int;\n        for(int i=0; i<1200000; i++){\n            if(hash[i] > 0){\n                //cout<<i<<\", \"<<hash[i]<<endl;\n                for(int j=0; j<hash[i]; j++){\n                    res *= i;\n                    res = res % 1000000007;\n                }\n            }\n        }\n        res_int = res % 100000007;\n        return res;\n    }\n};"
+    },
+    "Q4": {}
+}

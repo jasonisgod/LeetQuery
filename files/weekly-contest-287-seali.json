@@ -1,0 +1,25 @@
+{
+    "rank": 3664,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "00:39:52",
+    "Q1": {
+        "solve_time": "00:08:52",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int convertTime(string current, string correct) {\n        \n        int hour = (std::stoi(correct.substr(0,2)) - std::stoi(current.substr(0,2)));\n        int min =  std::stoi(correct.substr(3,2)) - std::stoi(current.substr(3,2));\n            \n        min = hour*60 + min;\n        \n        int a[] = {60,15,5,1};\n        \n        int result = 0;\n        \n        int i = 0;\n        \n        while(min) {\n            \n            result += min/a[i];\n            min %= a[i];\n            i++;\n        }\n        \n        return result;\n        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:20:10",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findWinners(vector<vector<int>>& matches) {\n        \n        /*\n        vector<vector<int>> output[2];\n        \n        unordered_set<int> has_show;\n        unordered_set<int> has_loss;\n        \n        for(auto& match : matches) {\n            has_show.insert(match[0]);\n            has_show.insert(match[1]);\n            \n        }\n        */\n        \n        int show_up = -1;\n        \n        vector<vector<int>> output(2);\n        vector<int> win( 100001,0);\n        vector<int> loss( 100001,0);\n        \n        for(auto& match : matches) {\n            win [match[0]]++;\n            loss[match[1]]++;\n            show_up = max(match[0], show_up);\n            show_up = max(show_up, match[1]);\n        }\n        \n        for(int i = 0 ; i <= show_up; i++) {\n            if(win[i] == 0 && loss[i] == 0)\n                continue;\n            if (loss[i] > 1)\n                continue;\n            output[loss[i]].push_back(i);\n        }\n        \n        return output;\n        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:29:52",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    long long sum;\n    bool enough(vector<int>& candies, int candy, long long k) {\n        \n        long long  temp = 0;\n        \n        for(auto& candy___ : candies) {\n            \n            temp += candy___/ candy;\n                        \n        }\n        \n        return temp >= k;\n        \n    }\n    \npublic:\n    int maximumCandies(vector<int>& candies, long long k) {\n        \n        sum = 0;\n        \n        for (auto& candy : candies)\n            sum += candy;\n        \n        if ( sum < k )\n            return 0;\n        \n        int left = 1;\n        int right = 1e9;\n        \n        int result = 0;\n        \n        while(left <= right) {\n            \n            int mid = left + (right-left) / 2;\n            \n            if (enough(candies, mid, k)) {\n                left = mid+1;\n                result = mid;\n            } else {\n                right = mid -1;\n            }\n            \n        }\n        \n        return result;\n        \n        \n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,30 @@
+{
+    "rank": 1405,
+    "username": "jasonisgod",
+    "score": 18,
+    "finish_time": "01:07:13",
+    "Q1": {
+        "solve_time": "00:39:24",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def convertTime(self, current: str, correct: str) -> int:\n        ans = 0\n        x = int(current[:2]) * 60 + int(current[3:])\n        y = int(correct[:2]) * 60 + int(correct[3:])\n        ops = [60, 15, 5, 1]\n        while x < y:\n            for op in ops:\n                if x + op <= y:\n                    ans += 1\n                    x += op\n                    break\n        return ans"
+    },
+    "Q2": {
+        "solve_time": "00:54:52",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def findWinners(self, matches: List[List[int]]) -> List[List[int]]:\n        p = [-666]*(100000+1)\n        n = 0\n        for (w, l) in matches:\n            n = max(n, max(w, l))\n            if p[w] == -666: p[w] = 0\n            if p[l] == -666: p[l] = 0\n            p[l] += 1\n        a0 = [i for i in range(1,n+1) if p[i] == 0]\n        a1 = [i for i in range(1,n+1) if p[i] == 1]\n        return [a0, a1]"
+    },
+    "Q3": {
+        "solve_time": "00:33:06",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def maximumCandies(self, candies: List[int], k: int) -> int:\n        s = sum(candies)\n        if s < k: return 0\n        lb, ub = 0, s\n        mid, last = 0, 0\n        while lb <= ub:\n            mid = (lb + ub) // 2\n            if mid == 0: mid = 1\n            if mid == last: break\n            cnt = sum([c // mid for c in candies])\n            if cnt >= k: last = mid\n            if cnt >= k: lb = mid + 1\n            if cnt < k: ub = mid - 1\n        return last"
+    },
+    "Q4": {
+        "solve_time": "01:07:13",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Encrypter:\n    def __init__(self, keys: List[str], values: List[str], dictionary: List[str]):\n        self.k = keys\n        self.v = values\n        self.d = dictionary\n        self.table = [self.encrypt(word) for word in self.d]\n    def encrypt(self, word: str) -> str:\n        return ''.join([self.v[self.k.index(ch)] for ch in word])\n    def decrypt(self, word: str) -> int:\n        return len([word for w in self.table if w == word])\n"
+    }
+}

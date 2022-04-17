@@ -1,0 +1,15 @@
+{
+    "rank": 9711,
+    "username": "jackycaelum",
+    "score": 3,
+    "finish_time": "00:16:58",
+    "Q1": {
+        "solve_time": "00:16:58",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Cmp {\npublic:\n    bool operator() (const int &lhs, const int &rhs) {\n        return lhs > rhs;\n    }\n};\n\nclass Solution {\npublic:\n    int largestInteger(int num) {\n        string s = to_string(num);\n        vector<int> odd;\n        vector<int> even;\n        \n        vector<int> parity (s.size(), 0);\n        for (int i=0; i<s.size(); i++) {\n            char &c = s[i];\n            int n = c - '0';\n            \n            if (n%2 == 0) {\n                parity[i] = 0;\n                even.push_back(n);\n            }\n            else {\n                parity[i] = 1;\n                odd.push_back(n);\n            }  \n        }\n        \n        sort(even.begin(), even.end(), Cmp());\n        sort(odd.begin(), odd.end(), Cmp());\n        \n        string ans;\n        int e=0, o=0;\n        for (int i=0; i<s.size(); i++) {\n            if (parity[i] == 0) {\n                ans += even[e]+'0';\n                e++;\n            }\n            else if (parity[i] == 1) {\n                ans += odd[o]+'0';\n                o++;\n            }         \n        }\n        return stoi(ans);       \n    }\n};"
+    },
+    "Q2": {},
+    "Q3": {},
+    "Q4": {}
+}

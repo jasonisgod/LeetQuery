@@ -1,0 +1,20 @@
+{
+    "rank": 9735,
+    "username": "yoyo6245a",
+    "score": 7,
+    "finish_time": "00:51:15",
+    "Q1": {
+        "solve_time": "00:07:29",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int convertTime(string current, string correct) {\n        int cur = tonum(current);\n        int cor = tonum(correct);\n        if(cor < cur) cor += 24 * 60;\n        int res = 0;\n        int rest = cor - cur;\n        //cout<<\"rest: \"<<rest<<endl;\n        while(rest >= 60){\n            rest -= 60;\n            res++;\n            //cout<<\"-=60\"<<endl;\n        }\n        while(rest >= 15){\n            rest -= 15;\n            res++;\n            //cout<<\"-=15\"<<endl;\n        }\n        while(rest >= 5){\n            rest -= 5;\n            res++;\n            //cout<<\"-=5\"<<endl;\n        }\n        res += rest;\n        return res;\n    }\n    int tonum(string str){\n        int num = 0;\n        num += ((str[0] - '0') * 10 + (str[1] - '0')) * 60;\n        num += (str[3] - '0') * 10 + (str[4] - '0');\n        return num;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:41:15",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<int>> findWinners(vector<vector<int>>& matches) {\n        vector<int> loser, all;\n        vector<vector<int>> res;\n        vector<int> winall, loseone;\n        for(vector<int> vec: matches){\n            loser.push_back(vec[1]);\n            all.push_back(vec[0]);\n            all.push_back(vec[1]);\n        }\n        sort( all.begin(), all.end() );\n        all.erase(unique( all.begin(), all.end() ), all.end());\n        sort(all.begin(), all.end());\n        sort(loser.begin(), loser.end());\n        //for(int l:loser){\n        //    cout<<l<<\" \";\n        //}\n        //cout<<endl;\n        int idx = 0;\n        for(int p: all){\n            //cout<<p<<\"/\"<<idx<<\": \"<<loser[idx]<<endl;\n            if(idx == loser.size() && p > loser[idx-1]){\n                winall.push_back(p);\n            }\n            else if(p < loser[idx]){\n                //cout<<\"all win: \"<<p<<endl;\n                winall.push_back(p);\n            }else if(p == loser[idx]){\n                //cout<<\"p == loser\"<<endl;\n                if(idx == loser.size()-1)\n                    loseone.push_back(p);\n                else if(loser[idx] != loser[idx+1]){\n                    loseone.push_back(p);\n                }\n                idx++;\n                while(idx < loser.size() && idx > 0 && loser[idx] == loser[idx-1]){\n                    idx++;\n                }\n            }\n        }\n        res.push_back(winall);\n        res.push_back(loseone);\n        return res;\n        \n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 2913,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:55:48",
+    "Q1": {
+        "solve_time": "00:40:04",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def findClosestNumber(self, nums: List[int]) -> int:\n        dis = abs(nums[0])\n        ans = nums[0]\n        for x in nums:\n            if abs(x) < dis:\n                dis = abs(x)\n                ans = x\n            elif abs(x) == dis:\n                dis = abs(x)\n                ans = max(ans, x)\n        return ans"
+    },
+    "Q2": {
+        "solve_time": "00:32:25",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def waysToBuyPensPencils(self, total: int, cost1: int, cost2: int) -> int:\n        ans = 0\n        mx1 = int(total / cost1)\n        for i in range(mx1+1):\n            tmp = total - (cost1 * i)\n            ans += int(tmp / cost2) + 1\n        return ans"
+    },
+    "Q3": {
+        "solve_time": "00:45:48",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class ATM:\n\n    def __init__(self):\n        self.c = [0,0,0,0,0]\n        self.v = [20, 50, 100, 200, 500]\n\n    def deposit(self, c: List[int]) -> None:\n        for i in [0,1,2,3,4]:\n            self.c[i] += c[i]\n        # print('deposit', c, self.c)\n\n    def withdraw(self, a: int) -> List[int]:\n        # print('withdraw', a, self.c)\n        ans = [0,0,0,0,0]\n        cc = list(self.c)\n        for i in [4,3,2,1,0]:\n            if cc[i] == 0: continue\n            if self.v[i] > a: continue \n            tmp = min(cc[i], int(a / self.v[i]))\n            ans[i] += tmp\n            cc[i] -= tmp\n            a -= (self.v[i] * tmp)\n            # print(self.v[i], tmp, a)\n        # if a > 0: print('ans [-1]')\n        if a > 0: return [-1]\n        # print('ans', self.c, ans)\n        self.c = list(cc)\n        return ans\n\n\n# Your ATM object will be instantiated and called as such:\n# obj = ATM()\n# obj.deposit(banknotesCount)\n# param_2 = obj.withdraw(amount)"
+    },
+    "Q4": {}
+}

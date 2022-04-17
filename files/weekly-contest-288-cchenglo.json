@@ -1,0 +1,25 @@
+{
+    "rank": 2375,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:56:58",
+    "Q1": {
+        "solve_time": "00:41:58",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int largestInteger(int num) {\n        \n        string s = to_string(num), s0, s1, sa;\n        \n        for(char c : s) {\n            if (c % 2 == 0)\n                s0.push_back(c);\n            else\n                s1.push_back(c);\n        }\n        \n        sort(s0.begin(), s0.end());\n        sort(s1.begin(), s1.end());\n        \n        reverse(s0.begin(), s0.end());\n        reverse(s1.begin(), s1.end());\n        \n        cout << s0 << \" \" << s1 << endl;\n        \n        int i0 = 0, i1 = 0;\n        for (int i = 0; i < s.length(); i++) {\n            if (s[i] % 2 == 0)\n                sa.push_back(s0[i0++]);\n            else\n                sa.push_back(s1[i1++]);\n        }\n        \n        return atoi(sa.c_str());\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:33:27",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\n    int f(string s) {\n        if (s == \"\")\n            return 1;\n        else\n            return atoi(s.c_str());\n    }\npublic:\n    string minimizeResult(string exp) {\n        int minNum = INT_MAX;\n        int addPos;\n        for (int i = 0; i < exp.length(); i++)\n            if (exp[i] == '+')\n                addPos = i;\n        \n        string s1 = exp.substr(0, addPos),\n               s2 = exp.substr(addPos + 1);\n        \n        // a (b + c) d\n        // a, d might be \"\"; b, c cannot be \"\" --> range of the for-loop\n        \n        string a, b, c, d;\n        vector<string> ss(4);\n        \n        for (int i = 0; i < s1.length(); i++) {\n            for (int j = 1; j <= s2.length(); j++) {\n                a = s1.substr(0, i);\n                b = s1.substr(i);\n                c = s2.substr(0, j);\n                d = s2.substr(j);\n                int val = f(a) * (f(b) + f(c)) * f(d);\n                // cout << a + \"(\" + b + \"+\" + c +\")\" + d << \" = \" << val << endl;\n                if (val < minNum) {\n                    minNum = val;\n                    ss = {a, b, c, d};\n                }\n            }\n        }\n        \n        \n        return ss[0] + \"(\" + ss[1] + \"+\" + ss[2] +\")\" + ss[3];\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:13:47",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int maximumProduct(vector<int>& nums, int k) {\n        priority_queue<int, vector<int>, greater<int>> pq;  // min heap\n        for (int n : nums)\n            pq.push(n);\n        for (int i = 0; i < k; i++) {\n            int x = pq.top();\n            pq.pop();\n            x += 1;\n            pq.push(x);\n        }\n        long long ans = 1;\n        while (!pq.empty()) {\n            ans = (ans * (long long)pq.top()) % 1000000007;\n            pq.pop();\n        }\n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

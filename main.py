@@ -5,7 +5,7 @@ import signal
 signal.signal(signal.SIGINT, lambda a,b: exit())
 
 DIR = 'files'
-PAGE_RANGE = list(range(100,500)) ## + list(range(460,470))
+PAGE_RANGE = list(range(10,400)) ## + list(range(460,470))
 SPACES = " "*100
 
 def my_reqeust(url):
@@ -127,7 +127,7 @@ def query_contests(contest_name_list, username_list):
     return
 
 def main():
-    contest_name_list = ['biweekly-contest-73']
+    contest_name_list = ['weekly-contest-289']
     username_list = json.load(open('username.json', 'r'))
     print(contest_name_list)
     print(username_list)

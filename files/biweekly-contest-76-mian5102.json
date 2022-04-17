@@ -1,0 +1,20 @@
+{
+    "rank": 7970,
+    "username": "mian5102",
+    "score": 7,
+    "finish_time": "01:00:36",
+    "Q1": {
+        "solve_time": "00:45:38",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int findClosestNumber(vector<int>& nums) {\n        int ans = INT_MIN;\n        int diff = INT_MAX;\n        for (int i=0; i<nums.size(); i++) {\n            if (abs(nums[i]-0) <= diff) {\n                diff = abs(nums[i]-0);\n                if (abs(ans) == abs(nums[i]))\n                    ans = max(ans, nums[i]);\n                else\n                    ans = nums[i];\n            }\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:55:36",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long waysToBuyPensPencils(int total, int cost1, int cost2) {\n        long long ans = 0;\n        if (total < cost1 and total < cost2)\n            return 1;\n        // int larger = (cost1 > cost2) ? cost1 : cost2;\n        int count = total/cost1;\n        for (int i=0; i<=count; i++) {\n            int temp = total-(cost1*i);\n            ans += ((temp/cost2) +1);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 1659,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:47:07",
+    "Q1": {
+        "solve_time": "00:04:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int largestInteger(int num) {\n        string numStr = to_string(num);\n        vector<char> oddChar, evenChar;\n        \n        for (char ch: numStr) {\n            if ((ch - '0') % 2 == 0)                \n                evenChar.push_back(ch);\n            else\n                oddChar.push_back(ch);            \n        }\n        \n        int i = 0, j = 0;\n        sort(oddChar.begin(), oddChar.end(), greater<char>());\n        sort(evenChar.begin(), evenChar.end(), greater<char>());\n        \n        for (char &ch: numStr) {\n            if ((ch - '0') % 2 == 0)\n                ch = evenChar[i++];\n            else\n                ch = oddChar[j++];\n        }\n        \n        return stoi(numStr);\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:18:16",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string minimizeResult(string expression) {\n        string termA = expression.substr(0, expression.find('+'));\n        string termB = expression.substr(expression.find('+') + 1);\n        int result = INT_MAX;\n        string resultExpr;\n        \n        for (int i=0; i<termA.size(); ++i) {\n            string numA = \"1\";\n            if (i != 0)\n                numA = termA.substr(0, i);\n            \n            string numB = termA.substr(i);\n            \n            for (int j=1; j<=termB.size(); ++j) {\n                string numC = termB.substr(0, j);\n                string numD = \"1\";\n                \n                if (j != termB.size())\n                    numD = termB.substr(j);\n                \n                int val = stoi(numA) * (stoi(numB) + stoi(numC)) * stoi(numD);\n                if (val < result) {\n                    result = val;\n                    resultExpr = ((i == 0)? \"\": numA) + \"(\" + numB + \"+\" + numC + \")\" + ((j == termB.size())? \"\": numD);\n                }\n            }\n        }\n        \n        return resultExpr;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:47:07",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    int maximumProduct(vector<int>& nums, int k) {\n        const int modulo = 1e9 + 7;\n        map<int, int> numMap;\n        \n        for (int num: nums)\n            ++numMap[num];\n        \n        while (k) {\n            int currNum = numMap.begin()->first, currCount = numMap.begin()->second;            \n            numMap.erase(numMap.begin());\n            \n            if (numMap.size() == 0) {\n                currNum += k / currCount;                \n                int nextNum = currNum + 1, nextCount = k % currCount;\n                currCount = currCount - (k % currCount);\n                \n                numMap[currNum] = currCount;\n                if (nextCount != 0)\n                    numMap[nextNum] = nextCount;\n                break;\n            }\n            \n            int nextNum = numMap.begin()->first;            \n            \n            if ((nextNum - currNum) * currCount <= k) {\n                k -= (nextNum - currNum) * currCount;\n                numMap[nextNum] += currCount;\n                continue;\n            }\n            \n            currNum += k / currCount;\n            nextNum = currNum + 1; \n            int nextCount = k % currCount;\n            currCount = currCount - (k % currCount);\n            numMap[currNum] = currCount;\n            \n            if (nextCount != 0)\n                numMap[nextNum] += nextCount;\n            break;\n        }\n        \n        LLI product = 1;\n        for (auto &mapPair: numMap) {\n            int num = mapPair.first, count = mapPair.second;            \n            \n            for (int i=0; i<count; ++i)\n                product = (product * (LLI)num) % (LLI)modulo;\n        }\n        \n        return product;\n    }\n};"
+    },
+    "Q4": {}
+}

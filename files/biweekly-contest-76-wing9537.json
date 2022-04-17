@@ -1,0 +1,25 @@
+{
+    "rank": 4482,
+    "username": "wing9537",
+    "score": 12,
+    "finish_time": "01:25:04",
+    "Q1": {
+        "solve_time": "00:13:08",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar findClosestNumber = function(nums) {\n    var num = nums[0];\n    console.log(num);\n    for (let i = 1; i < nums.length; i++) {\n        console.log(Math.abs(nums[i]));\n        if (Math.abs(nums[i]) < Math.abs(num)) {\n            num = nums[i];\n        } else if (Math.abs(nums[i]) == Math.abs(num)) {\n            num = Math.max(nums[i], num);\n        }\n    }\n    return num;\n};"
+    },
+    "Q2": {
+        "solve_time": "00:28:24",
+        "fail_count": 2,
+        "lang": "javascript",
+        "code": "/**\n * @param {number} total\n * @param {number} cost1\n * @param {number} cost2\n * @return {number}\n */\nvar waysToBuyPensPencils = function(total, cost1, cost2) {\n    var num = 1;\n    var money = total;\n    var item1 = Math.min(cost1, cost2);\n    var item2 = Math.max(cost1, cost2);\n    while (money >= item1) {\n        num += Math.floor(money / item2) + 1;\n        money -= item1;\n    }\n    return num;\n};"
+    },
+    "Q3": {
+        "solve_time": "01:05:04",
+        "fail_count": 2,
+        "lang": "javascript",
+        "code": "\nvar ATM = function() {\n    this.n20 = 0;\n    this.n50 = 0;\n    this.n100 = 0;\n    this.n200 = 0;\n    this.n500 = 0;\n};\n\n/** \n * @param {number[]} banknotesCount\n * @return {void}\n */\nATM.prototype.deposit = function(banknotesCount) {\n    this.n20 += banknotesCount[0];\n    this.n50 += banknotesCount[1];\n    this.n100 += banknotesCount[2];\n    this.n200 += banknotesCount[3];\n    this.n500 += banknotesCount[4];\n};\n\n/** \n * @param {number} amount\n * @return {number[]}\n */\nATM.prototype.withdraw = function(amount) {\n    var c20 = 0;\n    var c50 = 0;\n    var c100 = 0;\n    var c200 = 0;\n    var c500 = 0;\n    \n    if (this.n500 > 0 && amount >= 500) {\n        c500 = Math.min(this.n500, Math.floor(amount / 500));\n        amount -= 500 * c500;\n    }\n    \n    if (this.n200 > 0 && amount >= 200) {\n        c200 = Math.min(this.n200, Math.floor(amount / 200));\n        amount -= 200 * c200;\n    }\n    \n    if (this.n100 > 0 && amount >= 100) {\n        c100 = Math.min(this.n100, Math.floor(amount / 100));\n        amount -= 100 * c100;\n    }\n    \n    if (this.n50 > 0 && amount >= 50) {\n        c50 = Math.min(this.n50, Math.floor(amount / 50));\n        amount -= 50 * c50;\n    }\n    \n    if (this.n20 > 0 && amount >= 20) {\n        c20 = Math.min(this.n20, Math.floor(amount / 20));\n        amount -= 20 * c20;\n    }\n    console.log(this.n20, this.n50, this.n100, this.n200, this.n500);\n    console.log(c20, c50, c100, c200, c500);\n    console.log(amount);\n    \n    if (amount > 0) return [-1];\n    \n    \n    this.n20 -= c20;\n    this.n50 -= c50;\n    this.n100 -= c100;\n    this.n200 -= c200;\n    this.n500 -= c500;\n    return [c20, c50, c100, c200, c500];\n};\n\n/** \n * Your ATM object will be instantiated and called as such:\n * var obj = new ATM()\n * obj.deposit(banknotesCount)\n * var param_2 = obj.withdraw(amount)\n */"
+    },
+    "Q4": {}
+}

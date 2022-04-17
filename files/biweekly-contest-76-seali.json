@@ -1,0 +1,25 @@
+{
+    "rank": 995,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "00:24:51",
+    "Q1": {
+        "solve_time": "00:08:21",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    int abs(int& a){\n        return a >= 0 ? a : -a;  \n    } \npublic:\n    int findClosestNumber(vector<int>& nums) {\n        \n        int dis = INT_MAX;\n        \n        int output = INT_MAX;\n        \n        for(auto num : nums) {\n            if (abs(num) < dis) {\n               dis = abs(num);\n               output = num;\n            } else if (abs(num) == dis) {\n                output = max(output, num);\n            } \n        }\n        \n        \n        return output;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:04:08",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long waysToBuyPensPencils(int total, int cost1, int cost2) {\n        \n        long long output = 0;\n        \n        for(int i = 0 ; cost1*i <= total; i++) {\n            \n            int remain = total - cost1*i;\n            \n            output += remain/cost2 + 1;\n            \n        }\n        \n        return output;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:19:51",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class ATM {\nprivate:\n    long long min (long long a, long long b) {\n        return a<b? a:b;\n    }\n    vector<int> money;\n    vector<long long> storage;\npublic:\n    ATM() {\n        money = {20, 50, 100, 200, 500};\n        storage = vector<long long>(5, 0);\n    }\n    \n    void deposit(vector<int> banknotesCount) {\n        for(int i = 0 ; i < banknotesCount.size(); i++) \n            storage[i] += banknotesCount[i];\n    }\n    \n    vector<int> withdraw(int amount) {\n        vector<int> output(5, 0);\n        for(int i = 4; i>=0; i--) {\n            int num = min(amount/money[i], storage[i]);\n            amount -= num*money[i];\n            output[i] = num;\n        }\n        \n        if (amount == 0) {\n            for(int i = 0 ; i < 5; i++) \n                storage[i] -= output[i];\n            return output;\n        } else\n            return {-1};\n    \n    }\n};\n\n/**\n * Your ATM object will be instantiated and called as such:\n * ATM* obj = new ATM();\n * obj->deposit(banknotesCount);\n * vector<int> param_2 = obj->withdraw(amount);\n */"
+    },
+    "Q4": {}
+}

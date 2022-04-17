@@ -1,0 +1,20 @@
+{
+    "rank": 4786,
+    "username": "yoyo6245a",
+    "score": 7,
+    "finish_time": "00:26:41",
+    "Q1": {
+        "solve_time": "00:15:01",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string digitSum(string s, int k) {\n        while(s.size() > k){\n            string tmp = \"\";\n            int sum = 0, i = 0;\n            //cout<<\"s: \"<<s<<endl;\n            for(i=0; i<s.size(); i++){\n                sum += s[i] - '0';\n                if(i % k == k-1){\n                    tmp += to_string(sum);\n                    sum = 0;\n                }\n            }\n            if(s.size() % k != 0){\n                tmp += to_string(sum);\n                sum = 0;\n            }\n            //cout<<tmp<<endl;\n            s = tmp;\n        }\n        return s;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:21:41",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumRounds(vector<int>& tasks) {\n        unordered_map<int, int> mp;\n        for(int t: tasks){\n            mp[t]++;\n        }\n        int res = 0;\n        for(auto set: mp){\n            if(set.second == 1) return -1;\n            else if(set.second <= 3) res++;\n            else{\n                res += (set.second + 2) / 3;\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 2341,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:56:37",
+    "Q1": {
+        "solve_time": "00:56:37",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def largestInteger(self, num: int) -> int:\n        t = [int(c) for c in str(num)]\n        gogogo = True\n        while gogogo:\n            gogogo = False\n            for i in range(len(t)):\n                for j in range(i+1,len(t)):\n                    if t[i] % 2 == t[j] % 2 and t[i] < t[j]:\n                        t[i], t[j] = t[j], t[i]\n                        gogogo = True\n        tt = [str(c) for c in t]\n        return int(''.join(tt))"
+    },
+    "Q2": {
+        "solve_time": "00:33:26",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minimizeResult(self, exp: str) -> str:\n        ans = exp\n        mn = 1_000_000_000_000_000\n        plus = exp.index('+')\n        n = len(exp)\n        for i in range(plus):\n            for j in range(plus+1, n+1):\n                try:\n                    left = '(' if i == 0 else '*('\n                    right = ')' if j == n else ')*'\n                    tmp = exp[:i] + left + exp[i:j] + right + exp[j:]\n                    val = int(eval(tmp))\n                    if (val < mn):\n                        mn = min(mn, val)\n                        ans = tmp\n                except: pass\n        return ans.replace('*', '')"
+    },
+    "Q3": {
+        "solve_time": "00:38:14",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    int maximumProduct(vector<int>& nums, int k) {\n        priority_queue<int, vector<int>, greater<int>> pq;\n        for (int num: nums) {\n            pq.push(num);\n        }\n        for (int i = 0; i < k; i++) {\n            int tmp = pq.top(); \n            pq.pop();\n            pq.push(tmp+1);\n        }\n        int ans = 1;\n        while (!pq.empty()) {\n            int tmp = pq.top(); \n            ans = (((LLI)ans) * tmp) % (1000000000+7);\n            pq.pop();\n        }\n        return ans;\n    }\n};\n\n/*\nclass Solution:\n    def maximumProduct(self, nums: List[int], k: int) -> int:\n        MOD = 1_000_000_000 + 7\n        from queue import PriorityQueue\n        q = PriorityQueue()\n        for num in nums:\n            q.put(num)\n        for i in range(k):\n            q.put(q.get()+1)\n        ans = 1\n        while not q.empty():\n            ans = (ans * q.get()) % MOD\n        # print(q)\n        return ans\n*/"
+    },
+    "Q4": {}
+}

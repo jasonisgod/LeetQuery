@@ -1,0 +1,25 @@
+{
+    "rank": 1281,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:30:21",
+    "Q1": {
+        "solve_time": "00:04:53",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Cmp {\npublic:\n    bool operator()(const int &lhs, const int &rhs) {\n        if (abs(lhs) != abs(rhs))\n            return abs(lhs) < abs(rhs);\n        return lhs > rhs;\n    }\n};\n\nclass Solution {\npublic:\n    int findClosestNumber(vector<int>& nums) {\n        sort(nums.begin(), nums.end(), Cmp());\n        \n        return nums[0];\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:11:06",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    long long waysToBuyPensPencils(int total, int cost1, int cost2) {\n        LLI result = 0;\n        int costLarge = max(cost1, cost2), costSmall = min(cost1, cost2);\n        \n        for (int largeCount=0; total-largeCount*costLarge >= 0; ++largeCount) {\n            int remain = total - largeCount * costLarge;\n            result += remain / costSmall + 1;\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:25:21",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass ATM {\nprivate:\n    vector<LLI> tmp;\n    vector<LLI> curr;\n    int money[5] = {20, 50, 100, 200, 500};\npublic:\n    ATM() {\n        tmp.resize(5, 0);\n        curr.resize(5, 0);\n    }\n    \n    void deposit(vector<int> banknotesCount) {\n        for (int i=0; i<banknotesCount.size(); ++i)\n            curr[i] += banknotesCount[i] ;        \n    }\n    \n    vector<int> withdraw(int amount) {\n        tmp = curr;\n        vector<int> result(5, 0);\n        \n        for (int i=4; i>=0 && amount>0; --i) {\n            if (amount < money[i])\n                continue;\n            \n            result[i] = min((LLI)amount / money[i], curr[i]);\n            curr[i] -= result[i];\n            amount -= result[i] * money[i];\n        }\n        \n        if (amount != 0) {\n            curr = tmp;\n            return {-1};\n        }\n        \n        return result;\n    }\n};\n\n/**\n * Your ATM object will be instantiated and called as such:\n * ATM* obj = new ATM();\n * obj->deposit(banknotesCount);\n * vector<int> param_2 = obj->withdraw(amount);\n */"
+    },
+    "Q4": {}
+}
