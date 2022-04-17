@@ -1,0 +1,20 @@
+{
+    "rank": 5962,
+    "username": "wing9537",
+    "score": 8,
+    "finish_time": "00:43:27",
+    "Q1": {
+        "solve_time": "00:12:31",
+        "fail_count": 2,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums\n * @return {boolean}\n */\nvar divideArray = function(nums) {\n    var arr = new Array(500);\n    for (var i = 0; i <= 500; i++) {\n        arr[i] = 0;\n    }\n    for (var i = 0; i < nums.length; i++) {\n        arr[nums[i]]++;\n    }\n    for(var i = 0; i < arr.length; i++) {\n        if (arr[i] % 2 != 0) return false;\n    }\n    return true;\n};"
+    },
+    "Q2": {},
+    "Q3": {
+        "solve_time": "00:33:27",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\ntypedef long long int LLI;\npublic:\n    int halveArray(vector<int>& nums) {\n        double total = 0;\n        priority_queue<double> listq;\n        \n        for (int num: nums) {\n            total += num;\n            listq.push(num);\n        }\n        \n        double half = total / 2;\n        int answer = 0;\n        while (total > half) {\n            double top_num = listq.top();\n            total -= top_num / 2;\n            listq.pop();\n            listq.push(top_num / 2);\n            answer += 1;\n        }\n        return answer;\n    }\n};"
+    },
+    "Q4": {}
+}

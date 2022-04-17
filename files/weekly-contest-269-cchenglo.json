@@ -1,0 +1,25 @@
+{
+    "rank": 3897,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:54:22",
+    "Q1": {
+        "solve_time": "00:04:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> targetIndices(vector<int>& nums, int target) {\n        int smaller = 0, eq = 0, bigger = 0;\n        for(int n : nums) {\n            if(n < target)\n                smaller++;\n            else if(n == target)\n                eq++;\n            else\n                bigger++;\n        }\n        vector<int> ans;\n        for(int i = 0; i < eq; i++)\n            ans.push_back(smaller + i);\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:38:48",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "// sliding window\n\nclass Solution {\npublic:\n    vector<int> getAverages(vector<int>& nums, int k) {\n        nums.push_back(0);\n        vector<int> ans(nums.size() - 1, -1);\n        \n        long long sum = 0;\n        for(int i = 0; i < 2*k + 1 && i < nums.size(); i++)\n            sum += nums[i];\n        \n        for(int i = k; i < ans.size() - k && i < ans.size(); i++) {\n            ans[i] = sum / (2 * k + 1);\n            sum -= nums[i-k];\n            sum += nums[i+k+1];\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:44:22",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\n    int min(int a, int b) {\n        return a < b ? a : b;\n    }\npublic:\n    int minimumDeletions(vector<int>& nums) {\n        int maxIndex = 0, minIndex = 0;\n        for(int i = 1; i < nums.size(); i++) {\n            if(nums[i] > nums[maxIndex])\n                maxIndex = i;\n            if(nums[i] < nums[minIndex])\n                minIndex = i;\n        }\n        // if(maxIndex == minIndex)\n        //     return min(maxIndex, nums.size() - 1 - maxIndex);\n        \n        int rmMinFront = minIndex + 1, rmMinEnd = nums.size() - minIndex;\n        int rmMaxFront = maxIndex + 1, rmMaxEnd = nums.size() - maxIndex;\n        return min(min(rmMinFront, rmMinEnd) + min(rmMaxFront, rmMaxEnd), \n                   min(  max(rmMinFront, rmMaxFront), \n                         max(rmMinEnd,   rmMaxEnd)));\n    }\n};"
+    },
+    "Q4": {}
+}
