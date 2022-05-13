@@ -1,0 +1,20 @@
+{
+    "rank": 6329,
+    "username": "mian5102",
+    "score": 7,
+    "finish_time": "00:51:15",
+    "Q1": {
+        "solve_time": "00:22:01",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countPrefixes(vector<string>& words, string s) {\n        int ans = 0;\n        for (string word : words) {\n            if (s.find(word) == 0) ans++;\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:46:15",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumAverageDifference(vector<int>& nums) {\n        int n = nums.size();\n        int ans = -1;\n        int min = INT_MAX;\n        vector<long long> prefix(nums.size(), nums[0]);\n        vector<long long> suffix(nums.size(), 0);\n        \n        for (int i = 1; i < n; ++i) \n            prefix[i] = nums[i] + prefix[i-1];\n        for (int i = 1; i < n; ++i)\n            suffix[i] = nums[n-i] + suffix[i-1];\n        for (int i = 0; i < n - 1; ++i)\n            if (abs(prefix[i] / (i+1) - (suffix[n-i-1]) / (n-i-1)) < min) {\n                min = abs(prefix[i] / (i+1) - (suffix[n-i-1]) / (n-i-1));\n                ans = i;\n            }\n                \n        if (abs(prefix[n-1] / n) < min)\n            ans = n-1;\n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

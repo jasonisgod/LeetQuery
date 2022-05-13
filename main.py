@@ -4,6 +4,7 @@ import signal
 
 signal.signal(signal.SIGINT, lambda a,b: exit())
 
+CONTEST_NAME = 'weekly-contest-291'
 DIR = 'files'
 PAGE_RANGE = list(range(10,400)) ## + list(range(460,470))
 SPACES = " "*100
@@ -127,7 +128,7 @@ def query_contests(contest_name_list, username_list):
     return
 
 def main():
-    contest_name_list = ['weekly-contest-289']
+    contest_name_list = [CONTEST_NAME]
     username_list = json.load(open('username.json', 'r'))
     print(contest_name_list)
     print(username_list)

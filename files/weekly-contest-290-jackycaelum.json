@@ -1,0 +1,20 @@
+{
+    "rank": 4665,
+    "username": "jackycaelum",
+    "score": 7,
+    "finish_time": "00:37:00",
+    "Q1": {
+        "solve_time": "00:05:21",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> intersection(vector<vector<int>>& nums) {\n        map<int, int> map;\n        vector<int> ans;\n        int size = nums.size();\n        \n        for (auto &numss: nums) {\n            for (int &n: numss) {           \n                map[n]++;\n            }\n        }\n        \n        for (auto &pair: map) {\n            if(pair.second == size)\n                ans.push_back(pair.first);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:37:00",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class hashFunction {\npublic:\n    bool operator() (const pair<int, int> &x) {\n        return x.first ^ x.second;\n    }\n    \n};\n\nclass Solution {\npublic:\n    double dis(int x1, int y1, int x2, int y2) {\n        return pow((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2), 0.5);\n    }\n    \n    int countLatticePoints(vector<vector<int>>& circles) {\n        vector<vector<int>> uset(300, vector<int> (300, 0));\n        \n        for (auto &circle: circles) {\n            int x = circle[0], y = circle[1], r = circle[2];\n            \n            for (int i=x-r; i<=x+r; i++) {\n                for (int j=y-r; j<=y+r; j++) {\n                    if (dis(i, j, x, y) <= r)\n                    {                \n                        uset[i][j]++;\n                    }              \n                }\n            }\n        }\n        \n        int ans = 0;\n        for (int i=0; i<300; i++) {\n            for (int j=0; j<300; j++) {\n                if (uset[i][j] != 0)\n                    ans++;\n            }\n        }\n        \n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

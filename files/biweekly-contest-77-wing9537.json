@@ -1,0 +1,25 @@
+{
+    "rank": 3519,
+    "username": "wing9537",
+    "score": 12,
+    "finish_time": "01:30:52",
+    "Q1": {
+        "solve_time": "00:03:23",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {string[]} words\n * @param {string} s\n * @return {number}\n */\nvar countPrefixes = function(words, s) {\n    return words.filter(prefix => s.startsWith(prefix)).length;\n};"
+    },
+    "Q2": {
+        "solve_time": "00:30:48",
+        "fail_count": 1,
+        "lang": "javascript",
+        "code": "/**\n * @param {number[]} nums\n * @return {number}\n */\nvar minimumAverageDifference = function(nums) {\n    var idx = -1;\n    var min = 9999999999;\n    var sum1 = 0;\n    var sum2 = nums.reduce((a, b) => a + b, 0);\n    var len1 = 0;\n    var len2 = nums.length;\n    var avg1 = 0;\n    var avg2 = 0;\n    for (let i = 0, len = nums.length; i < len; i++) {\n        ++len1; --len2;\n        sum1 += nums[i];\n        sum2 -= nums[i];\n        avg1 = Math.floor((sum1 / len1) || 0);\n        avg2 = Math.floor((sum2 / len2) || 0);\n        abs = Math.abs(avg1 - avg2);\n        \n        console.log(avg1, avg2, abs);\n        if (abs < min) {\n            min = abs;\n            idx = i;\n        }\n    }\n    return idx;\n};"
+    },
+    "Q3": {
+        "solve_time": "01:25:52",
+        "fail_count": 0,
+        "lang": "javascript",
+        "code": "/**\n * @param {number} m\n * @param {number} n\n * @param {number[][]} guards\n * @param {number[][]} walls\n * @return {number}\n */\nvar countUnguarded = function(m, n, guards, walls) {\n    // var map = Array(m).fill(Array(n).fill('M'));\n    var map = [];\n    for (let i = 0; i < m; i++) {\n        map[i] = Array(n).fill('M');\n    }\n    guards.forEach(([x, y]) => map[x][y] = 'G');\n    walls.forEach(([x, y]) => map[x][y] = 'W');\n    \n    var t;\n    guards.forEach(([x, y]) => {\n        t = x - 1;\n        while (t >= 0 && ['M', 'V'].includes(map[t][y])) map[t--][y] = 'V';\n        t = x + 1;\n        while (t < m  && ['M', 'V'].includes(map[t][y])) map[t++][y] = 'V';\n        t = y - 1;\n        while (t >= 0 && ['M', 'V'].includes(map[x][t])) map[x][t--] = 'V';\n        t = y + 1;\n        while (t < n  && ['M', 'V'].includes(map[x][t])) map[x][t++] = 'V';\n    });\n    \n    \n    console.log(map);\n    return map.reduce((ans, arr) => ans + arr.filter(c => c == 'M').length, 0);\n}\n    "
+    },
+    "Q4": {}
+}

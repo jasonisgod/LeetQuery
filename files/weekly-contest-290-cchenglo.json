@@ -1,0 +1,25 @@
+{
+    "rank": 2201,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "01:02:31",
+    "Q1": {
+        "solve_time": "00:02:20",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> intersection(vector<vector<int>>& nums) {\n        map<int, int> m;\n        for (auto &ns : nums) {\n            for (int &n : ns)\n                m[n]++;\n        }\n        vector<int> ans;\n        for (auto it : m) {\n            if (it.second == nums.size())\n                ans.push_back(it.first);\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:07:30",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\n    int square(int x) {\n        return x * x;\n    }\npublic:\n    int countLatticePoints(vector<vector<int>>& circles) {\n        \n        set<int> s;\n        \n        for (auto &cs : circles) {\n            int x = cs[0],\n                y = cs[1],\n                r = cs[2];\n            \n            for (int i = x - r; i <= x + r; i++) {\n                for (int j = y - r; j <= y + r; j++) {\n                    if (square(i - x) + square(j - y) <= square(r)) {\n                        s.insert(10000 * i + j);  // 1 <= x, y <= 100\n                    }\n                }\n            }\n        }\n        \n            \n        return s.size();\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:52:31",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\n    int binSearch(vector<int>& arr, int t) {\n        if (arr.size() < 1)\n            return 0;\n        int l = 0, r = arr.size() - 1, pos;\n        while (l <= r) {\n            int m = (l + r) / 2;\n            if (arr[m] == t)\n                return m;\n            else if (arr[m] > t) {\n                r = m - 1;\n                pos = m;\n            }\n            else {\n                l = m + 1;\n                pos = m + 1;\n            }\n        }\n        return pos;\n    }\npublic:\n    vector<int> countRectangles(vector<vector<int>>& rectangles, vector<vector<int>>& points) {\n        \n        vector<int> ans(points.size(), 0);\n        vector<int> y2xs[101];\n        \n        for (auto rs : rectangles) {\n            y2xs[rs[1]].push_back(rs[0]);\n        }\n        for (int i = 0; i <= 100; i++)\n            sort(y2xs[i].begin(), y2xs[i].end(), less<int>());\n                \n        for (int p = 0; p < points.size(); p++) {\n            \n            for (int i = points[p][1]; i <= 100; i++) {\n                \n                // cout << \"i= \" << i << \" \" << binSearch(y2xs[i], points[p][0]) << endl;\n                ans[p] += (y2xs[i].size() - binSearch(y2xs[i], points[p][0]));\n                \n\n                // int j = 0;\n                // while (j < y2xs[i].size() && y2xs[i][j] >= points[p][0]) {\n                //     // cout << y2xs[i][j] << \" \" << i << endl;\n                //     ans[p]++;\n                //     j++;\n                // }\n                \n            }\n            \n        }\n        return ans;\n    }\n};"
+    },
+    "Q4": {}
+}

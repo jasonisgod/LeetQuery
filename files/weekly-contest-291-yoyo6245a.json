@@ -1,0 +1,20 @@
+{
+    "rank": 8894,
+    "username": "yoyo6245a",
+    "score": 7,
+    "finish_time": "00:58:13",
+    "Q1": {
+        "solve_time": "00:11:32",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string removeDigit(string number, char digit) {\n        string tmp = number;\n        string res;\n        for(int i=0; i<number.size(); i++){\n            if(number[i] == digit){\n                tmp = number;\n                tmp.erase(i, 1);\n                if(tmp > res){\n                    res = tmp;\n                }\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:38:13",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumCardPickup(vector<int>& cards) {\n        unordered_map<int, int> mp;\n        int res = -1;\n        for(int i=0; i<cards.size(); i++){\n            if(mp.find(cards[i]) == mp.end()){\n                mp[cards[i]] = i;\n            }else{\n                if(res == -1){\n                    res = i - mp[cards[i]] + 1;\n                }else{\n                    res = i - mp[cards[i]] + 1 < res? i - mp[cards[i]] + 1: res;\n                }\n                mp[cards[i]] = i;\n            }\n        }\n        return res;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

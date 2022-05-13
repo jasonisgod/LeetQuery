@@ -1,0 +1,25 @@
+{
+    "rank": 1150,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:39:52",
+    "Q1": {
+        "solve_time": "00:28:18",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def countPrefixes(self, words: List[str], s: str) -> int:\n        return sum([1 if s[:len(w)] == w else 0 for w in words])"
+    },
+    "Q2": {
+        "solve_time": "00:39:52",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minimumAverageDifference(self, nums: List[int]) -> int:\n        sum1 = 0\n        sum2 = sum(nums)\n        n = len(nums)\n        mn = 666_666_666_666_666\n        ans = -1\n        for i in range(n):\n            sum1 += nums[i]\n            sum2 -= nums[i]\n            n1 = i + 1\n            n2 = n - n1\n            avg1 = 0 if n1 == 0 else int(sum1 / n1)\n            avg2 = 0 if n2 == 0 else int(sum2 / n2)\n            diff = abs(avg1 - avg2)\n            if diff < mn:\n                mn = diff\n                ans = i\n        return ans"
+    },
+    "Q3": {
+        "solve_time": "00:24:50",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def countUnguarded(self, m: int, n: int, guards: List[List[int]], walls: List[List[int]]) -> int:\n        map = [['M' for j in range(n)] for i in range(m)]\n        for (x, y) in guards:\n            map[x][y] = 'G'\n        for (x, y) in walls:\n            map[x][y] = 'W'\n        # print('\\n'.join([''.join(row) for row in map]))\n        for (x, y) in guards:\n            xx = x-1\n            while xx >= 0 and map[xx][y] in 'MX': map[xx][y] = 'X'; xx -= 1\n            xx = x+1\n            while xx <  m and map[xx][y] in 'MX': map[xx][y] = 'X'; xx += 1\n            yy = y-1\n            while yy >= 0 and map[x][yy] in 'MX': map[x][yy] = 'X'; yy -= 1\n            yy = y+1\n            while yy <  n and map[x][yy] in 'MX': map[x][yy] = 'X'; yy += 1\n        # print('\\n'.join([''.join(row) for row in map]))\n        ans = sum([sum([1 if col == 'M' else 0 for col in row]) for row in map])\n        return ans"
+    },
+    "Q4": {}
+}

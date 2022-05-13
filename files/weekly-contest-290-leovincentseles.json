@@ -1,0 +1,30 @@
+{
+    "rank": 771,
+    "username": "leovincentseles",
+    "score": 18,
+    "finish_time": "01:01:56",
+    "Q1": {
+        "solve_time": "00:01:52",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> intersection(vector<vector<int>>& nums) {\n        unordered_map<int, int> numMap;\n        vector<int> result;\n        \n        for (vector<int> &arr: nums) {\n            for (int num: arr)\n                ++numMap[num];\n        }\n        \n        for (auto &mapPair: numMap) {\n            if (mapPair.second == nums.size())\n                result.push_back(mapPair.first);\n        }\n        \n        sort(result.begin(), result.end());\n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:06:49",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countLatticePoints(vector<vector<int>>& circles) {\n        set<pair<int, int>> pts;\n        \n        for (vector<int> &circle: circles) {\n            int x = circle[0], y = circle[1], r = circle[2];\n            \n            for (int currX=x-r; currX<=x+r; ++currX) {\n                for (int currY=y-r; currY<=y+r; ++currY) {\n                    if ((currX-x) * (currX-x) + (currY-y) * (currY-y) <= r*r)\n                        pts.insert({currX, currY});\n                }\n            }\n        }\n        \n        return pts.size();\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:36:00",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Cmp {\npublic:\n    bool operator()(const vector<int> &lhs, const vector<int> &rhs) {\n        return lhs[0] > rhs[0];\n    }\n};\n\n\n\nclass Solution {\npublic:\n    vector<int> countRectangles(vector<vector<int>>& rectangles, vector<vector<int>>& points) {\n        vector<int> result(points.size(), 0), idx(points.size());                \n        \n        sort(rectangles.begin(), rectangles.end(), Cmp());\n        \n        for (int i=0; i<idx.size(); ++i)\n            idx[i] = i;\n        \n        sort(idx.begin(), idx.end(), [&](const int &lhs, const int &rhs) {\n            return points[lhs][0] > points[rhs][0];\n        });\n        \n        int ytimes[101] = {0}, j = 0;\n        \n        for (int i: idx) {\n            vector<int> &point = points[i];\n            for (; j<rectangles.size() && rectangles[j][0]>=point[0]; ++j)\n                ++ytimes[rectangles[j][1]];\n            \n            int sum = 0;\n            for (int y=100; y>=point[1]; --y)\n                sum += ytimes[y];\n            \n            result[i] = sum;\n        }        \n        \n        return result;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "00:56:56",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& persons) {        \n        vector<vector<int>> acts;        \n        vector<int> result(persons.size(), 0);\n        acts.reserve(flowers.size() * 2 + persons.size());                \n        \n        for (vector<int> &flower: flowers) {\n            int start = flower[0], end = flower[1];\n            acts.push_back({start, 0, 0});\n            acts.push_back({end, 2, 0});\n        }\n        \n        for (int i=0; i<persons.size(); ++i)\n            acts.push_back({persons[i], 1, i});\n        \n        sort(acts.begin(), acts.end(), [&](const vector<int> &lhs, const vector<int> &rhs){\n            if (lhs[0] != rhs[0])\n                return lhs[0] < rhs[0];\n            return lhs[1] < rhs[1];\n        });\n        \n        int count = 0;        \n        for (vector<int> &act: acts) {            \n            switch (act[1]) {\n                case 0:\n                    ++count;\n                    break;\n                case 1:\n                    result[act[2]] = count;\n                    break;\n                default:\n                    --count;\n                    break;\n            }            \n        } \n        \n        return result;\n    }\n};"
+    }
+}

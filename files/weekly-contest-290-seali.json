@@ -1,0 +1,20 @@
+{
+    "rank": 7198,
+    "username": "seali",
+    "score": 7,
+    "finish_time": "01:40:02",
+    "Q1": {
+        "solve_time": "00:14:03",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\n    \npublic:\n    vector<int> intersection(vector<vector<int>>& nums) {\n        \n        vector<unordered_set<int>> sets(nums.size());\n        \n        for(int i = 0 ; i < nums.size(); ++i) {\n            for(auto& ele:nums[i])\n                sets[i].insert(ele);\n        }\n        \n        vector<int> output;\n        \n        for(auto& ele : sets[0]) {\n            bool found = false;\n            for(int i = 0 ; i < sets.size(); i++) {\n                if (sets[i].find(ele) == sets[i].end()) {\n                    found = true;\n                    break;\n                }\n            }\n            if (!found)\n                output.push_back(ele);\n        }\n\n        sort(output.begin(), output.end());\n        \n        return output;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:15:02",
+        "fail_count": 5,
+        "lang": "cpp",
+        "code": "struct Hash{\n    int operator()(const pair<int,int>& p) const{\n        return std::hash<int>()(p.first) ^ std::hash<int>()(p.second); \n    }\n};\n\nstruct Hash2{\n    int operator()(const pair<int, pair<int,int>>& p) const{\n        return std::hash<int>()(p.first) ^ std::hash<int>()(p.second.first) ^ std::hash<int>()(p.second.second); \n    }\n};\n\n\nclass Solution {\npublic:\n    int countLatticePoints(vector<vector<int>>& circles) {\n        \n        unordered_set<pair<int, int>, Hash> set;\n        unordered_set<pair<int, pair<int,int>>, Hash2> seen;\n        \n        for(auto& circle : circles) {\n            \n            int x = circle[0], y = circle[1], r = circle[2];\n            \n            if (seen.find({x, {y,r}}) != seen.end())\n                continue;\n            \n            seen.insert({x, {y,r}});\n            \n            for(int dx = 0; dx <= r; dx ++) {\n                for(int dy = 0; dy <= r; dy ++) {\n                    if (dx*dx + dy*dy > r*r)\n                        break;\n                    set.insert({x+dx, y+dy});\n                    set.insert({x+dx, y-dy});\n                    set.insert({x-dx, y+dy});\n                    set.insert({x-dx, y-dy});\n                }\n            }\n        \n        }\n        \n        return set.size();\n        \n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}
