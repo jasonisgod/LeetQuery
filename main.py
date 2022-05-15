@@ -4,7 +4,7 @@ import signal
 
 signal.signal(signal.SIGINT, lambda a,b: exit())
 
-CONTEST_NAME = 'weekly-contest-291'
+CONTEST_NAME = 'weekly-contest-293'
 DIR = 'files'
 PAGE_RANGE = list(range(10,400)) ## + list(range(460,470))
 SPACES = " "*100

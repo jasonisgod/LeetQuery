@@ -1,0 +1,25 @@
+{
+    "rank": 4786,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "00:44:57",
+    "Q1": {
+        "solve_time": "00:05:00",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<string> removeAnagrams(vector<string>& words) {\n        \n        vector<string> v;\n        \n        for(auto& w : words) {\n            v.push_back(w);\n        }\n        \n        for(auto& w : v) {\n            sort(w.begin(), w.end());\n            \n        }\n        \n        unordered_set<int> s;\n        \n        for(int i = 1; i < words.size(); i++) {\n            if (v[i] == v[i-1]) {\n                s.insert(i);\n            }\n        }\n        \n        vector<string> output;\n        \n        for(int i = 0; i < words.size(); i++) {\n            if (s.find(i) == s.end())\n                output.push_back(words[i]);\n        }\n        \n        return output;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:14:21",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int maxConsecutive(int bottom, int top, vector<int>& special) {\n        \n        special.push_back(bottom-1);\n        special.push_back(top+1);\n        \n        sort(special.begin(), special.end());\n        \n        int output = INT_MIN;\n        \n        for(int i = 1; i < special.size(); i++) {\n            \n            output = max(output, special[i] - special[i-1] - 1);\n            \n        \n        }\n        \n        return output;\n        \n    }\n};\n\n\n/*\n\n3 3  7  9 9\n\n*/"
+    },
+    "Q3": {
+        "solve_time": "00:44:57",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int largestCombination(vector<int>& candidates) {\n        \n        unordered_map<int, int> map;\n        \n        for(auto c : candidates) {\n            \n            int i = 0;\n            while(c) {\n                if (c%2)\n                    map[i] ++;\n                c/=2;\n                i++;\n            }\n            \n        }\n        \n        int output = 0;\n        \n        for(auto& pair_ : map) {\n            output = max(output, pair_.second);\n        }\n        \n        return output;\n        \n    }\n};"
+    },
+    "Q4": {}
+}

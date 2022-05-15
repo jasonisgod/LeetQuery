@@ -56,8 +56,12 @@
             initTables();
             updateTables();
             hljsUpdate();
+            hideLoading();
         }, 5000);
         // setTimeout(() => location.reload(), 30000);
+    }
+    function hideLoading() {
+        $('#loading').hide();
     }
     function initTables() {
         contestNameList.forEach(contestName => {
@@ -232,6 +236,12 @@
     <img src="https://assets.leetcode.com/users/leetcode/avatar_1568224780.png">
     <br><br>
     <div id="box"></div>
+    <div id="loading">
+        <h3>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif" style="width:20px">
+            Loading ...
+        </h3>
+    </div>
     <br><br>
     
     <br><br>

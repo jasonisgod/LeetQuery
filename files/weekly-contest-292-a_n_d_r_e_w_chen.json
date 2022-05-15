@@ -1,0 +1,20 @@
+{
+    "rank": 8858,
+    "username": "a_n_d_r_e_w_chen",
+    "score": 7,
+    "finish_time": "01:24:45",
+    "Q1": {
+        "solve_time": "00:27:09",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string largestGoodInteger(string num) {\n        string rStr = \"\";\n        \n        for(int i=0; i<=num.length()-3; ++i){\n            if (num[i] == num[i + 1] && num[i + 1] == num[i + 2]){\n                string newGood = num.substr(i, 3);\n                if(rStr.empty() || newGood[0] > rStr[0])\n                    rStr = newGood;\n            }\n        }\n        \n        return rStr;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "01:19:45",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int rInt = 0;\n    \n    int averageOfSubtree(TreeNode* root) {\n\n        TreeNode *dpPtr = new TreeNode(-1);\n        \n        recursiveAvg(root, dpPtr);\n        \n        return rInt;\n    }\n    \n    void recursiveAvg(TreeNode* root, TreeNode *dpPtr){\n        if (!root)\n            return;\n        \n        if (root->left && !dpPtr->left){\n            dpPtr->left = new TreeNode(-1);\n            \n            recursiveAvg(root->left, dpPtr->left);\n        }\n        \n        \n        if (root->right && !dpPtr->right){\n            dpPtr->right = new TreeNode(-1);\n            \n            recursiveAvg(root->right, dpPtr->right);\n        }\n        \n        int denom = 1;\n        \n        if (dpPtr->left && dpPtr->right){\n            denom = 1 + root->left->val + root->right->val;\n            dpPtr->val = (dpPtr->left->val + dpPtr->right->val + root->val);\n        } else if (dpPtr->left){\n            denom = 1 + root->left->val;\n            dpPtr->val = (dpPtr->left->val + root->val);\n        } else if (dpPtr->right){\n            denom = 1 + root->right->val;\n            dpPtr->val = (dpPtr->right->val + root->val);\n        } else {\n            dpPtr->val = root->val;\n        }\n        \n        if (dpPtr->val / denom == root->val)\n            ++rInt;\n        \n        root->val = denom;\n        \n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

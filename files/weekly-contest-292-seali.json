@@ -1,0 +1,25 @@
+{
+    "rank": 2425,
+    "username": "seali",
+    "score": 12,
+    "finish_time": "00:59:03",
+    "Q1": {
+        "solve_time": "00:29:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string largestGoodInteger(string num) {\n        \n        int tmp = -1;\n        \n        for(int i = 2; i < num.size(); i++) {\n            if (num[i] == num[i-1] && num[i-1] == num[i-2]) {\n                int sum = num[i] - '0';\n                tmp = max(tmp, sum*111);\n            }\n        }\n        \n        if (tmp == -1)\n            return \"\";\n        \n        if (tmp == 0)\n            return \"000\";\n        \n        return std::to_string(tmp);\n        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:33:10",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\nprivate:\n    int count;\n    pair<int, int> dfs(TreeNode* node) {\n        \n        if (!node)\n            return {0,0};\n        \n        pair<int, int> left = dfs(node->left);\n        pair<int, int> right = dfs(node->right);\n        \n        int sum = (left.first + right.first + node->val);\n        int n = left.second + right.second + 1;\n        \n        if (sum / n == node->val)\n            count ++;\n            \n        return {sum, n};\n    }\npublic:\n    int averageOfSubtree(TreeNode* root) {\n        \n        count = 0;\n        \n        dfs(root);\n        \n        return count;\n        \n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:54:03",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    \n    vector<int> memo;\n    \n    unordered_map<int, int> table;\n    \n    int recursiveFunc(string& s, int index) {\n        \n        if (index > s.size())\n            return 0;\n        \n        if (index == s.size())\n            return 1;\n        \n        if (memo[index] != -1)\n            return memo[index];\n        \n        long long total = 0;\n        \n        int max_leng = table[s[index]];;\n        \n        for(int i = 0; i< max_leng; i++) {\n            if (index+i < s.size() && s[index+i] == s[index] ) {\n                total += recursiveFunc(s, index+i+1);\n                total %= int(1e9) + 7;\n            } else\n                break;\n        }\n            \n        return memo[index] = total;\n        \n    }\npublic:\n    int countTexts(string pressedKeys) {\n        \n        for(auto c = '2' ; c <= '9'; c++) {\n            table[c] = 3;\n        }\n        table['7'] ++; table['9']++;\n        \n        memo = vector<int> (pressedKeys.size(), -1);\n        \n        return recursiveFunc(pressedKeys, 0);\n        \n    }\n};"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 835,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:48:31",
+    "Q1": {
+        "solve_time": "00:40:03",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def divisorSubstrings(self, num: int, k: int) -> int:\n        n = len(str(num))\n        ans = 0\n        for i in range(n-k+1):\n            tmp = int(str(num)[i:i+k])\n            if tmp == 0: continue\n            if num % tmp == 0: ans += 1\n        return ans"
+    },
+    "Q2": {
+        "solve_time": "00:48:31",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def waysToSplitArray(self, nums: List[int]) -> int:\n        arr = [0]\n        n = len(nums)\n        for e in nums:\n            arr += [arr[-1] + e]\n        # print(arr)\n        ans = 0\n        for i in range(1,n):\n            l = arr[i]\n            r = arr[-1] - arr[i]\n            # print(l, r)\n            if l >= r: ans += 1\n        return ans"
+    },
+    "Q3": {
+        "solve_time": "00:36:01",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def maximumWhiteTiles(self, tiles: List[List[int]], carpetLen: int) -> int:\n        n = len(tiles)\n        tiles.sort(key=lambda x: x[0])\n        # print(tiles)\n        i, j = 0, 0\n        cnt = 0\n        ans = 0\n        while i < n and j < n:\n            l, r = tiles[i]\n            tail = l + carpetLen - 1\n            last = 0\n            while j < n:\n                ll, rr = tiles[j]\n                if tail < ll:\n                    last = 0\n                    break\n                elif ll <= tail <= rr:\n                    last = tail - ll + 1\n                    break\n                else:\n                    cnt += rr - ll + 1\n                    j += 1\n            ans = max(ans, cnt + last)\n            # print(i, l, r, j, ll, rr, cnt, last, ans)\n            cnt -= r - l + 1\n            i += 1\n        return ans"
+    },
+    "Q4": {}
+}

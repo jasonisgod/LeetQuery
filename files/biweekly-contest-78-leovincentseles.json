@@ -1,0 +1,25 @@
+{
+    "rank": 1152,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "01:00:35",
+    "Q1": {
+        "solve_time": "00:04:16",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int divisorSubstrings(int num, int k) {\n        int result = 0;\n        string numStr = to_string(num);\n        for (int i=0; i<=numStr.size()-1-k+1; ++i) {\n            string substr = numStr.substr(i, k);\n            int subNum = stoi(substr);\n            \n            if (subNum != 0 && num % subNum == 0)\n                ++result;\n        }\n        \n        return result;        \n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:08:25",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    int waysToSplitArray(vector<int>& nums) {\n        LLI sum = accumulate(nums.begin(), nums.end(), 0LL), currSum = 0;\n        int result = 0;\n        \n        for (int i=0; i+1<nums.size(); ++i) {\n            currSum += nums[i];\n            \n            if (currSum >= (sum - currSum))\n                ++result;\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:00:35",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\nprivate:\n    // find the last such that li <= goal\n    int findLast(vector<vector<int>>& tiles, int goal) {\n        // find the first such that li > goal\n        int left = 0, right = tiles.size();\n        \n        while (left < right) {\n            int mid = (left + right) / 2;\n            \n            if (tiles[mid][0] > goal)\n                right = mid;\n            else\n                left = mid + 1;\n        }\n        \n        return right - 1;        \n    }\n    \n    // find the first such that ri >= goal\n    int findFirst(vector<vector<int>>& tiles, int goal) {\n        int left = 0, right = tiles.size();\n        \n        while (left < right) {\n            int mid = (left + right) / 2;\n            \n            if (tiles[mid][1] >= goal)\n                right = mid;\n            else\n                left = mid + 1;\n        }\n        \n        return right;\n    }\npublic:\n    int maximumWhiteTiles(vector<vector<int>>& tiles, int carpetLen) {\n        vector<int> length(tiles.size(), 0);\n        sort(tiles.begin(), tiles.end(), [&](const vector<int> &lhs, const vector<int> &rhs) {\n            return lhs[0] < rhs[0];\n        });\n        \n        int sum = 0, maxVal = 0;\n        for (int i=0; i<tiles.size(); ++i)\n            length[i] = sum += (tiles[i][1] - tiles[i][0] + 1);\n        \n        for (int i=0; i<tiles.size(); ++i) {\n            int start = tiles[i][0], end = start + carpetLen - 1;\n            int lastIndex = findLast(tiles, end);\n            \n            if (lastIndex == i)\n                maxVal = max(maxVal, min(tiles[i][1] - tiles[i][0] + 1, carpetLen));\n            else {                \n                int currVal = min(end, tiles[lastIndex][1]) - tiles[lastIndex][0] + 1 + length[lastIndex-1] - (i==0? 0: length[i-1]);\n                maxVal = max(maxVal, currVal);\n            }\n        }\n        \n        for (int i=0; i<tiles.size(); ++i) {\n            int end = tiles[i][1], start = max(0, end - carpetLen + 1);\n            int firstIndex = findFirst(tiles, start);\n            \n            if (firstIndex == i)\n                maxVal = max(maxVal, min(tiles[i][1] - tiles[i][0] + 1, carpetLen));\n            else {\n                int currVal = tiles[firstIndex][1] - max(start, tiles[firstIndex][0]) + 1 + length[i] - length[firstIndex];\n                maxVal = max(maxVal, currVal);\n            }\n        }\n        \n        return maxVal;\n    }\n};"
+    },
+    "Q4": {}
+}

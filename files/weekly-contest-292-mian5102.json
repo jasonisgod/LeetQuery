@@ -1,0 +1,20 @@
+{
+    "rank": 6332,
+    "username": "mian5102",
+    "score": 7,
+    "finish_time": "00:43:01",
+    "Q1": {
+        "solve_time": "00:32:46",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string largestGoodInteger(string num) {\n        string ans = \"\";\n        int i = 0;\n        while (i < num.length() - 2) {\n            if (num[i] == num[i+1] and num[i] == num[i+2]) {\n                string temp = num.substr(i, 3);\n                if (temp > ans)\n                    ans = temp;\n            }\n            i++;\n        }\n               \n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:43:01",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    /*  \n    pair<int, int>: \n    first-> # of node in subtree\n    second-> sum of node in subtree\n    */\n    \n    pair<int, int> dfs(TreeNode* root) {\n        pair<int, int> p = make_pair(1, root->val);\n        \n        if (root->left) {\n            pair<int, int> pChild = dfs(root->left);\n            p.first += pChild.first;\n            p.second += pChild.second;\n        }\n        if (root->right) {\n            pair<int, int> pChild = dfs(root->right);\n            p.first += pChild.first;\n            p.second += pChild.second;\n        }\n        if (p.second / p.first == root->val) ans++;\n        \n        return p;\n    }\n    int averageOfSubtree(TreeNode* root) {\n        ans = 0;\n        dfs(root);\n        \n        return ans;\n    }\nprivate:\n    int ans;\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

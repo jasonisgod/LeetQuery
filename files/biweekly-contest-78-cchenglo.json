@@ -1,0 +1,20 @@
+{
+    "rank": 2429,
+    "username": "cchenglo",
+    "score": 7,
+    "finish_time": "00:07:09",
+    "Q1": {
+        "solve_time": "00:03:00",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int divisorSubstrings(int num, int k) {\n        int ans = 0;\n        string s = to_string(num);\n        for (int i = 0; i + k <= s.length(); i++) {\n            int n = stoi(s.substr(i, k));\n            if (n != 0 && num % n == 0)\n                ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:07:09",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int waysToSplitArray(vector<int>& nums) {\n        long long sum = 0;\n        int ans = 0;\n        vector<long long> acc(nums.size());   \n        for (int i = 0; i < nums.size(); i++) {\n            sum += nums[i];\n            acc[i] = sum;\n        }\n        for (int i = 0; i < nums.size() - 1; i++) {\n            if (acc[i] >= sum - acc[i])\n                ans++;\n        }\n        return ans;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}
