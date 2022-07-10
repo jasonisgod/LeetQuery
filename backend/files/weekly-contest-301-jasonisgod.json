@@ -1,0 +1,25 @@
+{
+    "rank": 1861,
+    "username": "jasonisgod",
+    "score": 12,
+    "finish_time": "00:53:58",
+    "Q1": {
+        "solve_time": "00:09:25",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def fillCups(self, amount: List[int]) -> int:\n        count = 0\n        while amount.count(0) <= 1:\n            amount.sort()\n            amount[-2] -= 1\n            amount[-1] -= 1\n            count += 1\n        amount.sort()\n        return count + amount[-1]"
+    },
+    "Q2": {
+        "solve_time": "00:13:06",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class SmallestInfiniteSet:\n\n    def __init__(self):\n        self.arr = list(range(1,1001))\n\n    def popSmallest(self) -> int:\n        return self.arr.pop(0)\n\n    def addBack(self, num: int) -> None:\n        if num not in self.arr:\n            self.arr.append(num)\n            self.arr.sort()\n        \n\n\n# Your SmallestInfiniteSet object will be instantiated and called as such:\n# obj = SmallestInfiniteSet()\n# param_1 = obj.popSmallest()\n# obj.addBack(num)"
+    },
+    "Q3": {
+        "solve_time": "00:48:58",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def canChange(self, start: str, target: str) -> bool:\n        L1,R1,L2,R2 = [],[],[],[]\n        for i in range(len(start)):\n            if start[i] == 'L': L1.append(i)\n            if start[i] == 'R': R1.append(i)\n        for i in range(len(target)):\n            if target[i] == 'L': L2.append(i)\n            if target[i] == 'R': R2.append(i)\n        if len(L1) != len(L2): return False\n        if len(R1) != len(R2): return False\n        L = [(a,b) for a,b in zip(L1,L2)]\n        R = [(a,b) for a,b in zip(R1,R2)]\n        if not all([(a >= b) for a,b in L]): return False\n        if not all([(a <= b) for a,b in R]): return False\n        # print(L, R)\n        while len(L) > 0 and len(R) > 0:\n            (maxL, minL), (minR, maxR) = L[0], R[0]\n            if minL <= minR <= maxL: return False\n            if minL <= maxR <= maxL: return False\n            if minR <= minL <= maxR: return False\n            if minR <= maxL <= maxR: return False\n            if minL <= minR: L.pop(0)\n            else: R.pop(0)\n        return True"
+    },
+    "Q4": {}
+}

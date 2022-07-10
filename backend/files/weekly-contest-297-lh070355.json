@@ -1,0 +1,15 @@
+{
+    "rank": 9665,
+    "username": "lh070355",
+    "score": 3,
+    "finish_time": "00:19:49",
+    "Q1": {
+        "solve_time": "00:19:49",
+        "fail_count": 0,
+        "lang": "ruby",
+        "code": "# @param {Integer[][]} brackets\n# @param {Integer} income\n# @return {Float}\ndef calculate_tax(brackets, income)\n  sum = 0\n  brackets.prepend([0, 0])\n  \n  index = brackets.bsearch_index { |bra| bra[0] >= income }\n\n  until index == 0\n    sum += (income - brackets[index - 1][0]) * brackets[index][1] / 100.0\n    income = brackets[index - 1][0]\n\n    index -= 1\n  end\n  \n  sum.truncate(5)\nend"
+    },
+    "Q2": {},
+    "Q3": {},
+    "Q4": {}
+}

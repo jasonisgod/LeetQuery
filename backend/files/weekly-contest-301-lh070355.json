@@ -1,0 +1,20 @@
+{
+    "rank": 9431,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "00:43:08",
+    "Q1": {
+        "solve_time": "00:17:33",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def fillCups(self, amount: List[int]) -> int:\n        amount.sort()\n        count = 0\n        while amount[2] != 0:\n            count += 1\n            if amount[1] != 0:\n                amount[1] -= 1\n            amount[2] -= 1\n            amount.sort()\n\n        return count"
+    },
+    "Q2": {
+        "solve_time": "00:33:08",
+        "fail_count": 2,
+        "lang": "python3",
+        "code": "class SmallestInfiniteSet:\n\n    def __init__(self):\n        self.heap = []\n        self.s = set()\n        self.counter = 0\n\n    def popSmallest(self) -> int:\n        if len(self.heap) == 0:\n            self.counter += 1\n            return self.counter\n        self.s.remove(self.heap[0])\n        return heappop(self.heap)\n\n    def addBack(self, num: int) -> None:\n        if num <= self.counter and num not in self.s:\n            self.s.add(num)\n            heappush(self.heap, num)\n        \n\n\n# Your SmallestInfiniteSet object will be instantiated and called as such:\n# obj = SmallestInfiniteSet()\n# param_1 = obj.popSmallest()\n# obj.addBack(num)"
+    },
+    "Q3": {},
+    "Q4": {}
+}

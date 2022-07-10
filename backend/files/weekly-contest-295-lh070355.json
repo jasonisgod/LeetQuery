@@ -1,0 +1,20 @@
+{
+    "rank": 6174,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "01:05:52",
+    "Q1": {
+        "solve_time": "00:15:57",
+        "fail_count": 1,
+        "lang": "ruby",
+        "code": "# @param {String} s\n# @param {String} target\n# @return {Integer}\ndef rearrange_characters(s, target)\n  h, hash, count = {}, {}, 0\n  \n  target.each_char do |c|\n    h[c] ||= 0\n    h[c] += 1\n  end\n  \n  s.each_char do |c|\n    if h[c]\n      hash[c] ||= 0\n      hash[c] += 1\n    end\n  end\n  return 0 if hash.keys.count < h.keys.count\n  \n  loop do\n    hash.each do |c, v|\n      hash[c] -= h[c]\n      return count if hash[c] < 0\n    end\n    count += 1\n  end\n\n  count\nend"
+    },
+    "Q2": {
+        "solve_time": "00:55:52",
+        "fail_count": 1,
+        "lang": "ruby",
+        "code": "# @param {String} sentence\n# @param {Integer} discount\n# @return {String}\ndef discount_prices(sentence, discount)\n  words = \"\"\n  sentence.split.each do |word|\n    words << word << \" \" and next unless word.match(/^\\$(\\d+)(\\.\\d+)?$/)\n    words << \"$\" + (\"%.2f\" % (word[1..-1].to_f * (100 - discount) / 100)).to_s << \" \"\n  end\n\n  words[0..-2]\nend"
+    },
+    "Q3": {},
+    "Q4": {}
+}

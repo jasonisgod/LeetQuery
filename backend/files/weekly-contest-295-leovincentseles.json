@@ -1,0 +1,20 @@
+{
+    "rank": 2535,
+    "username": "leovincentseles",
+    "score": 7,
+    "finish_time": "00:21:40",
+    "Q1": {
+        "solve_time": "00:03:47",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int rearrangeCharacters(string s, string target) {\n        unordered_map<char, int> targetMap, srcMap;\n        int result = INT_MAX;\n        \n        for (char ch: target)\n            ++targetMap[ch];\n        \n        for (char ch: s)\n            ++srcMap[ch];\n        \n        for (auto &mapPair: targetMap)\n            result = min(result, srcMap[mapPair.first] / mapPair.second);\n        \n        return result;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:21:40",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    string discountPrices(string sentence, int discount) {\n        stringstream ss(sentence);\n        string result, curr;\n        \n        while (ss >> curr) {\n            if (curr[0] == '$' && curr.size() > 1 && curr.find_first_not_of(\"0123456789\", 1) == string::npos) {\n                try {\n                    LLI num = stoll(curr.substr(1));\n                    char numStr[100];\n                    sprintf(numStr, \"%.2f\", (double)num * (100 - discount) / 100.0);\n                    result += \"$\" + string(numStr) + \" \";\n                } catch (...) {\n                    result += curr + \" \";\n                }\n            } else {\n                result += curr + \" \";\n            }\n        }\n        \n        result.pop_back();\n        return result;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

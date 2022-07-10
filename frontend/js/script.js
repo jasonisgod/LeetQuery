@@ -1,6 +1,6 @@
 
-// var DOMAIN = 'http://jasonisgod.xyz:9003';
-var DOMAIN = 'http://127.0.0.1:9003';
+var DOMAIN = 'http://jasonisgod.xyz:9003';
+// var DOMAIN = 'http://127.0.0.1:9003';
 var TOP_N = 5;
 var VER_JS = 'v2.0.1';
 var TIME_RELOAD = 60000;
