@@ -1,11 +1,12 @@
 
-var DOMAIN = 'http://jasonisgod.xyz:9003';
-// var DOMAIN = 'http://127.0.0.1:9003';
+// var DOMAIN = 'http://jasonisgod.xyz:9003';
+var DOMAIN = 'http://127.0.0.1:9003';
 var TOP_N = 5;
-var VER_JS = 'v2.0.1';
-var TIME_RELOAD = 60000;
-var TIME_DELAY_1 = 2000;
-var TIME_DELAY_2 = 5000;
+var VER_JS = 'v2.0.3';
+var TIME_RELOAD = 60000; // 60 sec
+var TIME_DELAY_1 = 2000; // 2 sec
+var TIME_DELAY_2 = 5000; // 5 sec
+var TIME_PAST = (1000 * 60 * 60 * 24 * 7 * 5); // 5 weeks
 
 $(document).ready(function(){ init(); });
 
@@ -21,7 +22,16 @@ var baseUrl = location.href.substring(0, location.href.lastIndexOf('/'));
 var tableData = {};
 var usernameList = [];
 var contestList = [];
+var contestDict = {};
 var handicapList = {};
+
+function s2t(s) {
+    const [dateValues, timeValues] = s.split(' ');
+    const [year, month, day] = dateValues.split('-');
+    const [hours, minutes, seconds] = timeValues.split(':');
+    const date = new Date(year, month - 1, day, hours, minutes, seconds);
+    return date
+}
 
 function requestHandicap() {
     return $.ajax({
@@ -40,7 +50,17 @@ function requestUsername() {
 function requestContest() {
     return $.ajax({
         url: DOMAIN + '/api/get/config/contest', 
-        success: (data, status, xhr) => contestList = JSON.parse(data)
+        success: (data, status, xhr) => {
+            contestDict = JSON.parse(data)
+            var now_ = Date.now();
+            for (var key in contestDict) {
+                var vtime = s2t(contestDict[key]);
+                if (now_ > vtime && (now_ - vtime) < TIME_PAST) {
+                    contestList.push(key);
+                }
+            }
+            contestList.reverse();
+        }
     });
 }
 
@@ -64,7 +84,10 @@ function init() {
 
     // $.when(requestHandicap(), requestUsername(), requestContest()).done( (a1, a2, a3) => {    });
     setTimeout(() => {
-        contestList = contestList.slice(0, TOP_N)
+        console.log(handicapList);
+        console.log(usernameList);
+        console.log(contestList);
+        console.log(contestDict);
         contestList.forEach(contest => {
             tableData[contest] = [];
             usernameList.forEach(username => requestData(contest, username));
@@ -72,17 +95,14 @@ function init() {
     }, TIME_DELAY_1);
 
     setTimeout(() => {
+        console.log(tableData);
         initTables();
         updateTables();
         hljsUpdate();
         hideLoading();
-        console.log(handicapList);
-        console.log(usernameList);
-        console.log(contestList);
-        console.log(tableData);
     }, TIME_DELAY_2);
 
-    setTimeout(() => location.reload(), TIME_RELOAD);
+    // setTimeout(() => location.reload(), TIME_RELOAD);
 }
 
 function hideLoading() {

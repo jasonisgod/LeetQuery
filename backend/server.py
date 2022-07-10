@@ -1,4 +1,3 @@
-import re
 from common import *
 
 if len(sys.argv) != 2:
@@ -28,5 +27,8 @@ def api_get_data(contest, username):
     except Exception as e:
         print(e); return ''
 
+thread = get_thread()
+thread.start()
 print(f'HOST={HOST} PORT={PORT}')
 app.run(host=HOST, port=PORT)
+stop_thread()

@@ -1,17 +1,35 @@
-import requests, json, signal, sys, os
+import requests, json, signal, sys, os, threading, datetime, time
 from flask import Flask, request, render_template
 from flask_cors import CORS
 
 DIR_DATA = 'files'
 DIR_CONFIG = 'config'
-PAGE_RANGE = list(range(10,400)) ## + list(range(460,470))
+PAGE_RANGE = list(range(1,400+1))
+# PAGE_RANGE = list(range(120,130))
 SPACES = " "*100
+TIME_SLEEP = 60 * 10 # 10 mins
+TIME_CONTEST = 60 * 60 * 2 # 2 hrs
+THREAD = True
+
+def now(): return datetime.datetime.now()
+def t2s(t): return t.strftime("%Y-%m-%d %H:%M:%S")
+def s2t(s): return datetime.datetime.strptime(s,"%Y-%m-%d %H:%M:%S")
+
+def log(text):
+    ts = t2s(now())
+    line = f'[{ts}] {text}'
+    print(line)
 
 def my_reqeust(url):
-    print(f'\rrequest: {url} ... ', end='')
     res = requests.get(url)
-    print(f'code: {res.status_code:3d} ', end='')
+    log(f'Request: {url} ({res.status_code}) ')
     return res
+
+def get_all_contests():
+    return json.load(open(DIR_CONFIG + '/contest.json', 'r'))
+
+def get_all_users():
+    return json.load(open(DIR_CONFIG + '/username.json', 'r'))
 
 def get_time_diff(d1, d2):
     diff = abs(d1 - d2)
@@ -73,7 +91,7 @@ def get_records(contest, username_list):
                     records[username]['info'] = obj
                     user_n -= 1
                     rank = max(0, int(page * 25 // 100) * 100 - 100)
-                    print(f'\rFound in page: {page:3d} rank:{rank:5d}+ user: {username} {SPACES}')
+                    log(f'Found page:{page} rank:{rank}+ user:{username}')
                     # print(f'\r{records[username]["submissions"]}')
     return records
 
@@ -113,9 +131,12 @@ def query_contest(contest, username_list):
     return scoreboard
 
 def query_contests(contest_list, username_list):
+    log('Start Crawling ...')
+    log(str(contest_list))
+    log(str(username_list))
     for contest in contest_list:
         try:
-            print(f'\r{contest} {SPACES}')
+            log(contest)
             scoreboard = query_contest(contest, username_list)
             # print(scoreboard)
             for row in scoreboard:
@@ -123,11 +144,26 @@ def query_contests(contest_list, username_list):
                 username = row["username"]
                 open(f'{DIR_DATA}/{contest}-{username}.json', 'w').write(text + '\n')
         except Exception as e: print();print(e);print()
+    log('Finished')
     return
 
+def _thread():
+    while True:
+        cc = get_all_contests()
+        now_ = now()
+        tmp = [(key, s2t(cc[key])) for key in cc]
+        tmp = [key for key,vtime in tmp if now_ > vtime and (now_ - vtime).seconds < TIME_CONTEST]
+        if len(tmp) == 1:
+            contest_list = [tmp[0]]
+            username_list = get_all_users()
+            query_contests(contest_list, username_list)
+        for i in range(TIME_SLEEP):
+            if not THREAD: return
+            time.sleep(1)
 
-# contest_list = [f'biweekly-contest-{i}' for i in range(66,71+1)]
-# json.dumps(scoreboard, indent=4)
-# ['jasonisgod','leovincentseles']
-# [f'weekly-contest-{i}' for i in range(269,282+1)]
-# [f'biweekly-contest-{i}' for i in range(66,71+1)]
+def get_thread():
+    return threading.Thread(target=_thread)
+
+def stop_thread():
+    global THREAD
+    THREAD = False
