@@ -1,0 +1,25 @@
+{
+    "rank": 854,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:27:46",
+    "Q1": {
+        "solve_time": "00:05:30",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string greatestLetter(string s) {\n        int lower[26] = {0}, upper[26] = {0};\n        string result = \"0\";\n        \n        for (char ch: s)\n            if ('a' <= ch && ch <= 'z')\n                lower[ch - 'a'] = 1;\n            else\n                upper[ch - 'A'] = 1;\n        \n        for (int i=25; i>=0; --i)\n            if (lower[i] && upper[i]) {\n                result[0] = 'A' + i;\n                return result;\n            }\n        \n        return \"\";\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:13:25",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumNumbers(int num, int k) {\n        int result = 0;\n        \n        if (k == 0) {\n            if (num % 10 != 0)\n                return -1;\n            return num != 0;\n        }\n        \n        while (num > 0) {\n            if (num < k)\n                return -1;\n            else if (num % 10 == 0 && result != 0)\n                return result;\n            else {\n                num -= k;\n                ++result;\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:22:46",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int longestSubsequence(string s, int k) {\n        vector<int> nums(1, 0);\n        nums.reserve(1000);\n        \n        for (char ch: s) {\n            for (int i=nums.size()-1; i>=0; --i) {\n                int num = nums[i] * 2 + ch - '0';\n                \n                if (num <= k) {\n                    if (i == nums.size() - 1)\n                        nums.push_back(num);\n                    else\n                        nums[i+1] = min(nums[i+1], num);\n                }   \n            }\n        }\n        \n        return nums.size() - 1;\n    }\n};"
+    },
+    "Q4": {}
+}

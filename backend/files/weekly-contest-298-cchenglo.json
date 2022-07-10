@@ -1,0 +1,25 @@
+{
+    "rank": 1396,
+    "username": "cchenglo",
+    "score": 12,
+    "finish_time": "00:51:43",
+    "Q1": {
+        "solve_time": "00:03:18",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string greatestLetter(string s) {\n        set<char> ss;\n        for (char c : s)\n            ss.insert(c);\n        for (int i = 25; i >= 0; i--) {\n            char a = 'a' + i, A = 'A' + i;\n            if (ss.count(a) && ss.count(A))\n                return string(1, A);\n        }\n        return \"\";\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:10:09",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int minimumNumbers(int num, int k) {\n        if (num == 0)\n            return 0;\n        if (k == 0) {\n            if (num % 10 == 0)\n                return 1;\n            else\n                return -1;\n        }\n        int cnt = 1;\n        for ( ; num - k * cnt >= 0; cnt++) {\n            if ((num - k * cnt) % 10 == 0)\n                return cnt;\n        }\n        return -1;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:31:43",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "\ntypedef unsigned long long ULL;\n\nclass Solution {\npublic:\n    int longestSubsequence(string s, int k) {\n        vector<int> acc0(s.length(), 0);\n        int cnt0 = 0;\n        for (int i = 0; i < s.length(); i++) {\n            if (s[i] == '0')\n                cnt0++;\n            acc0[i] = cnt0;\n        }\n        ULL n = 0;\n        for (int i = s.length() - 1; i >= 0; i--) {\n            if (s.length() - 1 - i >= 64) {  // many 0s in the front (since k <= 10^9)\n                return acc0[i] + (s.length() - 1 - i + 1) - 1;  \n            }\n            n = n | (ULL)(s[i] - '0') << (s.length() - 1 - i);\n            if (n > k) {\n                return acc0[i] + (s.length() - 1 - i + 1) - 1;   \n            }\n        }\n        return s.length();  // the whole string\n    }\n};"
+    },
+    "Q4": {}
+}

@@ -40,24 +40,24 @@ def get_submission(submission_id):
     except Exception as e: print(e)
     return ''
 
-def get_start_time(contest_name):
-    url = f'https://leetcode.com/contest/api/info/{contest_name}/'
+def get_start_time(contest):
+    url = f'https://leetcode.com/contest/api/info/{contest}/'
     res = my_reqeust(url)
     json_obj = res.json()
     return json_obj['contest']['start_time']
 
-def get_questions(contest_name):
-    url = f'https://leetcode.com/contest/api/ranking/{contest_name}/?region=global'
+def get_questions(contest):
+    url = f'https://leetcode.com/contest/api/ranking/{contest}/?region=global'
     res = my_reqeust(url)
     json_obj = res.json()
     return json_obj['questions']
 
-def get_records(contest_name, username_list):
+def get_records(contest, username_list):
     records = {}
     user_n = len(username_list)
     for page in PAGE_RANGE:
         if user_n == 0: break
-        url = f'https://leetcode.com/contest/api/ranking/{contest_name}/?region=global&pagination={page}'
+        url = f'https://leetcode.com/contest/api/ranking/{contest}/?region=global&pagination={page}'
         res = my_reqeust(url)
         json_obj = res.json()
         for repeat in range(1):
@@ -77,7 +77,7 @@ def get_records(contest_name, username_list):
                     # print(f'\r{records[username]["submissions"]}')
     return records
 
-def get_scoreboard(contest_name, username_list, start_time, questions, records):
+def get_scoreboard(contest, username_list, start_time, questions, records):
     scoreboard = []
     for username in username_list:
         if username not in records.keys(): continue
@@ -105,28 +105,28 @@ def get_scoreboard(contest_name, username_list, start_time, questions, records):
         scoreboard.append(row)
     return scoreboard
 
-def query_contest(contest_name, username_list):
-    start_time = get_start_time(contest_name)
-    questions = get_questions(contest_name)
-    records = get_records(contest_name, username_list)
-    scoreboard = get_scoreboard(contest_name, username_list, start_time, questions, records)
+def query_contest(contest, username_list):
+    start_time = get_start_time(contest)
+    questions = get_questions(contest)
+    records = get_records(contest, username_list)
+    scoreboard = get_scoreboard(contest, username_list, start_time, questions, records)
     return scoreboard
 
-def query_contests(contest_name_list, username_list):
-    for contest_name in contest_name_list:
+def query_contests(contest_list, username_list):
+    for contest in contest_list:
         try:
-            print(f'\r{contest_name} {SPACES}')
-            scoreboard = query_contest(contest_name, username_list)
+            print(f'\r{contest} {SPACES}')
+            scoreboard = query_contest(contest, username_list)
             # print(scoreboard)
             for row in scoreboard:
                 text = json.dumps(row, indent=4)
                 username = row["username"]
-                open(f'{DIR_DATA}/{contest_name}-{username}.json', 'w').write(text + '\n')
+                open(f'{DIR_DATA}/{contest}-{username}.json', 'w').write(text + '\n')
         except Exception as e: print();print(e);print()
     return
 
 
-# contest_name_list = [f'biweekly-contest-{i}' for i in range(66,71+1)]
+# contest_list = [f'biweekly-contest-{i}' for i in range(66,71+1)]
 # json.dumps(scoreboard, indent=4)
 # ['jasonisgod','leovincentseles']
 # [f'weekly-contest-{i}' for i in range(269,282+1)]
