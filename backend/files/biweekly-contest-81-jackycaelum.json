@@ -1,0 +1,15 @@
+{
+    "rank": 8297,
+    "username": "jackycaelum",
+    "score": 3,
+    "finish_time": "00:04:52",
+    "Q1": {
+        "solve_time": "00:04:52",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int countAsterisks(string s) {\n        int ans = 0;\n        bool isStar = true;\n        \n        for (char &c: s) {\n            if (c == '*' && isStar == true) {\n                ans++;\n                continue;\n            }       \n            \n            if (c == '|' && isStar == true) {\n                isStar = false;\n                continue;\n            }\n            \n            if (c == '|' && isStar == false) {\n                isStar = true;\n                continue;\n            }\n        }\n        return ans;\n    }\n};"
+    },
+    "Q2": {},
+    "Q3": {},
+    "Q4": {}
+}
