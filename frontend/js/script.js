@@ -1,5 +1,14 @@
 
+// var DOMAIN = 'http://jasonisgod.xyz:9003';
+var DOMAIN = 'http://127.0.0.1:9003';
+var TOP_N = 5;
+var VER_JS = 'v2.0';
+var TIME_RELOAD = 30000;
+var TIME_DELAY_1 = 2000;
+var TIME_DELAY_2 = 5000;
+
 $(document).ready(function(){ init(); });
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     var modal = document.getElementById("codeModal");
@@ -7,57 +16,100 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 var baseUrl = location.href.substring(0, location.href.lastIndexOf('/'));
 var tableData = {};
 var usernameList = [];
-var contestNameList = [];
+var contestList = [];
 var handicapList = {};
+
+function requestHandicap() {
+    return $.ajax({
+        url: DOMAIN + '/api/get/config/handicap', 
+        success: (data, status, xhr) => handicapList = JSON.parse(data)
+    });
+}
+
+function requestUsername() {
+    return $.ajax({
+        url: DOMAIN + '/api/get/config/username', 
+        success: (data, status, xhr) => usernameList = JSON.parse(data)
+    });
+}
+
+function requestContest() {
+    return $.ajax({
+        url: DOMAIN + '/api/get/config/contest', 
+        success: (data, status, xhr) => contestList = JSON.parse(data)
+    });
+}
+
+function requestData(contest, username) {
+    return $.ajax({
+        url: DOMAIN + '/api/get/data/' + contest + '/' + username, 
+        success: (data, status, xhr) => {
+            if (data != '') {
+                tableData[contest].push(JSON.parse(data))
+            }
+        }
+    });
+}
+
 function init() {
+
+    requestHandicap();
+    requestUsername();
+    requestContest();
+
+    // $.when(requestHandicap(), requestUsername(), requestContest()).done( (a1, a2, a3) => {    });
     setTimeout(() => {
-        fetchFile('handicap.json', json => handicapList = json);
-        fetchFile('username.json', json => usernameList = json);
-        fetchFile('contest.json', json => contestNameList = json);
-    }, 0);
+        contestList = contestList.slice(0, TOP_N)
+        contestList.forEach(contest => {
+            tableData[contest] = [];
+            usernameList.forEach(username => requestData(contest, username));
+        });
+    }, TIME_DELAY_1);
+
     setTimeout(() => {
-        console.log(handicapList);
-        console.log(usernameList);
-        console.log(contestNameList);
-        contestNameList = contestNameList.slice(0,5);
-        fetchBoard();
-    }, 1000);
-    setTimeout(() => {
-        console.log(tableData);
         initTables();
         updateTables();
         hljsUpdate();
         hideLoading();
-    }, 5000);
-    // setTimeout(() => location.reload(), 30000);
+        console.log(handicapList);
+        console.log(usernameList);
+        console.log(contestList);
+        console.log(tableData);
+    }, TIME_DELAY_2);
+
+    setTimeout(() => location.reload(), TIME_RELOAD);
 }
+
 function hideLoading() {
     $('#loading').hide();
 }
+
 function initTables() {
-    contestNameList.forEach(contestName => {
-        var h3 = $('<h3>').html(contestName);
+    contestList.forEach(contest => {
+        var h3 = $('<h3>').html(contest);
         $('#box').append(h3);
-        var div = $('<div id="' + contestName + '"></div>');
+        var div = $('<div id="' + contest + '"></div>');
         $('#box').append(div);
     });
 }
+
 function updateTables() {
-    contestNameList.forEach(contestName => {
-        if (tableData[contestName].length == 0) {
-            $('#' + contestName).html('[ No Data ]');
+    contestList.forEach(contest => {
+        if (tableData[contest].length == 0) {
+            $('#' + contest).html('[ No Data ]');
             return;
         }
-        // console.log(contestName);
-        tableData[contestName].forEach(e => {
-            e['handicap'] = getHandicap(contestName, e['username']);
+        // console.log(contest);
+        tableData[contest].forEach(e => {
+            e['handicap'] = getHandicap(contest, e['username']);
             e['black_time'] = getBlackTime(e['handicap'], e['finish_time']);
-            // console.log(contestName, e['username'], e['handicap'], e['black_time']);
+            // console.log(contest, e['username'], e['handicap'], e['black_time']);
         });
-        tableData[contestName].sort(function(a, b) {
+        tableData[contest].sort(function(a, b) {
             var aScore = parseInt(a['score']);
             var bScore = parseInt(b['score']);
             if (aScore != bScore) return bScore - aScore;
@@ -79,7 +131,7 @@ function updateTables() {
             tr.append($('<td>(Rank)</td>'));
         table.append(tr);
         var count = 1;
-        tableData[contestName].forEach(e => {
+        tableData[contest].forEach(e => {
             var tr = $('<tr></tr>');
             tr.append($('<td></td>').text(count)); count++;
             tr.append($('<td></td>').html(e['username'].padEnd(15).replaceAll(' ', '&nbsp')));
@@ -92,13 +144,13 @@ function updateTables() {
                     tr.append($('<td>.............</td>'));
                     continue;
                 }
-                var id = contestName + '-' + e['username'];
+                var id = contest + '-' + e['username'];
                 var solve_time = e['Q' + i]['solve_time'];
                 var fail_count = e['Q' + i]['fail_count'];
                 var code = e['Q' + i]['code'];
                 var td = $('<td></td>').addClass('q');
                 var span1 = $('<span></span>').html(solve_time);
-                var onclickCmd = "showCode('"+contestName+"','"+e['username']+"','"+('Q' + i)+"')";
+                var onclickCmd = "showCode('"+contest+"','"+e['username']+"','"+('Q' + i)+"')";
                 var button = $('<button><b>&#60;/&#62;</b></button>').attr("id", 'btn-' + id).attr("onclick", onclickCmd);
                 var fail_count_str = (fail_count == 0? '&nbsp&nbsp&nbsp': '+' + fail_count);
                 var span2 = $('<span></span>').html(fail_count_str);
@@ -108,22 +160,25 @@ function updateTables() {
             tr.append($('<td></td>').text(e['rank']));
             table.append(tr);
         });
-        $('#' + contestName).html('').append(table);
+        $('#' + contest).html('').append(table);
     });
 }
-function getHandicap(contestName, username) {
-    var handicap = handicapList[contestName + '-' + username];
+
+function getHandicap(contest, username) {
+    var handicap = handicapList[contest + '-' + username];
     if (handicap == undefined) handicap = 0;
     return handicap;
 }
+
 function getBlackTime(handicap, finish_time_str) {
     var datetime = new Date('1970-01-01T' + finish_time_str + 'Z');
     var blackTime = Date.parse(datetime) + (handicap * 60 * 1000);
     return blackTime;
 }
-function showCode(contestName, username, question) {
-    // console.log(contestName, username, question);
-    tableData[contestName].forEach(e => {
+
+function showCode(contest, username, question) {
+    // console.log(contest, username, question);
+    tableData[contest].forEach(e => {
         if (e['username'] == username) {
             var code = e[question]['code'];
     code = code.replace(/</gi,'&lt;').replace(/>/gi,'&gt;');
@@ -147,20 +202,23 @@ function showCode(contestName, username, question) {
     codeModal.style.display = "block";        
     // $([document.documentElement, document.body]).animate({ scrollTop: $("#code").offset().top }, 1000);
 }
+
 function hljsUpdate() {
     hljs.highlightAll();
     hljs.initLineNumbersOnLoad();
 }
+
 function fetchBoard() {
     tableData = {}
-    contestNameList.forEach(contestName => {
-        tableData[contestName] = [];
+    contestList.forEach(contest => {
+        tableData[contest] = [];
         usernameList.forEach(username => {
-            var url = (baseUrl) + '/files/' + contestName + '-' + username + '.json';
-            fetchFile(url, json => tableData[contestName].push(json));
+            var url = (baseUrl) + '/files/' + contest + '-' + username + '.json';
+            fetchFile(url, json => tableData[contest].push(json));
         });
     });
 }
+
 function fetchFile(url, func) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -174,12 +232,14 @@ function fetchFile(url, func) {
         .then(json => func(json))
         .catch(error => console.log(error.message));
 }
+
 function myTimer() {
     fetchHandicap();
     fetchBoard();
     // TODO: replace by $.when(fetch1, fetch2, fetch3, ...)
     setTimeout(updateTables, 2000);
 }
+
 function closeModal() {
     var codeModal = document.getElementById("codeModal");        
     codeModal.style.display = "none"; 

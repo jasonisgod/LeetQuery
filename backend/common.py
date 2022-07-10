@@ -1,6 +1,6 @@
-import requests
-import json
-import signal
+import requests, json, signal, sys, os
+from flask import Flask, request, render_template
+from flask_cors import CORS
 
 DIR_DATA = 'files'
 DIR_CONFIG = 'config'
