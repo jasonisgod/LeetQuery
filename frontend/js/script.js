@@ -2,8 +2,8 @@
 // var DOMAIN = 'http://jasonisgod.xyz:9003';
 var DOMAIN = 'http://127.0.0.1:9003';
 var TOP_N = 5;
-var VER_JS = 'v2.0';
-var TIME_RELOAD = 30000;
+var VER_JS = 'v2.0.1';
+var TIME_RELOAD = 60000;
 var TIME_DELAY_1 = 2000;
 var TIME_DELAY_2 = 5000;
 
@@ -57,6 +57,7 @@ function requestData(contest, username) {
 
 function init() {
 
+    $('#ver-display').html(VER_JS);
     requestHandicap();
     requestUsername();
     requestContest();
