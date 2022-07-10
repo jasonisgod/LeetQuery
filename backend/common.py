@@ -2,10 +2,8 @@ import requests
 import json
 import signal
 
-signal.signal(signal.SIGINT, lambda a,b: exit())
-
-CONTEST_NAME = 'weekly-contest-293'
-DIR = 'files'
+DIR_DATA = 'files'
+DIR_CONFIG = 'config'
 PAGE_RANGE = list(range(10,400)) ## + list(range(460,470))
 SPACES = " "*100
 
@@ -123,19 +121,10 @@ def query_contests(contest_name_list, username_list):
             for row in scoreboard:
                 text = json.dumps(row, indent=4)
                 username = row["username"]
-                open(f'{DIR}/{contest_name}-{username}.json', 'w').write(text + '\n')
+                open(f'{DIR_DATA}/{contest_name}-{username}.json', 'w').write(text + '\n')
         except Exception as e: print();print(e);print()
     return
 
-def main():
-    contest_name_list = [CONTEST_NAME]
-    username_list = json.load(open('username.json', 'r'))
-    print(contest_name_list)
-    print(username_list)
-    query_contests(contest_name_list, username_list)
-    print(f'\r{SPACES}')
-
-for i in range(5): main()
 
 # contest_name_list = [f'biweekly-contest-{i}' for i in range(66,71+1)]
 # json.dumps(scoreboard, indent=4)
