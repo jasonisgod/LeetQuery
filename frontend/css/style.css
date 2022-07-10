@@ -1,0 +1,16 @@
+body { margin: auto; max-width: 1280px; text-align: center; background-color: #222; }
+h1,h2,h3,h4,h5,p,div,pre,code,a,td { font-family: "Courier New";  }
+h1,h2,h3,h4,h5,p,div,pre,code,td { color: #bbb; }
+thead { font-weight: bold; }
+a { color: cornflowerblue; }
+img { width: 30%; max-width: 200px; }
+p { margin: 1px; }
+div { margin: 0 20px; overflow: scroll; display: grid; }
+#bb { color: #000; border-bottom: 1px solid #ddd; line-height: 0.1em; margin: 10px 0 20px; }
+.element::-webkit-scrollbar {display:none}
+::-webkit-scrollbar { width: 0; background: transparent; }
+td { padding: 5px 10px;  white-space: nowrap; font-size: 15px; }
+td.q { width: 10%; min-width: 100px; }
+button { border-radius: 5px; border: 0; margin: 0 5px; background-color: #bbb; font-size: 10px;} 
+/*pre { margin: 1px; }
+code { border:#bbb solid 1px; border-radius: 15px; padding: 30px; margin: 0 30px; text-align: left;}*/
