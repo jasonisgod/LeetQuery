@@ -152,7 +152,8 @@ def _thread():
         cc = get_all_contests()
         now_ = now()
         tmp = [(key, s2t(cc[key])) for key in cc]
-        tmp = [key for key,vtime in tmp if now_ > vtime and (now_ - vtime).seconds < TIME_CONTEST]
+        tmp = [key for key,vtime in tmp if now_ > vtime and (now_ - vtime).total_seconds() < TIME_CONTEST]
+        print('_thread() ', now_, tmp)
         if len(tmp) == 1:
             contest_list = [tmp[0]]
             username_list = get_all_users()
