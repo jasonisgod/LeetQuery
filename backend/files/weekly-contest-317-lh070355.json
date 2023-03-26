@@ -1,0 +1,20 @@
+{
+    "rank": 4748,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "00:32:25",
+    "Q1": {
+        "solve_time": "00:07:07",
+        "fail_count": 2,
+        "lang": "python3",
+        "code": "class Solution:\n    def averageValue(self, nums: List[int]) -> int:\n        numss = tuple(num for num in nums if num % 6 == 0)\n\n        return 0 if len(numss) == 0 else sum(numss) // len(numss)"
+    },
+    "Q2": {
+        "solve_time": "00:22:25",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "from collections import defaultdict\n\nclass Solution:\n    def mostPopularCreator(self, creators: List[str], ids: List[str], views: List[int]) -> List[List[str]]:\n        counter = defaultdict(int)\n        most_views = {}\n        for i, creator, id, view in zip(range(len(views)), creators, ids, views):\n            counter[creator] += view\n            if creator not in most_views or views[(view_i := most_views[creator])] < view or views[view_i] == view and ids[view_i] > id:\n                most_views[creator] = i\n        max_count = max(counter.values())\n        return [[creator, ids[most_views[creator]]] for creator, views in counter.items() if views == max_count]"
+    },
+    "Q3": {},
+    "Q4": {}
+}

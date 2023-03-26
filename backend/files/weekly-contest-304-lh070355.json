@@ -1,0 +1,25 @@
+{
+    "rank": 4934,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "01:07:11",
+    "Q1": {
+        "solve_time": "00:09:32",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minimumOperations(self, nums: List[int]) -> int:\n        s = set(nums)\n        s.discard(0)\n        return len(s)"
+    },
+    "Q2": {
+        "solve_time": "00:28:08",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "from math import sqrt\n\nclass Solution:\n    def maximumGroups(self, grades: List[int]) -> int:\n        n = int(sqrt(2 * (length := len(grades)))) - 1\n        if n < 1:\n            n = 1\n        \n        while (n + 1) * (n + 2) <= 2 * length:\n            n += 1\n            \n        return n"
+    },
+    "Q3": {
+        "solve_time": "01:02:11",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def closestMeetingNode(self, edges: List[int], node1: int, node2: int) -> int:\n        length = len(edges)\n        visit = [0] * length\n        max_distance = [-1] * length\n        min_node, min_distance_of_all = -1, 10 ** 6\n        node1_dis = node2_dis = 0\n        \n        while node1 != -1 and visit[node1] != 2:\n            visit[node1] = 2\n            max_distance[node1] = node1_dis\n            node1_dis += 1\n            node1 = edges[node1]\n            \n        while node2 != -1 and visit[node2] & 1 != 1:\n            visit[node2] |= 1\n            # node1 have visited this node\n            if visit[node2] & 2 == 2:\n                if min_distance_of_all > (max_dis := max(max_distance[node2], node2_dis)): \n                    min_node, min_distance_of_all = node2, max_dis\n                elif min_distance_of_all == max_dis and min_node > node2:\n                    min_node = node2\n            node2_dis += 1\n            node2 = edges[node2]\n            \n        return min_node"
+    },
+    "Q4": {}
+}

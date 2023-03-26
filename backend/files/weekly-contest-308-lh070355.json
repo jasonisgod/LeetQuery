@@ -1,0 +1,25 @@
+{
+    "rank": 6685,
+    "username": "lh070355",
+    "score": 11,
+    "finish_time": "00:49:13",
+    "Q1": {
+        "solve_time": "00:26:40",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "from bisect import bisect_right\n\nclass Solution:\n    def answerQueries(self, nums: List[int], queries: List[int]) -> List[int]:\n        nums.sort()\n        pre_sum = [0] * len(nums)\n        ans = []\n        pre = 0\n        \n        for i, num in enumerate(nums):\n            pre_sum[i] = pre + num\n            pre = pre_sum[i]\n        \n        for que in queries:\n            ans.append(bisect_right(pre_sum, que))\n            \n        return ans"
+    },
+    "Q2": {
+        "solve_time": "00:29:02",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def removeStars(self, s: str) -> str:\n        stack = []\n        \n        for c in s:\n            if c == '*':\n                stack.pop()\n            else:\n                stack.append(c)\n            \n        return ''.join(stack)"
+    },
+    "Q3": {
+        "solve_time": "00:49:13",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def garbageCollection(self, garbage: List[str], travel: List[int]) -> int:\n        mapping = { 'G':0, 'M': 1, 'P':2 }\n        travel.append(0)\n        last = [-1, -1, -1]\n        counts = [0, 0, 0]\n        pre_sum = [0] * (len(garbage) + 1)\n        \n        for i, gar in enumerate(garbage):\n            pre_sum[i] = pre_sum[i - 1] + travel[i - 1]\n            for g_type in gar:\n                last[mapping[g_type]] = i\n                counts[mapping[g_type]] += 1\n                \n        pre_sum.pop()\n                \n        return sum(counts) + sum(pre_sum[i] for i in last if i != -1)\n        \n        "
+    },
+    "Q4": {}
+}

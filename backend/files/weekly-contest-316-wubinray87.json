@@ -1,0 +1,20 @@
+{
+    "rank": 7244,
+    "username": "wubinray87",
+    "score": 7,
+    "finish_time": "01:15:04",
+    "Q1": {
+        "solve_time": "00:05:41",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool haveConflict(vector<string>& event1, vector<string>& event2) {\n        if ((event1[0] < event2[0] && event1[1] < event2[0]) || (event2[0] < event1[0] && event2[1] < event1[0])) {\n            return false;\n        }\n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:55:04",
+        "fail_count": 4,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int subarrayGCD(vector<int>& nums, int k) {\n        auto n = nums.size();\n        \n        std::vector<std::vector<int>> gcdMap(n, std::vector<int>(n, 0));\n        \n        int count = 0;\n        for (int i = 0; i < n; ++i) {\n            for (int j = i; j < n; ++j) {\n                if (i == j) {\n                    gcdMap[i][j] = nums[i];\n                } else {\n                    gcdMap[i][j] = std::gcd(gcdMap[i][j-1], nums[j]);\n                }\n                if (gcdMap[i][j] == k) {\n                    count++;\n                }\n            }\n        }\n        return count;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

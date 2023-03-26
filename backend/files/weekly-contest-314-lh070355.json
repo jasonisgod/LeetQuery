@@ -1,0 +1,25 @@
+{
+    "rank": 3193,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "00:52:41",
+    "Q1": {
+        "solve_time": "00:11:42",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def hardestWorker(self, n: int, logs: List[List[int]]) -> int:\n        start = 0\n        long_i = long_t = 0\n        \n        for i, time in logs:\n            if time - start > long_t or time - start == long_t and i < long_i:\n                long_i = i\n                long_t = time - start\n            start = time\n        \n        return long_i"
+    },
+    "Q2": {
+        "solve_time": "00:14:24",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def findArray(self, pref: List[int]) -> List[int]:\n        ans = [pref[0]]\n        \n        for i in range(1, len(pref)):\n            ans.append(pref[i] ^ pref[i - 1])\n            \n        return ans"
+    },
+    "Q3": {
+        "solve_time": "00:47:41",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def robotWithString(self, s: str) -> str:\n        a_ord = ord('a')\n        length = len(s)\n        counter = {chr(a_ord + i):0 for i in range(26)}\n        for c in s:\n            counter[c] += 1\n        # print(counter)\n        for k, v in tuple(counter.items()):\n            if v == 0:\n                del counter[k]\n        first_c = next(iter(counter))\n        # print(counter, first_c)\n            \n        s_i = 0\n        stack = [chr(a_ord + 30)] # dummy element\n        paper = []\n        \n        while s_i < length:\n            if stack[-1] > first_c:\n                stack.append(s[s_i])\n                counter[s[s_i]] -= 1\n                if not counter[s[s_i]]:\n                    del counter[s[s_i]]\n                    first_c = next(iter(counter), None)\n                s_i += 1\n            else:\n                paper.append(stack.pop())\n        # print(paper, stack)\n        paper.extend(reversed(stack))\n        paper.pop() # pop the dummy element\n        \n        return ''.join(paper)\n        "
+    },
+    "Q4": {}
+}

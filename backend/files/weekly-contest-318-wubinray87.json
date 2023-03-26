@@ -1,0 +1,25 @@
+{
+    "rank": 5360,
+    "username": "wubinray87",
+    "score": 12,
+    "finish_time": "01:58:56",
+    "Q1": {
+        "solve_time": "00:05:57",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> applyOperations(vector<int>& nums) {\n        auto n = nums.size();\n        \n        for (int i = 0; i < n-1; ++i) {\n            if (nums[i] == nums[i+1]) {\n                nums[i] *= 2;\n                nums[i+1] = 0;\n            }\n        }\n        \n        int slow = 0, fast = 0;\n        for (; fast < n; ++fast) {\n            if (nums[fast] != 0) {\n                std::swap(nums[slow++], nums[fast]);\n            }\n        }\n        \n        return nums;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:27:41",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long maximumSubarraySum(vector<int>& nums, int k) {\n        \n        auto n = nums.size();\n        \n        std::unordered_map<int, int> counts;\n        long long sum = 0, result = 0;\n        int left = 0, right = 0;\n        for (; right < n; ++right) {\n            counts[nums[right]]++;\n            sum += nums[right];\n            \n            if (right - left + 1 > k) {\n                counts[nums[left]]--;\n                sum -= nums[left];\n                left++;\n            }\n            while (counts[nums[right]] > 1) {\n                counts[nums[left]]--;\n                sum -= nums[left];\n                left++;\n            }\n            \n            if (right - left + 1 == k) {\n                result = std::max(result, sum);\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:23:56",
+        "fail_count": 5,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long totalCost(vector<int>& costs, int k, int candidates) {\n        auto n = costs.size();\n        \n        std::priority_queue<int, std::vector<int>, std::greater<int>> minHeapHead, minHeapTail;\n        \n        int left = 0, right = n-1;\n        for (;left < std::min((int)n, candidates); ++left) {\n            minHeapHead.push(costs[left]);\n        }\n        for (;right >= left && (n-1-right) < candidates; --right) {\n            minHeapTail.push(costs[right]);\n        }\n        std::cout << \"candidiates\" << candidates << \" \" << minHeapHead.size() << \" \" <<  minHeapTail.size() << std::endl;\n                \n        long long result = 0;\n        for (int i = 0; i < k; ++i) {\n            if (!minHeapHead.empty() && !minHeapTail.empty()) {\n                if (minHeapHead.top() <= minHeapTail.top()) {\n                    result += minHeapHead.top();\n                    minHeapHead.pop();\n                    if (left <= right) {\n                        minHeapHead.push(costs[left]);\n                        left++;\n                    }\n                } else {\n                    result += minHeapTail.top();\n                    minHeapTail.pop();\n                    if (left <= right) {\n                        minHeapTail.push(costs[right]);\n                        right--;\n                    }\n                }\n            } else if (minHeapHead.empty()) {\n                result += minHeapTail.top();\n                minHeapTail.pop();\n            } else if (minHeapTail.empty()) {\n                result += minHeapHead.top();\n                minHeapHead.pop();\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}

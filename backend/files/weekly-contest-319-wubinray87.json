@@ -1,0 +1,30 @@
+{
+    "rank": 2724,
+    "username": "wubinray87",
+    "score": 18,
+    "finish_time": "01:56:37",
+    "Q1": {
+        "solve_time": "00:01:28",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<double> convertTemperature(double celsius) {\n        return {celsius + 273.15, celsius * 1.80 + 32.00};\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:56:34",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int subarrayLCM(vector<int>& nums, int k) {\n        auto n = nums.size();\n        \n        int result = 0;\n        for (int i = 0; i < n; ++i) {\n            auto lcm = 1;\n            for (int j = i; j < n; ++j) {\n                lcm = nums[j] * lcm / std::gcd(nums[j], lcm);\n                if (lcm == k) {\n                    result++;\n                } else if (lcm > k) {\n                    break;\n                }\n            }\n        }\n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:42:02",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int minimumOperations(TreeNode* root) {\n        if (root == nullptr) {\n            return 0;\n        }\n        \n        int swapCount = 0;\n        \n        // level traverse\n        std::deque<TreeNode*> que;\n        que.push_back(root);\n        while (!que.empty()) {\n            auto n = que.size();\n            \n            std::vector<int> nums; nums.reserve(n);\n            std::unordered_map<int, int> numToIdx; numToIdx.reserve(n);\n            for (int i = 0; i < n; ++i) {\n                auto* node = que.front();\n                que.pop_front();\n                \n                numToIdx[node->val] = i;\n                nums.push_back(node->val);\n                \n                if (node->left) que.push_back(node->left);\n                if (node->right) que.push_back(node->right);\n            }\n            \n            std::vector<int> sortedNums(nums);\n            std::sort(sortedNums.begin(), sortedNums.end());\n            \n            for (int i = 0; i < n; ++i) {\n                if (sortedNums[i] != nums[i]) {\n                    numToIdx[nums[i]] = numToIdx[sortedNums[i]];\n                    std::swap(nums[i], nums[numToIdx[sortedNums[i]]]);\n                    swapCount++;\n                }\n            }\n        }\n        \n        return swapCount;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:26:37",
+        "fail_count": 3,
+        "lang": "cpp",
+        "code": "class Solution {\n    using pair_t = std::pair<int, int>;\n    struct Compare {\n        bool operator()(const pair_t& a, const pair_t& b) {\n            if (a.second != b.second)\n                return a.second > b.second;\n            return a.first > b.first;\n        }\n    };\npublic:\n    int maxPalindromes(string s, int k) {\n        auto n = s.size();\n        \n        std::vector<std::vector<bool>> dp(n+1, std::vector<bool>(n+1, false));        \n        for (int len = 1; len <= n; ++len) {\n            for (int i = 0; i <= n - len; ++i) {\n                if (len == 1) {\n                    dp[i][i] = true;\n                } \n                if (len == 2 && s[i] == s[i+1]) {\n                    dp[i][i+1] = true;\n                }\n                if (len >= 3 && dp[i+1][i+len-2] && s[i] == s[i+len-1]) {\n                    dp[i][i+len-1] = true;\n                }\n            }\n        }\n        \n        std::priority_queue<pair_t, std::vector<pair_t>, Compare> pq;  // {{start, end}, ...}\n        for (int i = 0; i < n; ++i) {\n            for (int j = i; j < n; ++j) {\n                if (dp[i][j] && j - i >= k - 1) {\n                    pq.push({i, j});\n                    break;\n                }\n            }\n        }\n        \n        int result = 0;\n        int ptr = -1;\n        while (!pq.empty()) {\n            auto top = pq.top();\n            pq.pop();\n            \n            if (ptr < top.first) {\n                result++;\n                ptr = top.second;\n            }\n        }\n        return result;\n        \n        /*\n        int result = 0;\n        for (int i = 0; i < n; ++i) {\n            for (int j = i+k-1; j < n; ++j) {\n                if (dp[i][j]) {\n                    std::cout << i << \" \" << j << std::endl;\n                    result++;\n                    i = j;\n                    break;\n                }\n            }\n        }\n        return result;\n        */\n    }\n};"
+    }
+}

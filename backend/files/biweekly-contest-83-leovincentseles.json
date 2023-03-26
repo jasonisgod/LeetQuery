@@ -1,0 +1,25 @@
+{
+    "rank": 3332,
+    "username": "leovincentseles",
+    "score": 12,
+    "finish_time": "00:24:31",
+    "Q1": {
+        "solve_time": "00:05:29",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    string bestHand(vector<int>& ranks, vector<char>& suits) {\n        int num[14] = {0};\n        \n        if (suits[0] == suits[1] && suits[1] == suits[2] && suits[2] == suits[3] && suits[3] == suits[4])\n            return \"Flush\";\n        \n        for (int rank: ranks)\n            ++num[rank];\n        \n        for (int i=1; i<=13; ++i)\n            if (num[i] >= 3)\n                return \"Three of a Kind\";\n        \n        for (int i=1; i<=13; ++i)\n            if (num[i] >= 2)\n                return \"Pair\";\n        \n        return \"High Card\";\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:12:59",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "typedef long long int LLI;\n\nclass Solution {\npublic:\n    long long zeroFilledSubarray(vector<int>& nums) {\n        LLI result = 0;\n        nums.push_back(1);\n        \n        for (int left=0, right=0; right<nums.size(); ++right)  {\n            if (nums[right] != 0) {\n                LLI n = right - left;\n                result += n * (n + 1) / 2;\n                left = right + 1;\n            }\n        }\n        \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:24:31",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class NumberContainers {\nprivate:\n    unordered_map<int, set<int>> valueSet;\n    unordered_map<int, pair<int, set<int>::iterator>> indexValue;\n    \npublic:\n    NumberContainers() {\n        \n    }\n    \n    void change(int index, int number) {\n        if (indexValue.count(index) != 0) {\n            int origVal = indexValue[index].first;\n            auto it = indexValue[index].second;\n            valueSet[origVal].erase(it);\n            if (valueSet[origVal].size() == 0)\n                valueSet.erase(origVal);\n        }\n        \n        auto insertit = valueSet[number].insert(index).first;\n        indexValue[index] = {number, insertit};\n    }\n    \n    int find(int number) {\n        if (valueSet.count(number) == 0)\n            return -1;\n        return *(valueSet[number].begin());\n    }\n};\n\n/**\n * Your NumberContainers object will be instantiated and called as such:\n * NumberContainers* obj = new NumberContainers();\n * obj->change(index,number);\n * int param_2 = obj->find(number);\n */"
+    },
+    "Q4": {}
+}

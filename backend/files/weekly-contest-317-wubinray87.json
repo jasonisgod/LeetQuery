@@ -1,0 +1,25 @@
+{
+    "rank": 5420,
+    "username": "wubinray87",
+    "score": 12,
+    "finish_time": "01:43:46",
+    "Q1": {
+        "solve_time": "00:06:22",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int averageValue(vector<int>& nums) {\n        auto n = nums.size();\n        \n        std::vector<int> candids;\n        candids.reserve(n);\n        for (const auto num : nums) {\n            if (!(num & 0x1) && (num % 3) == 0) {\n                candids.push_back(num);\n            }\n        }\n        \n        double sum = 0;\n        for (const auto candid : candids) {\n            sum += candid;\n        }\n        \n        return sum == 0 ? 0 : static_cast<int>(std::floor(sum / candids.size()));\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:27:10",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<vector<string>> mostPopularCreator(vector<string>& creators, vector<string>& ids, vector<int>& views) {\n        auto n = ids.size();\n        \n        // map<string, int> {creator, popularity}\n        std::unordered_map<std::string, long long> popularity;\n        for (int i = 0; i < n; ++i) {\n            popularity[creators[i]] += views[i];\n        }\n        \n        // find most popular\n        long long maxPopular = 0;\n        std::unordered_set<std::string> popularCreators;\n        for (const auto& [creator, popular] : popularity) {\n            if (popular > maxPopular) {\n                maxPopular = popular;\n                popularCreators = {creator};\n            } else if (popular == maxPopular) {\n                popularCreators.insert(creator);\n            }\n        }\n        \n        // find most popular video for every creators\n        std::unordered_map<std::string, std::pair<std::string, int>> mostPopularVideo;  // {creator, {video, view}}\n        for (int i = 0; i < n; ++i) {\n            if (mostPopularVideo.count(creators[i]) == 0) {\n                mostPopularVideo[creators[i]] = {ids[i], views[i]};    \n            } else {\n                if (views[i] > mostPopularVideo[creators[i]].second || \n                   (views[i] == mostPopularVideo[creators[i]].second && ids[i] < mostPopularVideo[creators[i]].first)) {\n                    mostPopularVideo[creators[i]] = {ids[i], views[i]};\n                }\n            }\n        }\n        \n        // make result\n        std::vector<std::vector<std::string>> result;\n        result.reserve(popularCreators.size());\n        for (const auto& creator : popularCreators) {\n            result.push_back({creator, mostPopularVideo[creator].first});\n        }   \n        return result;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:03:46",
+        "fail_count": 5,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long makeIntegerBeautiful(long long n, int target) {\n        long long sumOfDigits = 0;\n        std::vector<int> digits;\n        while (n) {\n            digits.push_back(n % 10);\n            n /= 10;\n            \n            sumOfDigits += digits.back();\n        }\n        digits.push_back(0);\n        digits.push_back(0);\n        \n        int i = 0;\n        long long decimal = 1;\n        int carry = 0;\n        long long result = 0;\n        target = sumOfDigits - target;\n        while (target > 0) {\n            if (i >= digits.size()) {\n                break;\n            } else if (true || digits[i] + carry >= 1) {\n                target -= (digits[i]+carry-1);\n                result += (long long)(10-digits[i]-carry)*decimal;\n                carry = 1;\n            } else {\n                carry = 0;\n            }\n            decimal *= 10;\n            i++;\n        }\n        return result;\n    }\n};"
+    },
+    "Q4": {}
+}

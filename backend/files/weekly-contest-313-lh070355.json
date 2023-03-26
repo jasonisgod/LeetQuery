@@ -1,0 +1,25 @@
+{
+    "rank": 4667,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "00:39:20",
+    "Q1": {
+        "solve_time": "00:09:23",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "import math\n\nclass Solution:\n    def commonFactors(self, a: int, b: int) -> int:\n        gcd = math.gcd(a, b)\n        ans = 0\n\n        for i in range(1, int(math.sqrt(gcd)) + 1):\n            if gcd % i == 0:\n                ans += 2\n\n        return ans - (int(math.sqrt(gcd)) ** 2 == gcd)"
+    },
+    "Q2": {
+        "solve_time": "00:21:29",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def maxSum(self, grid: List[List[int]]) -> int:\n        filters = ((0, 0), (0, 1), (0, 2), (1, 1), (2, 0), (2, 1), (2, 2))\n        max_num = 0\n        m, n = len(grid), len(grid[0])\n        for i in range(m - 2):\n            for j in range(n - 2):\n                cur = 0\n                for i_inc, j_inc in filters:\n                    cur += grid[i + i_inc][j + j_inc]\n                if cur > max_num:\n                    max_num = cur\n\n        return max_num\n"
+    },
+    "Q3": {
+        "solve_time": "00:39:20",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minimizeXor(self, num1: int, num2: int) -> int:\n        count = bin(num2).count('1')\n        x = 0\n\n        for i in range(29, -1, -1):\n            if count == 0:\n                break\n            if num1 & (1 << i):\n                x |= 1 << i\n                count -= 1\n        \n        for i in range(30):\n            if count == 0:\n                break\n            if not num1 & (1 << i):\n                x |= 1 << i\n                count -= 1\n\n        return x"
+    },
+    "Q4": {}
+}

@@ -1,0 +1,25 @@
+{
+    "rank": 3052,
+    "username": "wubinray87",
+    "score": 12,
+    "finish_time": "01:09:23",
+    "Q1": {
+        "solve_time": "00:15:28",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool equalFrequency(string word) {\n        const auto histEqualized = [](auto& hist) -> bool {\n            int number = hist.begin()->second;\n            for (const auto&[c, count] : hist) {\n                if (count == 0) continue;\n                if (number != count) {\n                    return false;\n                }\n            }\n            return true;\n        };\n        \n        std::unordered_map<char, int> hist;\n        for (const auto& c : word) {\n            hist[c]++;\n        }\n        \n        // find most\n        for (auto&[c, count] : hist) {\n            count--;\n            if (histEqualized(hist)) {\n                return true;\n            }\n            count++;\n        }\n        return false;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:22:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class LUPrefix {\n    int longestIdx = 0;\n    std::vector<bool> uploaded;\npublic:\n    LUPrefix(int n) {\n        uploaded = std::vector<bool>(n+1, false);\n        uploaded[0] = true;\n    }\n    \n    void upload(int video) {\n        uploaded[video] = true;\n        if (longestIdx == video-1) {\n            while (uploaded[video] == true) {\n                video++;\n            }\n            longestIdx = video-1;\n        }\n    }\n    \n    int longest() {\n        return longestIdx;\n    }\n};\n\n/**\n * Your LUPrefix object will be instantiated and called as such:\n * LUPrefix* obj = new LUPrefix(n);\n * obj->upload(video);\n * int param_2 = obj->longest();\n */"
+    },
+    "Q3": {
+        "solve_time": "00:59:23",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {\n        const auto xorVec = [&](const auto& nums) {\n            if (nums.size() == 0) return 0;\n            int num = nums[0];\n            for (int i = 1; i < nums.size(); ++i) {\n                num ^= nums[i];\n            }\n            return num;\n        };\n        \n        auto xor1 = xorVec(nums1);\n        auto xor2 = xorVec(nums2);\n        if (nums1.size()%2 == 0 && nums2.size()%2 == 0) {\n            return 0;\n        } else if (nums1.size()%2 == 0) {\n            return xor1;\n        } else if (nums2.size()%2 == 0) {\n            return xor2;\n        }\n        return xor1^xor2;\n    }\n};"
+    },
+    "Q4": {}
+}

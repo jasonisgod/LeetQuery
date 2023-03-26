@@ -1,0 +1,20 @@
+{
+    "rank": 5161,
+    "username": "wubinray87",
+    "score": 7,
+    "finish_time": "00:25:51",
+    "Q1": {
+        "solve_time": "00:09:39",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool isCircularSentence(string s) {\n        if (s.back() != s.front()) {\n            return false;\n        }\n        \n        int n = s.size();\n        int idx = 0;\n        int currEnd, nextStart; \n        do {\n            currEnd   = s.find(' ', idx) - 1; \n            nextStart = s.find_first_not_of(' ', currEnd+1); \n            if (nextStart != std::string::npos && s[currEnd] != s[nextStart]) {\n                return false;\n            }\n                \n            idx = nextStart;\n        } while (nextStart != std::string::npos);\n        \n        return true;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:25:51",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    long long dividePlayers(vector<int>& skill) {\n        const auto rmSet = [](const auto p, auto& lut) {\n            lut[p]--;\n            if (lut[p] == 0) {\n                lut.erase(p);\n            }\n        };\n        \n        // make up set\n        std::unordered_map<int, int> lut;\n        for (const auto s : skill) {\n            lut[s]++;\n        }\n        \n        // teamSum\n        int n = skill.size();\n        \n        auto totalSum = std::accumulate(skill.begin(), skill.end(), 0);\n        auto teamSum = totalSum * 2 / n;\n        \n        // calculate each team\n        long long totalChemistry = 0;\n        for (const auto p1 : skill) {\n            auto p2 = teamSum - p1;\n            if (lut[p2] <= 0) {\n                return -1;\n            }\n            \n            rmSet(p2, lut);\n            \n            totalChemistry += p1 * p2;\n        }\n        \n        return totalChemistry / 2;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

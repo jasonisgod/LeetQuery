@@ -1,0 +1,25 @@
+{
+    "rank": 2868,
+    "username": "lh070355",
+    "score": 13,
+    "finish_time": "01:33:58",
+    "Q1": {
+        "solve_time": "00:56:49",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def haveConflict(self, event1: List[str], event2: List[str]) -> bool:\n        def time_to_int(start, end):\n            return (int(start[:2]) * 60 + int(start[3:]), int(end[:2]) * 60 + int(end[3:]))\n        time_1, time_2 = time_to_int(*event1), time_to_int(*event2)\n        if time_1[0] > time_2[0]:\n            time_1, time_2 = time_2, time_1\n        return time_1[1] >= time_2[0]"
+    },
+    "Q2": {
+        "solve_time": "00:59:33",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "from math import gcd\n\nclass Solution:\n    def subarrayGCD(self, nums: List[int], k: int) -> int:\n        left = right = 0\n        count = 0\n        length = len(nums)\n        for i in range(length):\n            div, mod = divmod(nums[i], k)\n            nums[i] = 0 if mod else div\n            \n        while left < length:\n            while left < length and nums[left] == 0:\n                left += 1\n            right = left\n            while right < length and nums[right] > 0:\n                right += 1\n            for i in range(left, right):\n                gcdd = nums[i]\n                for j in range(i, right):\n                    if (gcdd := gcd(gcdd, nums[j])) == 1:\n                        count += right - j\n                        break\n                \n            left = right\n            \n        return count"
+    },
+    "Q3": {
+        "solve_time": "01:28:58",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minCost(self, nums: List[int], costs: List[int]) -> int:\n        sorted_nums = sorted(zip(nums, costs))\n        prefix_sum = sum(costs)\n        accu_sum = 0\n        \n        for num, cost in sorted_nums:\n            accu_sum += cost\n            prefix_sum -= cost\n            \n            if accu_sum >= prefix_sum:\n                return sum(abs(n - num) * c for n, c in sorted_nums)\n            \n            \n            \n            \n            \n            \n#             if cur_num != num:\n#                 if cost > \n#             else:\n#                 cur_cost += cost\n                \n                \n#             if cur_num > num:\n                \n#             elif cur_num < num:\n#             else:\n#                 cur_cost += cost"
+    },
+    "Q4": {}
+}

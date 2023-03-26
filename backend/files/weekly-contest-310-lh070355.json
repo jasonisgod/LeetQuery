@@ -1,0 +1,25 @@
+{
+    "rank": 5330,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "01:15:07",
+    "Q1": {
+        "solve_time": "00:05:54",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "from collections import Counter\n\nclass Solution:\n    def mostFrequentEven(self, nums: List[int]) -> int:\n        counter = Counter(num for num in nums if num & 1 == 0)\n        max_k, max_v = -1, -1\n        for k, v in counter.items():\n            if v > max_v or (v == max_v and k < max_k):\n                max_k, max_v = k, v\n                \n        return max_k"
+    },
+    "Q2": {
+        "solve_time": "00:09:10",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def partitionString(self, s: str) -> int:\n        se = set()\n        count = 1\n        \n        for c in s:\n            if c in se:\n                count += 1\n                se.clear()\n            se.add(c)\n                \n        return count"
+    },
+    "Q3": {
+        "solve_time": "01:05:07",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "from sortedcontainers import SortedList\nfrom operator import itemgetter\n\nclass Solution:\n    def minGroups(self, intervals: List[List[int]]) -> int:\n        intervals.sort(key=itemgetter(1, 0))\n        rights = SortedList()\n        \n        for left, right in intervals:\n            i = rights.bisect_right(left)\n            while i > 0 and rights[i - 1] == left:\n                i -= 1\n            if i == 0:\n                rights.add(right)\n            else:\n                rights.pop(i - 1)\n                rights.add(right)\n                \n        return len(rights)\n        \n        \n        \n        \n        \n        \n        \n        \n#         intervals.sort()\n#         intervals.append([10 ** 7, 0])\n#         max_con = con = max_right = 0\n        \n#         for i, (left, right) in enumerate(intervals):\n#             # intersect\n#             if left <= max_right:\n#                 con += 1\n#                 if right > max_right:\n#                     max_right = right\n#             # not intersect\n#             else:\n#                 if con > max_con:\n#                     max_con = con\n#                 con = 1\n                \n#         return max_con if max_con > con else con"
+    },
+    "Q4": {}
+}

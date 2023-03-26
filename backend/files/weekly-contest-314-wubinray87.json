@@ -1,0 +1,20 @@
+{
+    "rank": 8284,
+    "username": "wubinray87",
+    "score": 7,
+    "finish_time": "00:38:36",
+    "Q1": {
+        "solve_time": "00:12:48",
+        "fail_count": 1,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int hardestWorker(int n, vector<vector<int>>& logs) {\n        if (logs.size() == 0) {\n            return 0;\n        }\n        \n        int maxTime = logs[0][1];\n        int id = logs[0][0];\n        for (int i = 1; i < logs.size(); ++i) {\n            auto time = logs[i][1] - logs[i-1][1];\n            if (time > maxTime) {\n                maxTime = time;\n                id = logs[i][0];\n            } else if (time == maxTime && logs[i][0] < id) {\n                id = logs[i][0];\n            } \n        }\n        return id;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:33:36",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    vector<int> findArray(vector<int>& pref) {\n        if (pref.size() == 0) {\n            return {};\n        }\n        \n        auto n = pref.size();\n        \n        std::vector<int> arr(n, 0);\n        \n        int tmp = arr[0] = pref[0];\n        for (int i = 1; i < n; ++i) {\n            arr[i] = ~((~pref[i])^tmp);\n            tmp = tmp ^ arr[i];\n        }\n        return arr;\n    }\n};"
+    },
+    "Q3": {},
+    "Q4": {}
+}

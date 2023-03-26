@@ -1,0 +1,25 @@
+{
+    "rank": 3505,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "01:23:49",
+    "Q1": {
+        "solve_time": "00:09:31",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def sortPeople(self, names: List[str], heights: List[int]) -> List[str]:\n        return list(name for _, name in sorted(zip(heights, names), reverse=True))"
+    },
+    "Q2": {
+        "solve_time": "00:39:03",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def longestSubarray(self, nums: List[int]) -> int:\n        max_len = max_val = i = 0\n        length = len(nums)\n        \n        while i < length:\n            if nums[i] > max_val:\n                max_val = nums[i]\n                cur_len = 0\n                while i + cur_len < length and nums[i + cur_len] == max_val:\n                    cur_len += 1\n                max_len = cur_len\n                i += cur_len\n            elif nums[i] == max_val:\n                cur_len = 0\n                while i + cur_len < length and nums[i + cur_len] == max_val:\n                    cur_len += 1\n                if cur_len > max_len:\n                    max_len = cur_len\n                i += cur_len                \n            else:\n                i += 1\n                \n        return max_len"
+    },
+    "Q3": {
+        "solve_time": "01:13:49",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def goodIndices(self, nums: List[int], k: int) -> List[int]:\n        before, after = [10 ** 6 + 1], [10 ** 6 + 1]\n        before_good, after_good = [], []\n        length = len(nums)\n        ans = []\n        \n        for i, num in enumerate(nums):\n            if len(before) > k:\n                before_good.append(i)\n            if num > before[-1]:\n                before = [10 ** 6 + 1, num]\n            else:\n                before.append(num)\n                    \n        for i, num in enumerate(reversed(nums)):\n            if len(after) > k:\n                after_good.append(length - 1 - i)\n            if num > after[-1]:\n                after = [10 ** 6 + 1, num]\n            else:\n                after.append(num)\n        print(before_good, after_good)\n                    \n        for i in before_good:\n            while after_good and after_good[-1] < i:\n                after_good.pop()\n            if after_good and after_good[-1] == i:\n                ans.append(i)\n                after_good.pop()\n            if not after_good:\n                break\n                \n        return ans\n                "
+    },
+    "Q4": {}
+}

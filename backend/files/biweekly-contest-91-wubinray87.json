@@ -1,0 +1,25 @@
+{
+    "rank": 1907,
+    "username": "wubinray87",
+    "score": 13,
+    "finish_time": "01:52:28",
+    "Q1": {
+        "solve_time": "00:04:10",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int distinctAverages(vector<int>& nums) {\n        std::priority_queue<int> maxHeap;\n        std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;\n        \n        for (const auto num : nums) {\n            maxHeap.push(num);\n            minHeap.push(num);\n        }\n        \n        std::unordered_set<int> s;\n        while (!maxHeap.empty()) {\n            auto big = maxHeap.top();\n            auto small = minHeap.top();\n            maxHeap.pop();\n            minHeap.pop();\n            s.insert(big + small);\n        }\n        return s.size();\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:15:06",
+        "fail_count": 4,
+        "lang": "cpp",
+        "code": "constexpr int modulo = 1e9 + 7;\nclass Solution {\npublic:\n    int countGoodStrings(int low, int high, int zero, int one) {\n        std::vector<long long> dp(high+2, 0);  // dp[i] : good strings len = i\n        dp[0] = 1;\n        \n        for (int i = 1; i <= high; ++i) {\n            long long tmp = 0;\n            if (i - zero >= 0) {\n                tmp += dp[i - zero];\n            }\n            if (i - one >= 0) {\n                tmp += dp[i - one];\n            }\n            dp[i] = tmp % modulo;\n        }\n        \n        long long sum = 0;\n        for (int i = low; i <= high; ++i) {\n            sum += dp[i];\n        }\n        return sum % modulo;\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "01:22:28",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {\n        int n = amount.size();\n        \n        // adj = {0: {1, ...}, ...}\n        std::vector<std::vector<int>> adj(n);\n        for (const auto& edge : edges) {\n            adj[edge[0]].push_back(edge[1]);\n            adj[edge[1]].push_back(edge[0]);\n        }\n        \n        // find bob's path\n        std::vector<int> bobPath;\n        {\n        std::vector<bool> visit(n, false);\n        const std::function<bool(int)> dfsBob = [&](auto n) {\n            if (n == bob) {\n                return true;\n            }\n            for (const auto neighbor : adj[n]) {\n                if (!visit[neighbor]) {\n                    visit[neighbor] = true;\n                    if (dfsBob(neighbor)) {\n                        bobPath.push_back(neighbor);\n                        return true;\n                    }\n                    visit[neighbor] = false;\n                }\n            }\n            return false;\n        };\n        visit[0] = true;\n        dfsBob(0);\n        bobPath.push_back(0);\n        }\n        \n        std::cout << bobPath.size() << std::endl;\n        \n        for (int i = 0; i < bobPath.size() / 2; ++i) {\n            std::cout << \"bobPath:\" << bobPath[i] << std::endl;\n            amount[bobPath[i]] = 0;\n        }\n        if ((bobPath.size() & 0x1) && bobPath.size() != 1) {\n            std::cout << \"bobPath:\" << bobPath[bobPath.size() / 2 + 1] << std::endl;\n            amount[bobPath[bobPath.size() / 2]] /= 2;\n        } else if (bobPath.size() == 1) {\n            if (bobPath[0] == 0)\n                amount[bobPath[0]] /= 2;\n            else \n                amount[bobPath[0]] = 0;\n        }\n        \n        // alice path\n        std::vector<bool> visit(n, false);\n        const std::function<int(int)> dfsAlice = [&](auto node) {\n            if (node == n) {\n                return 0;\n            }\n            \n            visit[node] = true;\n            \n            int ans = INT_MIN;\n            for (auto neighbor : adj[node]) {\n                if (!visit[neighbor]) {\n                    ans = std::max(ans, dfsAlice(neighbor));\n                }\n            }\n                                   \n            if (ans == INT_MIN) {\n                ans = 0;\n            }\n            \n            std::cout << \"node:\" << node << \" amount:\" << amount[node] << std::endl;\n            \n            return ans + amount[node];\n        };\n        return dfsAlice(0);\n    }\n};"
+    },
+    "Q4": {}
+}

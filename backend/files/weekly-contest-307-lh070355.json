@@ -1,0 +1,20 @@
+{
+    "rank": 5141,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "01:36:30",
+    "Q1": {
+        "solve_time": "00:23:17",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def minNumberOfHours(self, initialEnergy: int, initialExperience: int, energy: List[int], experience: List[int]) -> int:\n        count_e = max(sum(energy) + 1 - initialEnergy, 0)\n        count_exp = 0\n        exp = initialExperience\n        for eexp in experience:\n            if exp <= eexp:\n                count_exp += eexp + 1 - exp\n                exp = 2 * eexp + 1\n            else:\n                exp += eexp\n                \n        return count_exp + count_e"
+    },
+    "Q2": {
+        "solve_time": "01:26:30",
+        "fail_count": 2,
+        "lang": "python3",
+        "code": "from collections import Counter\n\nclass Solution:\n    def largestPalindromic(self, num: str) -> str:\n        counter = [0] * 10\n        for c in num:\n            counter[int(c)] += 1\n        ans = []\n        odd = -1\n        \n        \n        for i, count in enumerate(counter):\n            if count & 1:\n                odd = i\n                    \n        for i, count in zip(range(9, -1, -1), reversed(counter)):\n            ans += [str(i)] * (count // 2)\n        \n        if ans and ans[0] == '0':\n            ans = []\n        ans += [str(odd) if odd != -1 else ''] + list(reversed(ans))\n        if ans[0] == '':\n            return '0'\n        \n        return ''.join(ans)     \n                \n#         if even:\n#             if max_odd_digit != -1:\n#                 insort(even, max_odd_digit)\n#             for num in reversed(even):\n#                 ans += [str(num)] * (counter[num] // 2)\n#             if ans[0] == '0':\n#                 ans = []\n#             ans += [str(max_odd_digit) if max_odd_digit != -1 else \"\"] + list(reversed(ans))\n#         else:\n#             if max_odd_digit == 0:\n#                 max_odd_count = max_odd_digit = -1\n#                 for i in range(1, 10):\n#                     count = counter[i]\n#                     if count & 1:\n#                         if count >= max_odd_count:\n#                             max_odd_digit, max_odd_count = i, count\n#                 if max_odd_digit == -1:\n#                     return '0'\n            \n#             ans = [str(max_odd_digit)] * counter[max_odd_digit]\n        \n        \n#         return ''.join(ans)\n        "
+    },
+    "Q3": {},
+    "Q4": {}
+}

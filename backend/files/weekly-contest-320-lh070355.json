@@ -1,0 +1,20 @@
+{
+    "rank": 5921,
+    "username": "lh070355",
+    "score": 7,
+    "finish_time": "00:59:44",
+    "Q1": {
+        "solve_time": "00:15:55",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "from collections import Counter\n\nclass Solution:\n    def unequalTriplets(self, nums: List[int]) -> int:\n        counts = tuple(Counter(nums).values())\n        length = len(counts)\n        num = 0\n        \n        for i in range(length):\n            for j in range(i + 1, length):\n                for k in range(j + 1, length):\n                    num += counts[i] * counts[j] * counts[k]\n                    \n        return num"
+    },
+    "Q2": {
+        "solve_time": "00:44:44",
+        "fail_count": 2,
+        "lang": "python3",
+        "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nfrom bisect import bisect_left\nclass Solution:\n    def closestNodes(self, root: Optional[TreeNode], queries: List[int]) -> List[List[int]]:\n#         @cache\n#         def find(que):\n#             ans = [-1, -1]\n#             node = root\n#             while node.val != que:\n#                 if node.val > que:\n#                     ans[1] = node.val\n#                     if node.left is None:\n#                         return ans\n#                     node = node.left\n#                 else:\n#                     ans[0] = node.val\n#                     if node.right is None:\n#                         return ans\n#                     node = node.right\n            \n#             return [que, que]\n\n#         return list([(t := find(que))[0], t[1]] for que in queries)\n\n        nodes = []\n        def dfs(root):\n            nodes.append(root.val)\n            if root.left:\n                dfs(root.left)\n            if root.right:\n                dfs(root.right)\n        dfs(root)\n        nodes.sort()\n        length = len(nodes)\n        ans = []\n        \n        for que in queries:\n            i = bisect_left(nodes, que)\n            if i == length:\n                ans.append([nodes[i - 1], -1])\n            elif nodes[i] == que:\n                ans.append([que, que])\n            else:\n                ans.append([nodes[i - 1] if i else -1, nodes[i]])\n            \n        return ans"
+    },
+    "Q3": {},
+    "Q4": {}
+}

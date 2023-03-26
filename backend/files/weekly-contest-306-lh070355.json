@@ -1,0 +1,25 @@
+{
+    "rank": 6174,
+    "username": "lh070355",
+    "score": 12,
+    "finish_time": "01:14:28",
+    "Q1": {
+        "solve_time": "00:23:12",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def largestLocal(self, grid: List[List[int]]) -> List[List[int]]:\n        n = len(grid)\n        min_grid = [[0 for _ in range(n - 2)] for _ in range(n - 2)]\n        for i in range(n - 2):\n            for j in range(n - 2):\n                min_grid[i][j] = max(max(grid[ii][jj] for jj in range(j, j + 3)) for ii in range(i, i + 3))\n                \n                \n        return min_grid\n"
+    },
+    "Q2": {
+        "solve_time": "00:31:27",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def edgeScore(self, edges: List[int]) -> int:\n        length = len(edges)\n        scores = [0] * length\n        max_i = max_val = 0\n                     \n        for i, edge in enumerate(edges):\n            scores[edge] += i\n            \n        for i, score in enumerate(scores):\n            if score > max_val:\n                max_i, max_val = i, score\n                \n        return max_i"
+    },
+    "Q3": {
+        "solve_time": "01:09:28",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "class Solution:\n    def smallestNumber(self, pattern: str) -> str:\n        length = len(pattern)\n        i = d_i = 0\n        num = 1\n        ans = [' '] * (length + 1)\n  \n        while i < length:\n            if pattern[i] == 'I':\n                ans[i] = str(num)\n                num += 1\n            else:\n                while d_i < length and pattern[d_i] == 'D':\n                    d_i += 1\n                for dd in range(d_i, i - 1, -1):\n                    ans[dd] = str(num)\n                    num += 1\n            i = d_i = d_i + 1\n        if ans[-1] == ' ':\n            ans[-1] = str(num)\n            \n        return ''.join(ans)\n            "
+    },
+    "Q4": {}
+}

@@ -1,0 +1,30 @@
+{
+    "rank": 1935,
+    "username": "lh070355",
+    "score": 17,
+    "finish_time": "01:29:18",
+    "Q1": {
+        "solve_time": "00:04:48",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def findMaxK(self, nums: List[int]) -> int:\n        s = set(nums)\n        max_num = -1\n        \n        for num in nums:\n            if -1 * num in s and abs(num) > max_num:\n                max_num = abs(num)\n                \n        return max_num"
+    },
+    "Q2": {
+        "solve_time": "00:10:16",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def countDistinctIntegers(self, nums: List[int]) -> int:\n        s = set(nums)\n        \n        for num in nums:\n            t = 0\n            while num:\n                t *= 10\n                div, mod = divmod(num, 10)\n                num = div\n                t += mod\n            s.add(t)\n            \n        return len(s)"
+    },
+    "Q3": {
+        "solve_time": "01:24:18",
+        "fail_count": 0,
+        "lang": "python3",
+        "code": "class Solution:\n    def sumOfNumberAndReverse(self, num: int) -> bool:\n        def reverse_digits(n):\n            return int(str(n)[::-1])\n        \n        for i in range(num + 1):\n            if i == reverse_digits(num - i):\n                return True\n        return False"
+    },
+    "Q4": {
+        "solve_time": "00:54:21",
+        "fail_count": 1,
+        "lang": "python3",
+        "code": "from collections import deque\n\nclass Solution:\n    def countSubarrays(self, nums: List[int], minK: int, maxK: int) -> int:\n        length = len(nums)\n        min_queue, max_queue = deque(), deque()\n        ans = i = 0\n\n        while i < length:\n            #  find the start i in range\n            while i < length and (minK > nums[i] or maxK < nums[i]):\n                i += 1\n            j = i\n\n            while j < length and minK - 1 < nums[j] < maxK + 1:\n                if nums[j] == minK:\n                    min_queue.append(j)\n                if nums[j] == maxK:\n                    max_queue.append(j)\n                j += 1\n            \n            for k in range(i, j):\n                if not min_queue or not max_queue:\n                    break\n                ans += (j - max(min_queue[0], max_queue[0]))\n                if min_queue[0] == k:\n                    min_queue.popleft()\n                if max_queue[0] == k:\n                    max_queue.popleft()\n            min_queue.clear()\n            max_queue.clear()\n            i = j\n\n        return ans"
+    }
+}

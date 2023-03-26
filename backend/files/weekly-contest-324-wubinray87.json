@@ -1,0 +1,30 @@
+{
+    "rank": 1972,
+    "username": "wubinray87",
+    "score": 19,
+    "finish_time": "02:12:11",
+    "Q1": {
+        "solve_time": "00:06:09",
+        "fail_count": 0,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    int similarPairs(vector<string>& words) {\n        const auto makePattern = [](const auto& word) {\n            int ptn = 0;\n            for (const auto& c : word) {\n                ptn |= (1 << (c-'a'));\n            }\n            \n            return ptn;\n        };\n        \n        std::unordered_map<int, int> lut;\n        int count = 0;\n        for (const auto& word : words) {\n            int ptn = makePattern(word);\n            count += lut[ptn];\n            lut[ptn]++;\n        }\n        return count;\n    }\n};"
+    },
+    "Q2": {
+        "solve_time": "00:20:50",
+        "fail_count": 2,
+        "lang": "cpp",
+        "code": "static const auto getPrimeFactors = [](auto n) -> std::vector<int> {\n    if (n == 1) {\n        return {1};\n    }\n\n    std::vector<int> factors;\n\n    int f = 2;\n    while (n >= f) {\n        if (n % f == 0) {\n            n /= f;\n            factors.push_back(f);\n        } else {\n            f++;\n        }\n    }\n    return factors;\n};\n\nclass Solution {\npublic:\n    int smallestValue(int n) {\n        if (n == 4) return 4;\n        \n        std::vector<int> factors;\n        do {\n            factors = getPrimeFactors(n);\n            n = std::accumulate(factors.begin(), factors.end(), 0);\n        } while (factors.size() > 1);\n        \n        return factors[0];\n    }\n};"
+    },
+    "Q3": {
+        "solve_time": "00:54:06",
+        "fail_count": 4,
+        "lang": "cpp",
+        "code": "class Solution {\npublic:\n    bool isPossible(int n, vector<vector<int>>& edges) {\n        const auto IsPattern = [](auto& ptn, auto ans) {\n            std::sort(ptn.begin(), ptn.end());\n            \n            for (int i = 0; i < ptn.size(); ++i) {\n                if (ptn[i] != ans[i]) {\n                    return false;\n                }\n            }\n            return true;\n        };\n        \n        const auto hasAnyUnusedNeighbor = [&](auto a, auto b, auto& adj) {\n            for (int i = 1; i <= n; ++i) {\n                if (adj[a].count(i) == 0 && adj[b].count(i) == 0) \n                    return true;\n            }\n            return false;\n        };\n        \n        const auto countLink = [](const auto node, const auto& oddNodes, const auto& adj) {\n            int count = 0;\n            for (const auto neigh : oddNodes) {\n                if (adj[node].count(neigh))\n                    count++;\n            }\n            return count;\n        };\n        \n        // adj\n        std::vector<std::unordered_set<int>> adj(n+1);\n        for (const auto& edge : edges) {\n            auto a = edge[0], b = edge[1];\n            adj[a].insert(b);\n            adj[b].insert(a);\n        }\n        \n        \n        // find odd degree nodes\n        std::vector<int> oddNodes;\n        for (int i = 1; i <=n ;++i) {\n            if (adj[i].size() & 0x1) {\n                oddNodes.push_back(i);\n            }\n        }\n        \n        std::cout << oddNodes.size() << std::endl;\n        \n        if (oddNodes.size() == 0) {\n            return true;\n        }\n        if (oddNodes.size() == 2) {\n            return hasAnyUnusedNeighbor(oddNodes[0], oddNodes[1], adj);\n        }\n        if (oddNodes.size() == 4) {\n            std::vector<int> ptn;\n            ptn.reserve(4);\n            for (const auto node : oddNodes) {\n                std::cout << countLink(node, oddNodes, adj) << std::endl;\n                ptn.push_back(countLink(node, oddNodes, adj));\n            }\n            if (IsPattern(ptn, std::vector<int>{0, 2, 2, 2}) || IsPattern(ptn, std::vector<int>{1, 1, 1, 3})) {\n                return false;\n            }\n            return true;\n        }\n        return false;\n    }\n};"
+    },
+    "Q4": {
+        "solve_time": "01:22:11",
+        "fail_count": 4,
+        "lang": "cpp",
+        "code": "template<typename T>\nstd::ostream& operator<<(std::ostream& os, std::vector<T> v) {\n    for (const auto ele : v) \n        os << ele << \" \";\n    return os;\n};\n\nclass Solution {\npublic:\n    vector<int> cycleLengthQueries(int n, vector<vector<int>>& queries) {\n        const auto getParents = [](auto a) {\n            std::vector<int> path;\n            path.reserve(log2(a)+1);\n            \n            do {\n                path.push_back(a);\n                a /= 2;\n            } while (a);\n            \n            std::reverse(path.begin(), path.end());\n            \n            return path;\n        };\n        \n        const auto getCommonPath = [](auto& pathA, auto& pathB) {\n            int n = std::min(pathA.size(), pathB.size());\n            \n            std::vector<int> path;\n            for (int i = 0; i < n; ++i) {\n                if (pathA[i] != pathB[i]) {\n                    break;\n                }\n                path.push_back(pathA[i]);\n            }\n            \n            return path;\n        };\n        \n        std::vector<int> result;\n        result.reserve(queries.size());\n        \n        for (const auto& query : queries) {\n            int a = query[0], b = query[1];\n            auto pathA = getParents(a);\n            auto pathB = getParents(b);\n            auto commonPath = getCommonPath(pathA, pathB);\n            \n            // std::cout << a << \" \" << b << std::endl;\n            // std::cout << pathA << std::endl;\n            // std::cout << pathB << std::endl;\n            // std::cout << commonPath << std::endl;\n            \n            result.push_back(pathA.size() + pathB.size() - commonPath.size() - commonPath.size() + 1);\n        }\n        return result;\n    }\n};"
+    }
+}
